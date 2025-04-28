@@ -1,1 +1,12 @@
 <p>game-statistics works!</p>
+<div class="container">
+<table class="table">
+    <thead>
+        <tr>
+            @for(cat of categories; track cat) {
+                <th scope="col">{{cat}}</th>   
+            }
+        </tr>
+    </thead>
+</table>
+</div>
