@@ -5,7 +5,7 @@ import { matches } from './match-data';
 @Injectable({
   providedIn: 'root'
 })
-export class MatchServiceService {
+export class MatchService {
 
   matches = matches;
 
@@ -14,4 +14,5 @@ export class MatchServiceService {
   getMatchById(id: number): Match {
     return this.matches.filter(match => match.id === id)[0];
   }
+
 }
