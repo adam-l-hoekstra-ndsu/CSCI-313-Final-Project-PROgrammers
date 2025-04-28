@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { GameStatisticsComponent } from "./game-statistics/game-statistics.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, GameStatisticsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
