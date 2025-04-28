@@ -1,10 +1,11 @@
 import { Team } from "./team";
+import { Sport } from "./sport"
 
 export const teams: Team[] = [
     {
         id: 1,
         name: "Team A",
-        sport: 2, // Rainbow Six Siege
+        sport: Sport.RainbowSixSiege,
         logoUrl: "https://example.com/logoA.png",
         players: [1,3], // Array of player IDs
         schedule: [], // Array of match IDs
@@ -16,7 +17,7 @@ export const teams: Team[] = [
     {
         id: 2,
         name: "Team B",
-        sport: 1, // Volleyball
+        sport: Sport.Volleyball,
         logoUrl: "https://example.com/logoB.png",
         players: [2,4], // Array of player IDs
         schedule: [], // Array of match IDs

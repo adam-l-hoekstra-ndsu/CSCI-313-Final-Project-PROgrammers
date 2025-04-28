@@ -5,6 +5,7 @@ export const players: Player[] = [
         id: 1,
         firstName: "John",
         lastName: "Doe",
+        teams: [1],
         age: 25,
         bio: "A skilled player with a passion for the game.",
         photoUrl: "https://example.com",
@@ -12,6 +13,7 @@ export const players: Player[] = [
     },
     {
         id: 2,
+        teams: [2],
         firstName: "Jane",
         lastName: "Smith",
         age: 28,
@@ -21,6 +23,7 @@ export const players: Player[] = [
     },
     {
         id: 3,
+        teams: [1],
         firstName: "Alice",
         lastName: "Johnson",
         age: 22,
@@ -30,6 +33,7 @@ export const players: Player[] = [
     },
     {
         id: 4,
+        teams: [2],
         firstName: "Bob",
         lastName: "Brown",
         age: 30,
