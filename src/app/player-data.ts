@@ -1,0 +1,44 @@
+import { Player } from "./player";
+
+export const players: Player[] = [
+    {
+        id: 1,
+        firstName: "John",
+        lastName: "Doe",
+        teams: [1],
+        age: 25,
+        bio: "A skilled player with a passion for the game.",
+        photoUrl: "https://example.com",
+        stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+    },
+    {
+        id: 2,
+        teams: [2],
+        firstName: "Jane",
+        lastName: "Smith",
+        age: 28,
+        bio: "An experienced player with a strategic mindset.",
+        photoUrl: "https://example.com/photo2.jpg",
+        stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+    },
+    {
+        id: 3,
+        teams: [1],
+        firstName: "Alice",
+        lastName: "Johnson",
+        age: 22,
+        bio: "A rising star in the gaming community.",
+        photoUrl: "https://example.com/photo3.jpg",
+        stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+    },
+    {
+        id: 4,
+        teams: [2],
+        firstName: "Bob",
+        lastName: "Brown",
+        age: 30,
+        bio: "A veteran player with years of experience.",
+        photoUrl: "https://example.com/photo4.jpg",
+        stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+    },
+]
