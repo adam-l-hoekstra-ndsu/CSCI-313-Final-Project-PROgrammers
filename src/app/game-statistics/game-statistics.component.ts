@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RainbowSixSiegeService } from '../rainbow-six-siege.service';
+import { Sport } from '../sport';
 
 @Component({
   selector: 'app-game-statistics',
@@ -9,7 +10,7 @@ import { RainbowSixSiegeService } from '../rainbow-six-siege.service';
 })
 export class GameStatisticsComponent implements OnInit {
   categories: string[] = [];
-  sportID: number = 2; // Hardcoding sport id to Rainbow Six Siege for now
+  sport: Sport = Sport.RainbowSixSiege; // Hardcoding sport to Rainbow Six Siege for now
   matchID: number = 3; // Hardcoding match id to 3 for now
 
   constructor() {}
