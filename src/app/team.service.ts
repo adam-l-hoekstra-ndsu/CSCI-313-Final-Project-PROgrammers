@@ -6,8 +6,9 @@ import { Player } from './player';
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
 
+export class TeamService {
+  
   teams = teams;
 
   constructor() { }
