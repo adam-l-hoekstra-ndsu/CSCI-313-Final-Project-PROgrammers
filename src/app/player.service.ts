@@ -12,7 +12,7 @@ export class PlayerService {
   constructor() { }
 
   getPlayerById(id: number): Player {
-    return this.players.filter(player => player.id === id)[0];
+    return this.players.filter(player => player.id == id)[0];
   }
 
 }
