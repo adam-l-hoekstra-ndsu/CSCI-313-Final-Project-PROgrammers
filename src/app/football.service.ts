@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { TeamService } from './team.service';
-import { Team } from './team';
+import { Team } from './team'; //Team Class/Interface
+import { teams } from './team-data'; //Team Data/Database
+import { TeamService } from './team.service'; //TeamService
+import { Player } from './player'; //Player Class/Interface
+import { players } from './player-data'; //Player Data/Database
+import { PlayerService } from './player.service'; //PlayerService
 
 @Injectable({
   providedIn: 'root'
