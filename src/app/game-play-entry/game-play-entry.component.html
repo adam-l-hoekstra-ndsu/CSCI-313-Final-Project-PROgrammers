@@ -53,6 +53,54 @@
         </div>
     </div>
     <div class="col-md-4 text-center">
+        <form #playerActionForm="ngForm" (ngSubmit)="onSubmit(playerActionForm)">
+            <div class="form-group">
+                <label for="playerActing">Player Acting</label>
+                <select class="form-control" id="playerActing" name="playerActing" [(ngModel)]="playerActing" required>
+                    @for(player of teamService.getPlayers(team1); track player) {
+                        <option value="player">{{player.firstName[0]}}. {{player.lastName}}</option>
+                    }
+                    @for(player of teamService.getPlayers(team2); track player) {
+                        <option value="player">{{player.firstName[0]}}. {{player.lastName}}</option>
+                    }
+                </select>
+                <label for="playerEffected">Player Effected</label>
+                <select class="form-control" id="playerEffected" name="playerEffected" [(ngModel)]="playerEffected" required>
+                    @for(player of teamService.getPlayers(team1); track player) {
+                        <option value="player">{{player.firstName[0]}}. {{player.lastName}}</option>
+                    }
+                    @for(player of teamService.getPlayers(team2); track player) {
+                        <option value="player">{{player.firstName[0]}}. {{player.lastName}}</option>
+                    }
+                </select>
+                <label for="playerAssisting">Player Assisting</label>
+                <select class="form-control" id="playerAssisting" name="playerAssisting" [(ngModel)]="playerAssisting" required>
+                    @for(player of teamService.getPlayers(team1); track player) {
+                        <option value="player">{{player.firstName[0]}}. {{player.lastName}}</option>
+                    }
+                    @for(player of teamService.getPlayers(team2); track player) {
+                        <option value="player">{{player.firstName[0]}}. {{player.lastName}}</option>
+                    }
+                    <option value="null">None</option>
+                </select>
+                <label for="playerTimeMinutes">Minutes</label>
+                <input class="form-control" id="playTimeMinutes" name="playTimeMinutes" [(ngModel)]="playTimeMinutes" required>
+                <label for="playerTimeSeconds">Seconds</label>
+                <input class="form-control" id="playTimeSeconds" name="playTimeSeconds" [(ngModel)]="playTimeSeconds" required>
+                <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                      <button type="submit" (click)="buttonValue.control.setValue('Killed')" class="btn btn-secondary">Kill</button>
+                      <button type="submit" (click)="buttonValue.control.setValue('Headshot')"class="btn btn-secondary">Headshot Kill</button>
+                      <button type="submit" (click)="buttonValue.control.setValue('Revived')" class="btn btn-secondary">Revive</button>
+                      <button type="submit" (click)="buttonValue.control.setValue('Planted/Disabled the Defuser')" class="btn btn-secondary">Plant/Defuse</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+         
+    </div>
+    <div class="col-md-4 text-center">
         @if(!match.hasStarted){
             <h1>Upcoming</h1>
         }
@@ -85,31 +133,26 @@
             }
         }
         <hr class=""my-1/>
-        @if(match.hasStarted) {
-            <div style="height: 300px; overflow-y: auto;">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Play</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                             @for(play of quarterOrRound.plays; track play) {
-                                    <tr>
-                                    <td scope="col">{{play.description}}</td>
-                                    <td scope="col">{{play.time | secondsToTime}}</td>
-                                </tr>
-                            }
+        <div style="height: 300px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Play</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                         @for(play of quarterOrRound.plays; track play) {
+                                <tr>
+                                <td scope="col">{{play.description}}</td>
+                                <td scope="col">{{play.time | secondsToTime}}</td>
+                            </tr>
                         }
-                    </tbody>
-                </table>
-            </div>  
-        } 
-    </div>
-    <div class="col-md-4 text-center">
-             
+                    }
+                </tbody>
+            </table>
+        </div> 
     </div>
     <div class="row text-center">
         <!-- <div class="col-md-12">
