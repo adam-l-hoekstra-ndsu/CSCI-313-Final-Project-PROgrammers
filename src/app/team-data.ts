@@ -26,4 +26,16 @@ export const teams: Team[] = [
         draws: 2,
         legueSubsection: "Europe",
     },
+    {
+        id: 3,
+        name: "Yeah BasketBall",
+        sport: Sport.Basketball,
+        logoUrl: "https://example.com/logoB.png",
+        players: [5,6], // Array of player IDs
+        schedule: [], // Array of match IDs
+        wins: 8,
+        losses: 7,
+        draws: 2,
+        legueSubsection: "Europe",
+    },
 ];
