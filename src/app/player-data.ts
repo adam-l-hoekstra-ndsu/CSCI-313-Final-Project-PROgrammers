@@ -41,4 +41,26 @@ export const players: Player[] = [
         photoUrl: "https://example.com/photo4.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
     },
+
+    {
+        id: 5,
+        teams: [3],
+        firstName: "Ian",
+        lastName: "Brown",
+        age: 30,
+        bio: "...",
+        photoUrl: "https://example.com/photo4.jpg",
+        stats: {},
+    },
+
+    {
+        id: 6,
+        teams: [3],
+        firstName: "John",
+        lastName: "Brown",
+        age: 30,
+        bio: "...",
+        photoUrl: "https://example.com/photo4.jpg",
+        stats: {},
+    },
 ]
