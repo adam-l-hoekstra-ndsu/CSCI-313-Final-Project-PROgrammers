@@ -10,6 +10,7 @@ export const players: Player[] = [
         bio: "A skilled player with a passion for the game.",
         photoUrl: "https://example.com",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: true,
     },
     {
         id: 2,
@@ -20,6 +21,7 @@ export const players: Player[] = [
         bio: "An experienced player with a strategic mindset.",
         photoUrl: "https://example.com/photo2.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: false,
     },
     {
         id: 3,
@@ -30,6 +32,7 @@ export const players: Player[] = [
         bio: "A rising star in the gaming community.",
         photoUrl: "https://example.com/photo3.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: false,
     },
     {
         id: 4,
@@ -40,6 +43,7 @@ export const players: Player[] = [
         bio: "A veteran player with years of experience.",
         photoUrl: "https://example.com/photo4.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: true,
     },
     {
         id: 5,
@@ -50,6 +54,7 @@ export const players: Player[] = [
         bio: "A versatile player with a knack for strategy.",
         photoUrl: "https://example.com/photo5.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: false,
     },
     {
         id: 6,
@@ -60,6 +65,7 @@ export const players: Player[] = [
         bio: "A tactical player with a focus on teamwork.",
         photoUrl: "https://example.com/photo6.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: true,
     },
     {
         id: 7,
@@ -70,6 +76,7 @@ export const players: Player[] = [
         bio: "An agile player with quick reflexes.",
         photoUrl: "https://example.com/photo7.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: false,
     },
     {
         id: 8,
@@ -80,5 +87,6 @@ export const players: Player[] = [
         bio: "A strategic player with a strong game sense.",
         photoUrl: "https://example.com/photo8.jpg",
         stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        currentlyInMatch: true,
     }
 ]
