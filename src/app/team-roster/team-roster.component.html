@@ -1,1 +1,5 @@
-<p>team-roster works!</p>
+@for (player of players; track $index) {
+<div class="row">
+    {{player.firstName}} {{player.lastName}}
+</div>
+}
