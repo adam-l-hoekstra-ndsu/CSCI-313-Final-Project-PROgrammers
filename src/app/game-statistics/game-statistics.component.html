@@ -1,54 +1,41 @@
 <div class="container-fluid">
-    <div class="row  justify-content-md-center">
-        <div class="col-md-auto text-center">
-            <h1>{{team1.name}} VS. {{team2.name}}</h1>
-            <h2>{{match.date}}</h2>
-            <h1>{{match.team1Score}} - {{match.team2Score}}</h1>
-            @if(match.timeRemaining == 0) {
-                <h3>Final</h3>
-            } 
-            @else {
-                <h3>{{match.timeRemaining}}</h3>
-            }
-        </div>
-    </div>
-    <div class="row" style="background-color: lightgrey;">
-        <div class = col-md-6>
+    <div class="row" style="background-color: lightgrey; margin-bottom: 2rem;">
+        <div class=col-md-6>
             <h2>{{team1.name}}</h2>
             <table class="table">
                 <thead>
                     <tr>
                         @for(cat of categories; track cat) {
-                            <th scope="col">{{cat}}</th>   
+                        <th scope="col">{{cat}}</th>
                         }
                     </tr>
-                    @for(player of team1Players; track player) {
-                        <tr>
-                            <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
-                            @for(stat of player.stats[matchID]; track stat) {
-                                <td scope="col">{{stat}}</td>
-                            }
-                        </tr>
+                    @for(player of teamService.getPlayers(team1); track player) {
+                    <tr>
+                        <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
+                        @for(stat of player.stats[matchID]; track stat) {
+                        <td scope="col">{{stat}}</td>
+                        }
+                    </tr>
                     }
                 </thead>
             </table>
         </div>
-        <div class = col-md-6>
+        <div class=col-md-6>
             <h2>{{team2.name}}</h2>
             <table class="table">
                 <thead>
                     <tr>
                         @for(cat of categories; track cat) {
-                            <th scope="col">{{cat}}</th>   
+                        <th scope="col">{{cat}}</th>
                         }
                     </tr>
-                    @for(player of team2Players; track player) {
-                        <tr>
-                            <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
-                            @for(stat of player.stats[matchID]; track stat) {
-                                <td scope="col">{{stat}}</td>
-                            }
-                        </tr>
+                    @for(player of teamService.getPlayers(team2); track player) {
+                    <tr>
+                        <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
+                        @for(stat of player.stats[matchID]; track stat) {
+                        <td scope="col">{{stat}}</td>
+                        }
+                    </tr>
                     }
                 </thead>
             </table>

@@ -2,6 +2,7 @@ import { Injectable, inject} from '@angular/core';
 import { Team } from './team';
 import { teams } from './team-data';
 import { TeamService } from './team.service';
+import { SiegeRoundResult } from './quarterOrRound';
 
 @Injectable({
   providedIn: 'root'
