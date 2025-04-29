@@ -145,7 +145,15 @@
                     <thead>
                         <tr>
                             @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                                <th>{{$index + 1}}</th>
+                                @if($index + 1 <= 4) {
+                                    <th>{{$index + 1}}</th>
+                                }
+                                @else if($index + 1 == 5) {
+                                    <th>OT</th>
+                                }
+                                @else {
+                                    <th>OT {{$index - 3}}</th>
+                                }   
                             }
                             <th style="background-color: lightgrey;">Total</th>
                         </tr>

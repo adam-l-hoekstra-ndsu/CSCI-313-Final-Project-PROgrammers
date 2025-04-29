@@ -19,7 +19,7 @@ import { SecondsToTimePipe } from '../seconds-to-time.pipe';
 export class GameViewComponent {
   categories: string[] = [];
 
-  matchID: number = 3; // Hardcoding match id for now
+  matchID: number = 1; // Hardcoding match id for now
   match!: Match;
   
   team1!: Team;
