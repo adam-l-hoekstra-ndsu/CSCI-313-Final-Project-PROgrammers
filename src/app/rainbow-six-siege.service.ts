@@ -4,9 +4,21 @@ import { teams } from './team-data';
 import { TeamService } from './team.service';
 import { SiegeRoundResult } from './quarterOrRound';
 
+export enum SiegeCatagory {
+  Kills,
+  Deaths,
+  Assists,
+  ObjectivePlays,
+  RoundsSurvived,
+  Trades,
+  Revives,
+  Clutches
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class RainbowSixSiegeService {
   statCategories: string[] = ["Kills", "Deaths", "Assists", "Objective Plays", "Rounds Survied", "Trades", "Revives", "Clutches"]
   teams: Team[] = [];
