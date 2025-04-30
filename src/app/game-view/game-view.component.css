@@ -1,0 +1,23 @@
+.text-center {
+    text-align: center;
+}
+
+.team-table {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.round-table {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.highlight {
+    background-color: lightgrey;
+    font-weight: bold;
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+}
