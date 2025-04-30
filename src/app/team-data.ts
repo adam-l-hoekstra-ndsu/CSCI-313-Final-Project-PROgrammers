@@ -27,29 +27,27 @@ export const teams: Team[] = [
         legueSubsection: "Europe",
     },
     {
-
-        id: 0,
-        name: "Team C",
-        sport: Sport.Football,
-        logoUrl: "https://example.com/logoA.png",
-        players: [1,3], // Array of player IDs
-        schedule: [], // Array of match IDs
-        wins: 10,
-        losses: 5,
-        draws: 2,
-        legueSubsection: "North America",
-    },
-    {
-
         id: 3,
-        name: "Yeah BasketBall",
-        sport: Sport.Basketball,
-        logoUrl: "https://example.com/logoB.png",
+        name: "Team C",
+        sport: Sport.RainbowSixSiege,
+        logoUrl: "https://example.com/logoC.png",
         players: [5,6], // Array of player IDs
         schedule: [], // Array of match IDs
-        wins: 8,
-        losses: 7,
+        wins: 12,
+        losses: 3,
         draws: 2,
-        legueSubsection: "Europe",
+        legueSubsection: "Asia",
+    },
+    {
+        id: 4,
+        name: "Team D",
+        sport: Sport.Basketball,
+        logoUrl: "https://example.com/logoD.png",
+        players: [7,8], // Array of player IDs
+        schedule: [], // Array of match IDs
+        wins: 9,
+        losses: 6,
+        draws: 2,
+        legueSubsection: "South America",
     },
 ];
