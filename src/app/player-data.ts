@@ -50,9 +50,12 @@ export const players: Player[] = [
         age: 30,
         bio: "...",
         photoUrl: "https://example.com/photo4.jpg",
-        stats: {},
+        stats: {1:[1, 31, 18, 7, 2, 2, 5],
+            2:[1, 22, 11, 5, 1, 0, 3],
+            3:[1, 36, 26, 10, 4, 2, 8],
+            4:[1, 27, 13, 6, 1, 0, 6],
+            5:[1, 30, 20, 8, 3, 1, 7]},
     },
-
     {
         id: 6,
         teams: [3],
@@ -61,6 +64,10 @@ export const players: Player[] = [
         age: 30,
         bio: "...",
         photoUrl: "https://example.com/photo4.jpg",
-        stats: {},
+        stats: { 1:[1, 34, 22, 9, 3, 1, 6],
+            2:[1, 28, 14, 6, 1, 1, 4],
+            3:[1, 41, 33, 12, 5, 4, 7],
+            4:[1, 19, 8, 3, 0, 2, 3],
+            5:[1, 26, 17, 7, 2, 1, 5]},
     },
 ]
