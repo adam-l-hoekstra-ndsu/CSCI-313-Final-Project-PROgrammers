@@ -34,7 +34,7 @@ export class GameStatisticsComponent implements OnInit {
   matchService = inject(MatchService)
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(this.matchID);
+    this.match = this.matchService.getMatchById(Number(this.matchID));
     this.team1 = this.teamService.getTeam(this.match.team1ID);
     this.team2 = this.teamService.getTeam(this.match.team2ID);
     this.setCategories(this.team1.sport);
