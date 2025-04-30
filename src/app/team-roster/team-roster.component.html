@@ -1,5 +1,35 @@
-@for (player of players; track $index) {
 <div class="row">
-    {{player.firstName}} {{player.lastName}}
+    <table>
+        <tr>
+            <td>Name</td>
+            @for (item of categories; track $index) {
+            <td>{{item}}</td>
+            }
+            <td></td>
+        </tr>
+        @for (player of players; track $index) {
+        @if($index % 2 == 0) {
+        <tr style="background-color: lightgrey;">
+            <td>{{player.firstName}} {{player.lastName}}</td>
+            @for (item of getAverages(player); track $index) {
+            <td>{{item}}</td>
+            }
+            <!-- some kind of if to see if they are admin -->
+            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]">Manage</a></td>
+        </tr>
+        }
+        @else {
+        <tr>
+            <td>{{player.firstName}} {{player.lastName}}</td>
+            @for (item of getAverages(player); track $index) {
+            <td>{{item}}</td>
+            }
+            <!-- some kind of if to see if they are admin -->
+            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]">Manage</a></td>
+        </tr>
+        }
+        }
+
+    </table>
+
 </div>
-}
