@@ -7,8 +7,9 @@ import { PlayerService } from './player.service';
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
 
+export class TeamService {
+  
   teams = teams;
 
   playerService = inject(PlayerService);

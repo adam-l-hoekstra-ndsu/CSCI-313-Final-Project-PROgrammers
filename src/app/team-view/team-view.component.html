@@ -1,1 +1,23 @@
-<p>team-view works!</p>
+<div class="container">
+    <div class="containerA">
+        <h1>{{team.name}}</h1>
+    </div>
+    <div class="row">
+        <button class="btn btn-secondary" (click)="changeFocus('info')">Info</button>
+        <button class="btn btn-secondary" (click)="changeFocus('roster')">Roster</button>
+        <button class="btn btn-secondary" (click)="changeFocus('schedule')">Schedule</button>
+    </div>
+
+    <div class="row">
+        @if(focus=="info") {
+        <app-team-header></app-team-header>
+        }
+        @if(focus=="roster") {
+        <app-team-roster [team]="team"></app-team-roster>
+        }
+        @if(focus=="schedule") {
+        <app-team-schedule></app-team-schedule>
+        }
+    </div>
+
+</div>
