@@ -9,4 +9,6 @@ export interface Player {
     bio: string;
     photoUrl: string;
     stats: { [key: number]: number[] };
+    avgStats: number[]
+    currentlyInMatch: boolean;
 }
