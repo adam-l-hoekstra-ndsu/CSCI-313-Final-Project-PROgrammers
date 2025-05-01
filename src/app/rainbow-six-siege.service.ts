@@ -5,6 +5,7 @@ import { TeamService } from './team.service'
 import { Sport } from './sport';
 import { Player } from './player';
 import { Play } from './play';
+import { QuarterOrRound } from './quarterOrRound';
 
 export enum SiegeCatagory {
   Kills,
@@ -79,7 +80,7 @@ export class RainbowSixSiegeService {
     }
 
     // Handle Objective Plays
-    if(action == 'Planted/Disabled the Defuser') {
+    if(action == SiegePlayType.Planted) {
       playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]++;
     }
 
@@ -94,6 +95,37 @@ export class RainbowSixSiegeService {
       description: playDescription,
     };
     this.matchService.addPlayToMatch(this.matchService.getMatchById(matchID), play);
+  }
+
+  reverseSiegeAction(matchID: number, play: Play, quarterOrRound: QuarterOrRound) {
+    // Handle Assists
+    if(play.playerAssisting != null) {
+      play.playerAssisting.stats[matchID][SiegeCatagory.Assists]--;
+    }
+
+    if(play.playerActing != null) {
+
+    if(play.playerEffected != null) {
+      if(play.playAction == SiegePlayType.Killed) {
+        play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
+        play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
+      }
+  
+      // Handle Revives
+      if(play.playAction == SiegePlayType.Revived) {
+        play.playerActing.stats[matchID][SiegeCatagory.Revives]--;
+      }
+    }
+    // Handle Kills & Trades
+    
+
+    // Handle Objective Plays
+    if(play.playAction == SiegePlayType.Planted) {
+      play.playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]--;
+    }
+  }
+
+    this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
   }
 
 }

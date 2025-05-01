@@ -146,18 +146,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                    @for(quarterOrRound of match.quarterOrRoundResults; track quarterOrRound) {
                          @for(play of quarterOrRound.plays; track play) {
-                                <tr (click)="onPlayClick(play)">
+                            <tr>
                                 <td scope="col">{{play.description}}</td>
                                 <td scope="col">{{play.time | secondsToTime}}</td>
+                                <td><button class="btn btn-danger" (click)="onPlayDelete(play, quarterOrRound)">Delete</button></td>
                             </tr>
                         }
                     }
                 </tbody>
             </table>
         </div> 
-        <button class="btn btn-danger" style="margin: 1rem;" (click)="onPlayDelete()">Delete Play</button>
     </div>
     <div class="row text-center">
         <!-- <div class="col-md-12">

@@ -10,6 +10,7 @@ import { MatchService } from '../match.service';
 import { GameStatisticsComponent } from '../game-statistics/game-statistics.component';
 import { SecondsToTimePipe } from '../seconds-to-time.pipe';
 import { FormsModule, NgForm } from '@angular/forms';
+import { QuarterOrRound } from '../quarterOrRound';
 
 
 @Component({
@@ -35,7 +36,6 @@ export class GamePlayEntryComponent {
   playDescription!: string;
   action!: SiegePlayType;
   trade!: boolean;
-  play!: Play;
 
   sportEnum = Sport; // For use in the template
   siegeActionEnum = SiegePlayType; // For use in the template
@@ -56,12 +56,10 @@ export class GamePlayEntryComponent {
     this.action = action;
   }
 
-  onPlayClick(play: Play) {
-    this.play = play;
-  }
-
-  onPlayDelete() {
-    this.matchService.removePlayFromMatch(this.match, this.play);
+  onPlayDelete(play : Play, quarterOrRound: QuarterOrRound) {
+    if(typeof play.playerActing == typeof SiegePlayType) {
+      this.siegeService.reverseSiegeAction(Number(this.matchID()), play, quarterOrRound)
+    }
   }
 
   onSubmit(form: NgForm) {

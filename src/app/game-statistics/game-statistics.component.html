@@ -13,7 +13,7 @@
                     @for(player of teamService.getPlayers(team1); track player) {
                     <tr>
                         <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
-                        @for(stat of player.stats[matchID]; track stat) {
+                        @for(stat of player.stats[matchID]; track $index) {
                         <td scope="col">{{stat}}</td>
                         }
                     </tr>
@@ -34,7 +34,7 @@
                     @for(player of teamService.getPlayers(team2); track player) {
                     <tr>
                         <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
-                        @for(stat of player.stats[matchID]; track stat) {
+                        @for(stat of player.stats[matchID]; track $index) {
                         <td scope="col">{{stat}}</td>
                         }
                     </tr>

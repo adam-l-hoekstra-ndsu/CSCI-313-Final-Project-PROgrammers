@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Match } from './match';
 import { matches } from './match-data';
 import { Play } from './play';
+import { QuarterOrRound } from './quarterOrRound';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Play } from './play';
 export class MatchService {
 
   addPlayToMatch(match: Match, play: Play) {
-    match.quarterOrRoundResults[match.quarterOrRound].plays.push(play);
+    match.quarterOrRoundResults[match.quarterOrRound - 1].plays.push(play);
   }
 
   matches = matches;
@@ -20,11 +21,9 @@ export class MatchService {
     return this.matches.filter(match => match.id === id)[0];
   }
 
-  removePlayFromMatch(match: Match, play: Play) {
-    const index = match.quarterOrRoundResults[match.quarterOrRound].plays.indexOf(play);
-    if (index > -1) {
-      match.quarterOrRoundResults[match.quarterOrRound].plays.splice(index, 1);
-    }
+  removePlayFromMatch(match: Match, playToRemove: Play, quarterOrRound: QuarterOrRound) {
+    quarterOrRound.plays = quarterOrRound.plays.filter(play => play != playToRemove );
+    
   }
 
 }
