@@ -36,13 +36,14 @@ export class TeamRosterComponent implements OnInit {
       if (this.sport = Sport.Basketball) {
         this.categories = this.bb.statCategories
       }
-      else if (this.sport = Sport.Football) {
+      if (this.sport = Sport.Football) {
         this.categories = this.fb.statCategories
       }
-      else if (this.sport = Sport.Volleyball) {
+      if (this.sport = Sport.Volleyball) {
         this.categories = this.vb.statCategories
+        console.log(this.categories)
       }
-      else if (this.sport = Sport.RainbowSixSiege) {
+      if (this.sport = Sport.RainbowSixSiege) {
         this.categories = this.rss.statCategories
       }
   }

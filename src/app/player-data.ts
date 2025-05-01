@@ -19,7 +19,11 @@ export const players: Player[] = [
         age: 28,
         bio: "An experienced player with a strategic mindset.",
         photoUrl: "https://example.com/photo2.jpg",
-        stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        stats: {1: [12, 87, 3, 45, 68, 29, 91, 10],
+            2: [7, 24, 39, 62, 14, 98, 5, 80],  
+            3: [51, 26, 74, 9, 38, 67, 43, 15] , 
+            4: [88, 4, 19, 95, 30, 21, 73, 6],  
+            5: [34, 11, 79, 66, 2, 84, 50, 25]},
     },
     {
         id: 3,
@@ -39,7 +43,11 @@ export const players: Player[] = [
         age: 30,
         bio: "A veteran player with years of experience.",
         photoUrl: "https://example.com/photo4.jpg",
-        stats: {1: [1, 2, 3], 2: [4, 5, 6], 3: [7, 8, 9]},
+        stats: {1: [12, 87, 3, 45, 68, 29, 91, 10],
+            2: [7, 24, 39, 62, 14, 98, 5, 80],  
+            3: [51, 26, 74, 9, 38, 67, 43, 15] , 
+            4: [88, 4, 19, 95, 30, 21, 73, 6],  
+            5: [34, 11, 79, 66, 2, 84, 50, 25]},
     },
 
     {
