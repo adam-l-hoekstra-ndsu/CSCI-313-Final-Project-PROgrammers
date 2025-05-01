@@ -87,13 +87,17 @@
                 <input class="form-control" id="playTimeMinutes" name="playTimeMinutes" [(ngModel)]="playTimeMinutes" required>
                 <label for="playerTimeSeconds">Seconds</label>
                 <input class="form-control" id="playTimeSeconds" name="playTimeSeconds" [(ngModel)]="playTimeSeconds" required>
+                <input class="form-check-input" type="checkbox" [(ngModel)]="trade" name="trade" value="true" id="trade">
+                <label class="form-check-label" for="trade">
+                Trade?
+                </label>
                 <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                      <button type="submit" (click)="setAction('Killed')" class="btn btn-secondary">Kill</button>
-                      <button type="submit" (click)="setAction('Headshot')"class="btn btn-secondary">Headshot Kill</button>
-                      <button type="submit" (click)="setAction('Revived')" class="btn btn-secondary">Revive</button>
-                      <button type="submit" (click)="setAction('Planted/Disabled the Defuser')" class="btn btn-secondary">Plant/Defuse</button>
+                      <button type="submit" (click)="setSiegeAction(siegeActionEnum.Killed)" class="btn btn-secondary">Kill</button>
+                      <button type="submit" (click)="setSiegeAction(siegeActionEnum.Headshot)"class="btn btn-secondary">Headshot Kill</button>
+                      <button type="submit" (click)="setSiegeAction(siegeActionEnum.Revived)" class="btn btn-secondary">Revive</button>
+                      <button type="submit" (click)="setSiegeAction(siegeActionEnum.Planted)" class="btn btn-secondary">Plant/Defuse</button>
                     </div>
                 </div>
             </div>
@@ -144,7 +148,7 @@
                 <tbody>
                     @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
                          @for(play of quarterOrRound.plays; track play) {
-                                <tr>
+                                <tr (click)="onPlayClick(play)">
                                 <td scope="col">{{play.description}}</td>
                                 <td scope="col">{{play.time | secondsToTime}}</td>
                             </tr>
@@ -153,6 +157,7 @@
                 </tbody>
             </table>
         </div> 
+        <button class="btn btn-danger" style="margin: 1rem;" (click)="onPlayDelete()">Delete Play</button>
     </div>
     <div class="row text-center">
         <!-- <div class="col-md-12">
@@ -216,4 +221,4 @@
     </div>
 </div>
 
-<app-game-statistics [matchID]="matchID"></app-game-statistics>
+<app-game-statistics [matchID]="this.match.id"></app-game-statistics>

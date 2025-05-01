@@ -20,4 +20,11 @@ export class MatchService {
     return this.matches.filter(match => match.id === id)[0];
   }
 
+  removePlayFromMatch(match: Match, play: Play) {
+    const index = match.quarterOrRoundResults[match.quarterOrRound].plays.indexOf(play);
+    if (index > -1) {
+      match.quarterOrRoundResults[match.quarterOrRound].plays.splice(index, 1);
+    }
+  }
+
 }

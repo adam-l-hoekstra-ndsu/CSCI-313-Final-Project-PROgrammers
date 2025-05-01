@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { RainbowSixSiegeService, SiegeCatagory } from '../rainbow-six-siege.service';
+import { Component, inject, input, OnInit } from '@angular/core';
+import { RainbowSixSiegeService, SiegeCatagory, SiegePlayType } from '../rainbow-six-siege.service';
 import { Sport } from '../sport';
 import { Player } from '../player';
 import { Team } from '../team'
@@ -19,7 +19,7 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './game-play-entry.component.css'
 })
 export class GamePlayEntryComponent {
-  matchID: number = 3; // Hardcoding match id for now
+  matchID = input.required<number>();
   match!: Match;
   
   team1!: Team;
@@ -33,9 +33,12 @@ export class GamePlayEntryComponent {
   playTime!: number;
   playOvertime!: boolean;
   playDescription!: string;
-  action!: string;
+  action!: SiegePlayType;
+  trade!: boolean;
+  play!: Play;
 
   sportEnum = Sport; // For use in the template
+  siegeActionEnum = SiegePlayType; // For use in the template
 
   constructor() {}
 
@@ -44,62 +47,32 @@ export class GamePlayEntryComponent {
   matchService = inject(MatchService)
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(this.matchID);
+    this.match = this.matchService.getMatchById(Number(this.matchID()));
     this.team1 = this.teamService.getTeam(this.match.team1ID);
     this.team2 = this.teamService.getTeam(this.match.team2ID);
   }
 
-  setAction(action : string) {
+  setSiegeAction(action : SiegePlayType) {
     this.action = action;
   }
 
-  playDescriptionBuilderAssist(playerActing: Player, playerEffected: Player, playerAssisting: Player, playAction: string): string {
-    let description = this.playDescriptionBuilder(playerActing, playerEffected, playAction);
-    description += ", assisted by " + playerAssisting.firstName + " " + playerAssisting.lastName;
-    return description;
+  onPlayClick(play: Play) {
+    this.play = play;
   }
 
-  playDescriptionBuilder(playerActing: Player, playerEffected: Player, playAction: string): string {
-    let description = playerActing.firstName + " " + playerActing.lastName;
-    description +=  " " + playAction + " " + playerEffected.firstName + " " + playerEffected.lastName;
-    return description;
+  onPlayDelete() {
+    this.matchService.removePlayFromMatch(this.match, this.play);
   }
 
   onSubmit(form: NgForm) {
     this.playTime = (Number(this.playTimeMinutes * 60) + Number(this.playTimeSeconds));
     if (this.playOvertime) {this.playTime = -this.playTime;} // - denotes overtime
-
-    // Handle Assists and Play Description
-    if(this.playerAssisting != null) {
-      this.playDescription = this.playDescriptionBuilderAssist(this.playerActing, this.playerEffected, this.playerAssisting, this.action);
-      this.playerAssisting.stats[this.matchID][SiegeCatagory.Assists]++;
-    }
-    else {
-      this.playDescription = this.playDescriptionBuilder(this.playerActing, this.playerEffected, this.action);
+    if(this.team1.sport == Sport.RainbowSixSiege) {
+      this.siegeService.siegePlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.action, this.trade);
     }
 
-    // Handle Kills
-    if(this.action == 'Killed') {
-      this.playerActing.stats[this.matchID][SiegeCatagory.Kills]++;
-      this.playerEffected.stats[this.matchID][SiegeCatagory.Deaths]++;
-    }
-
-    // Handle Revives
-    if(this.action == 'Revived') {
-      this.playerActing.stats[this.matchID][SiegeCatagory.Revives]++;
-    }
-
-    // Handle Objective Plays
-    if(this.action == 'Planted/Disabled the Defuser') {
-      this.playerActing.stats[this.matchID][SiegeCatagory.ObjectivePlays]++;
-    }
-
-    // Create and add the play object
-    let play: Play = {
-      time: this.playTime,
-      description: this.playDescription,
-    };
-    this.matchService.addPlayToMatch(this.match, play);
+    //Reset form values
+    form.resetForm();
   }
 
 }

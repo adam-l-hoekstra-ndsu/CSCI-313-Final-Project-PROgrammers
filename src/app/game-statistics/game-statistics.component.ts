@@ -45,15 +45,15 @@ export class GameStatisticsComponent implements OnInit {
       case Sport.RainbowSixSiege:
         this.categories = this.siegeService.statCategories;
         break;
-      // case Sport.Football:
-      //   this.categories = this.footballService.statCategories;
-      //   break;
+      case Sport.Football:
+        this.categories = this.footballService.statCategories;
+        break;
       // case Sport.Volleyball:
       //   this.categories = this.volleyballService.statCategories;
       //   break;
-      // case Sport.Basketball:
-      //   this.categories = this.basketballService.statCategories;
-      //   break;
+      case Sport.Basketball:
+        this.categories = this.basketballService.statCategories;
+        break;
       default:
         this.categories = [];
     }

@@ -11,7 +11,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-game-view',
-  imports: [GameStatisticsComponent, SecondsToTimePipe, RouterOutlet, RouterLink],
+  imports: [GameStatisticsComponent, SecondsToTimePipe],
   templateUrl: './game-view.component.html',
   styleUrl: './game-view.component.css'
 })

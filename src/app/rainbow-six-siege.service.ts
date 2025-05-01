@@ -1,9 +1,10 @@
 import { Injectable, inject} from '@angular/core';
 import { Team } from './team';
-import { teams } from './team-data';
+import { MatchService } from './match.service';
 import { TeamService } from './team.service'
-import { SiegeRoundResult } from './quarterOrRound';
 import { Sport } from './sport';
+import { Player } from './player';
+import { Play } from './play';
 
 export enum SiegeCatagory {
   Kills,
@@ -16,6 +17,13 @@ export enum SiegeCatagory {
   Clutches
 }
 
+export enum SiegePlayType {
+  Killed = "Killed",
+  Headshot = "Headshot",
+  Revived = "Revived",
+  Planted = "Planted/Disabled the Defuser",
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,11 +33,67 @@ export class RainbowSixSiegeService {
   teams: Team[] = [];
 
   teamData = inject(TeamService);
+  matchService = inject(MatchService);
 
   constructor() { }
 
   onInit() {
     this.teams = this.teamData.teams.filter(team => team.sport === Sport.Football); // Filter teams for Rainbow Six Siege
+  }
+
+  playDescriptionBuilderAssist(playerActing: Player, playerEffected: Player, playerAssisting: Player, playAction: SiegePlayType): string {
+    let description = this.playDescriptionBuilder(playerActing, playerEffected, playAction);
+    description += ", assisted by " + playerAssisting.firstName + " " + playerAssisting.lastName;
+    return description;
+  }
+
+  playDescriptionBuilder(playerActing: Player, playerEffected: Player, playAction: SiegePlayType): string {
+    let description = playerActing.firstName + " " + playerActing.lastName;
+    description +=  " " + playAction + " " + playerEffected.firstName + " " + playerEffected.lastName;
+    return description;
+  }
+
+  siegePlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: SiegePlayType, trade: boolean): void {
+    // Handle Assists and Play Description
+    let playDescription = "";
+    if(playerAssisting != null) {
+      playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
+      playerAssisting.stats[matchID][SiegeCatagory.Assists]++;
+    }
+    else {
+      playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
+    }
+
+    // Handle Kills & Trades
+    if(action == SiegePlayType.Killed) {
+      playerActing.stats[matchID][SiegeCatagory.Kills]++;
+      playerEffected.stats[matchID][SiegeCatagory.Deaths]++;
+      if(trade) {
+        playerActing.stats[matchID][SiegeCatagory.Trades]++;
+      }
+    }
+
+    // Handle Revives
+    if(action == SiegePlayType.Revived) {
+      playerActing.stats[matchID][SiegeCatagory.Revives]++;
+    }
+
+    // Handle Objective Plays
+    if(action == 'Planted/Disabled the Defuser') {
+      playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]++;
+    }
+
+
+    // Create and add the play object
+    let play: Play = {
+      playerActing: playerActing,
+      playerEffected: playerEffected,
+      playerAssisting: playerAssisting,
+      playAction: action,
+      time: time,
+      description: playDescription,
+    };
+    this.matchService.addPlayToMatch(this.matchService.getMatchById(matchID), play);
   }
 
 }
