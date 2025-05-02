@@ -83,21 +83,28 @@
                     }
                     <option [ngValue]="null">None</option>
                 </select>
-                <label for="playerTimeMinutes">Minutes</label>
-                <input class="form-control" id="playTimeMinutes" name="playTimeMinutes" [(ngModel)]="playTimeMinutes" required>
-                <label for="playerTimeSeconds">Seconds</label>
-                <input class="form-control" id="playTimeSeconds" name="playTimeSeconds" [(ngModel)]="playTimeSeconds" required>
+                <div class="row">
+                    <div class="col">
+                        <label for="playerTimeMinutes">Minutes</label>
+                        <input class="form-control" id="playTimeMinutes" name="playTimeMinutes" [(ngModel)]="playTimeMinutes" required>
+                    </div>
+                    <div class="col">
+                        <label for="playerTimeSeconds">Seconds</label>
+                        <input class="form-control" id="playTimeSeconds" name="playTimeSeconds" [(ngModel)]="playTimeSeconds" required>
+                    </div>
+                </div>
                 <input class="form-check-input" type="checkbox" [(ngModel)]="trade" name="trade" value="true" id="trade">
-                <label class="form-check-label" for="trade">
-                Trade?
-                </label>
+                <label class="form-check-label" for="trade">Trade?</label>
+                <input class="form-check-input" type="checkbox" [(ngModel)]="playOvertime" name="playOvertime" value="true" id="playOvertime">
+                <label class="form-check-label" for="trade">Overtime?</label>
                 <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <div style="margin: auto" class="btn-group mr-2" role="group" aria-label="First group">
                       <button type="submit" (click)="setSiegeAction(siegeActionEnum.Killed)" class="btn btn-secondary">Kill</button>
                       <button type="submit" (click)="setSiegeAction(siegeActionEnum.Headshot)"class="btn btn-secondary">Headshot Kill</button>
                       <button type="submit" (click)="setSiegeAction(siegeActionEnum.Revived)" class="btn btn-secondary">Revive</button>
                       <button type="submit" (click)="setSiegeAction(siegeActionEnum.Planted)" class="btn btn-secondary">Plant/Defuse</button>
+                      <button type="submit" (click)="setSiegeAction(siegeActionEnum.Clutch)" class="btn btn-secondary">Clutch</button>
                     </div>
                 </div>
             </div>
@@ -160,14 +167,17 @@
         </div> 
     </div>
     <div class="row text-center">
-        <!-- <div class="col-md-12">
+        <div class="col-md-12">
             @if(team1.sport == sportEnum.RainbowSixSiege && match.hasStarted) {
                 <h2 style="margin-top: 2rem;">Round History</h2>
                 <table class="table table-bordered table-responsive">
                     <thead>
                         <tr>
                             @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                                @if($index % 12 >= 6 || $index == 13) {
+                                @if($index + 1 == match.quarterOrRound) {
+                                    <th style="background-color: grey;">{{$index + 1}} - Active</th>
+                                }
+                                @else if($index % 12 >= 6 || $index == 13) {
                                     <th style="background-color: lightgrey;">{{$index + 1}}</th>
                                 }
                                 @else {
@@ -189,6 +199,32 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>Team 1 Win</h2>
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM1_KILL)" class="btn btn-secondary">Elimination</button>
+                            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM1_TIME)"class="btn btn-secondary">Time</button>
+                            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM1_OBJ)"class="btn btn-secondary">Objective</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Team 2 Win</h2>
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM2_KILL)" class="btn btn-secondary">Elimination</button>
+                            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM2_TIME)"class="btn btn-secondary">Time</button>
+                            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM2_OBJ)"class="btn btn-secondary">Objective</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Round Controls</h2>
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <button type="submit" (click)="previousRound()" class="btn btn-secondary">Previous Round</button>
+                            <button type="submit" (click)="nextRound()" class="btn btn-secondary">Next Round</button>
+                            <button type="submit" (click)="deleteQuarterOrRound()"class="btn btn-danger">Delete Round</button>
+                        </div>
+                    </div>
+                </div>
             }
             @else if(team1.sport == sportEnum.Basketball || team1.sport == sportEnum.Football) {
                 <h2 style="margin-top: 2rem;">Score by Quarter</h2>
@@ -217,7 +253,7 @@
                     </tbody>
                 </table>
             }
-        </div> -->
+        </div>
     </div>
 </div>
 

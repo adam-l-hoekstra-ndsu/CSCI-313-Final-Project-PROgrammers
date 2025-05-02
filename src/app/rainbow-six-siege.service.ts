@@ -5,7 +5,7 @@ import { TeamService } from './team.service'
 import { Sport } from './sport';
 import { Player } from './player';
 import { Play } from './play';
-import { QuarterOrRound } from './quarterOrRound';
+import { QuarterOrRound, SiegeRoundResult} from './quarterOrRound';
 
 export enum SiegeCatagory {
   Kills,
@@ -23,6 +23,7 @@ export enum SiegePlayType {
   Headshot = "Headshot",
   Revived = "Revived",
   Planted = "Planted/Disabled the Defuser",
+  Clutch = "Clutched"
 }
 
 @Injectable({
@@ -69,6 +70,7 @@ export class RainbowSixSiegeService {
     if(action == SiegePlayType.Killed) {
       playerActing.stats[matchID][SiegeCatagory.Kills]++;
       playerEffected.stats[matchID][SiegeCatagory.Deaths]++;
+      playerEffected.currentlyInMatch = false; // Player is dead
       if(trade) {
         playerActing.stats[matchID][SiegeCatagory.Trades]++;
       }
@@ -82,6 +84,11 @@ export class RainbowSixSiegeService {
     // Handle Objective Plays
     if(action == SiegePlayType.Planted) {
       playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]++;
+    }
+
+    // Handle Clutches
+    if(action == SiegePlayType.Clutch) {
+      playerActing.stats[matchID][SiegeCatagory.Clutches]++;
     }
 
 
@@ -109,6 +116,7 @@ export class RainbowSixSiegeService {
       if(play.playAction == SiegePlayType.Killed) {
         play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
         play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
+        play.playerEffected.currentlyInMatch = true;
       }
   
       // Handle Revives
@@ -116,16 +124,35 @@ export class RainbowSixSiegeService {
         play.playerActing.stats[matchID][SiegeCatagory.Revives]--;
       }
     }
-    // Handle Kills & Trades
     
+    // Handle Clutches
+    if(play.playAction == SiegePlayType.Clutch) {
+      play.playerActing.stats[matchID][SiegeCatagory.Clutches]++;
+    }
 
     // Handle Objective Plays
     if(play.playAction == SiegePlayType.Planted) {
       play.playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]--;
     }
+    
   }
 
     this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
+  }
+
+  setSiegeRoundResult(quarterOrRound: QuarterOrRound, result: SiegeRoundResult) {
+    quarterOrRound.result = result;
+
+    // Update the scores based on the result
+    if(result == SiegeRoundResult.TEAM1_OBJ || result == SiegeRoundResult.TEAM1_KILL || result == SiegeRoundResult.TEAM1_TIME) {
+      quarterOrRound.team1Score = 1;
+      quarterOrRound.team2Score = 0;
+    }
+    else if(result == SiegeRoundResult.TEAM2_OBJ || result == SiegeRoundResult.TEAM2_KILL || result == SiegeRoundResult.TEAM2_TIME) {
+      quarterOrRound.team1Score = 0;
+      quarterOrRound.team2Score = 1;
+    }
+    
   }
 
 }

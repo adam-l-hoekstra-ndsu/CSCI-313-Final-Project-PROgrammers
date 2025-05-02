@@ -14,10 +14,12 @@ export class QuarterOrRound {
     }
 }
 
+// Enum has to be declared here rather than in the service to avoid type errors in the template
 export enum SiegeRoundResult {
-    ATK_OBJ = "/ATK_OBJ.png",
-    ATK_KILL = "/ATK_KILL.png",
-    DEF_OBJ = "/DEF_OBJ.png",
-    DEF_KILL = "/DEF_KILL.png",
-    DEF_TIME = "/DEF_TIME.png",
+    TEAM1_OBJ = "/ATK_OBJ.png",
+    TEAM1_KILL = "/ATK_KILL.png",
+    TEAM1_TIME = "/ATK_TIME.png",
+    TEAM2_OBJ = "/DEF_OBJ.png",
+    TEAM2_KILL = "/DEF_KILL.png",
+    TEAM2_TIME = "/DEF_TIME.png",
 }
