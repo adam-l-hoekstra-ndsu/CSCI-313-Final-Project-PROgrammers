@@ -14,7 +14,9 @@
                     <tr>
                         <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
                         @for(stat of player.stats[matchID]; track $index) {
-                        <td scope="col">{{stat}}</td>
+                            @if($index < this.categories.length) {
+                                <td scope="col">{{stat}}</td>
+                            } 
                         }
                     </tr>
                     }
@@ -35,7 +37,9 @@
                     <tr>
                         <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
                         @for(stat of player.stats[matchID]; track $index) {
-                        <td scope="col">{{stat}}</td>
+                            @if($index < this.categories.length) {
+                                <td scope="col">{{stat}}</td>
+                            }          
                         }
                     </tr>
                     }

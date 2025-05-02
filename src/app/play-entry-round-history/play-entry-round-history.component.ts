@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, Signal, inject } from '@angular/core';
 import { Match } from '../match';
 import { Team } from '../team';
-import { RainbowSixSiegeService, SiegePlayType } from '../rainbow-six-siege.service';
+import { RainbowSixSiegeService, SiegeCatagory, SiegePlayType } from '../rainbow-six-siege.service';
 import { TeamService } from '../team.service';
 import { MatchService } from '../match.service';
 import { QuarterOrRound, SiegeRoundResult } from '../quarterOrRound';
 import { Sport } from '../sport';
+import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'app-play-entry-round-history',
@@ -24,6 +25,7 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
   siegeService = inject(RainbowSixSiegeService);
   teamService = inject(TeamService);
   matchService = inject(MatchService)
+  playerService = inject(PlayerService);
 
   siegeRoundResultEnum = SiegeRoundResult; // For use in the template
 
@@ -37,6 +39,12 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
     this.match.quarterOrRound++;
     if(this.match.quarterOrRound > this.match.quarterOrRoundResults.length) {
       this.match.quarterOrRoundResults.push({team1Score: 0, team2Score: 0, plays: []});
+      for(let i = 0; i < this.team1.players.length; i++) {
+        this.siegeService.calculateStats(this.playerService.getPlayerById(this.team1.players[i]), this.match)
+      }
+      for(let i = 0; i < this.team2.players.length; i++) {
+        this.siegeService.calculateStats(this.playerService.getPlayerById(this.team2.players[i]), this.match)
+      }
     }
   }
 
@@ -52,6 +60,12 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
       if(this.team1.sport == Sport.RainbowSixSiege) {
         for(let i = 0; i < this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays.length; i++) {
           this.siegeService.reverseSiegeAction(this.match.id, this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays[i], this.match.quarterOrRoundResults[this.match.quarterOrRound - 1]);
+        }
+        for(let i = 0; i < this.team1.players.length; i++) {
+          this.siegeService.calculateStats(this.playerService.getPlayerById(this.team1.players[i]), this.match)
+        }
+        for(let i = 0; i < this.team2.players.length; i++) {
+          this.siegeService.calculateStats(this.playerService.getPlayerById(this.team2.players[i]), this.match)
         }
       }
     }

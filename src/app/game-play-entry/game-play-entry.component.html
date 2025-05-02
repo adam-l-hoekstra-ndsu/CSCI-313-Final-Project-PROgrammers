@@ -101,7 +101,11 @@
                          @for(play of quarterOrRound.plays; track play) {
                             <tr>
                                 <td scope="col">{{play.description}}</td>
-                                <td scope="col">{{play.time | secondsToTime}}</td>
+                                @if(play.time < 0) {
+                                    <td scope="col">-{{play.time | secondsToTime}}</td>
+                                } @else {
+                                    <td scope="col">{{play.time | secondsToTime}}</td>
+                                }
                                 <td><button class="btn btn-danger" (click)="onPlayDelete(play, quarterOrRound)">Delete</button></td>
                             </tr>
                         }

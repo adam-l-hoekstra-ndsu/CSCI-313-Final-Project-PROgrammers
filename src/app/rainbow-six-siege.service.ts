@@ -6,6 +6,7 @@ import { Sport } from './sport';
 import { Player } from './player';
 import { Play } from './play';
 import { QuarterOrRound, SiegeRoundResult} from './quarterOrRound';
+import { Match } from './match';
 
 export enum SiegeCatagory {
   Kills,
@@ -15,7 +16,10 @@ export enum SiegeCatagory {
   RoundsSurvived,
   Trades,
   Revives,
-  Clutches
+  Clutches,
+  KDRatio,
+  HSRatio,
+  HS,
 }
 
 export enum SiegePlayType {
@@ -31,7 +35,7 @@ export enum SiegePlayType {
 })
 
 export class RainbowSixSiegeService {
-  statCategories: string[] = ["Kills", "Deaths", "Assists", "Objective Plays", "Rounds Survied", "Trades", "Revives", "Clutches"]
+  statCategories: string[] = ["Kills", "Deaths", "Assists", "Objective Plays", "Rounds Survied", "Trades", "Revives", "Clutches", "K/D", "HS%"]
   teams: Team[] = [];
 
   teamData = inject(TeamService);
@@ -55,6 +59,12 @@ export class RainbowSixSiegeService {
     return description;
   }
 
+  playDescriptionBuilderSolo(playerActing: Player, playAction: SiegePlayType): string {
+    let description = playerActing.firstName + " " + playerActing.lastName;
+    description +=  " " + playAction;
+    return description;
+  }
+
   siegePlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: SiegePlayType, trade: boolean): void {
     // Handle Assists and Play Description
     let playDescription = "";
@@ -62,17 +72,24 @@ export class RainbowSixSiegeService {
       playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
       playerAssisting.stats[matchID][SiegeCatagory.Assists]++;
     }
-    else {
+    else if(playerEffected != null) {
       playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
+
+    }
+    else {
+      playDescription = this.playDescriptionBuilderSolo(playerActing, action);
     }
 
     // Handle Kills & Trades
-    if(action == SiegePlayType.Killed) {
+    if(action == SiegePlayType.Killed || action == SiegePlayType.Headshot) {
       playerActing.stats[matchID][SiegeCatagory.Kills]++;
       playerEffected.stats[matchID][SiegeCatagory.Deaths]++;
       playerEffected.currentlyInMatch = false; // Player is dead
       if(trade) {
         playerActing.stats[matchID][SiegeCatagory.Trades]++;
+      }
+      if(action == SiegePlayType.Headshot) {
+        playerActing.stats[matchID][SiegeCatagory.HS]++;
       }
     }
 
@@ -110,13 +127,17 @@ export class RainbowSixSiegeService {
       play.playerAssisting.stats[matchID][SiegeCatagory.Assists]--;
     }
 
+    // Handle Kills, Headshots & Trades
     if(play.playerActing != null) {
 
     if(play.playerEffected != null) {
-      if(play.playAction == SiegePlayType.Killed) {
+      if(play.playAction == SiegePlayType.Killed || play.playAction == SiegePlayType.Headshot) {
         play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
         play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
         play.playerEffected.currentlyInMatch = true;
+      }
+      if(play.playAction == SiegePlayType.Headshot) {
+        play.playerActing.stats[matchID][SiegeCatagory.HS]--;
       }
   
       // Handle Revives
@@ -127,7 +148,7 @@ export class RainbowSixSiegeService {
     
     // Handle Clutches
     if(play.playAction == SiegePlayType.Clutch) {
-      play.playerActing.stats[matchID][SiegeCatagory.Clutches]++;
+      play.playerActing.stats[matchID][SiegeCatagory.Clutches]--;
     }
 
     // Handle Objective Plays
@@ -154,5 +175,28 @@ export class RainbowSixSiegeService {
     }
     
   }
+
+  calculateStats(player: Player, match: Match) {
+    // Rounds Survived
+    let playerRoundsSurvived =  player.stats[match.id][SiegeCatagory.RoundsSurvived];
+        let playerDeaths =  player.stats[match.id][SiegeCatagory.Deaths];
+        player.stats[match.id][SiegeCatagory.RoundsSurvived] = match.quarterOrRoundResults.length - playerDeaths;
+
+    // K/D Ratio
+    if(player.stats[match.id][SiegeCatagory.Deaths] == 0) {
+      player.stats[match.id][SiegeCatagory.KDRatio] = player.stats[match.id][SiegeCatagory.Kills];
+    }
+    else {
+      player.stats[match.id][SiegeCatagory.KDRatio] = Number(Number(player.stats[match.id][SiegeCatagory.Kills]) / Number(player.stats[match.id][SiegeCatagory.Deaths]));
+    }
+
+    // HS%
+    if(player.stats[match.id][SiegeCatagory.HS] == 0) {
+      player.stats[match.id][SiegeCatagory.HSRatio] = 0;
+    }
+    else {
+      player.stats[match.id][SiegeCatagory.HSRatio] = (player.stats[match.id][SiegeCatagory.HS] / player.stats[match.id][SiegeCatagory.Kills]) * 100;
+    }
+  };
 
 }

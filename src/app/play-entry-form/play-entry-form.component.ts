@@ -31,8 +31,8 @@ export class PlayEntryFormComponent implements OnInit {
   playerActing!: Player;
   playerEffected!: Player;
   playerAssisting!: Player;
-  playTimeMinutes!: number;
-  playTimeSeconds!: number;
+  playTimeMinutes: number = 0;
+  playTimeSeconds: number = 0;
   playTime!: number;
   playOvertime!: boolean;
   playDescription!: string;
@@ -50,16 +50,20 @@ export class PlayEntryFormComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.playTime = (Number(this.playTimeMinutes * 60) + Number(this.playTimeSeconds));
-    if (this.playOvertime) {this.playTime = -this.playTime;} // - denotes overtime
+    if (this.playOvertime) this.playTime = -this.playTime;
     if(this.team1.sport == Sport.RainbowSixSiege) {
       this.siegeService.siegePlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.siegeAction, this.trade);
     }
+
+    this.siegeService.calculateStats(this.playerActing, this.match);
 
     //Set current match time
     this.match.timeRemaining = this.playTime;
 
     //Reset form values
     form.resetForm();
+    form.controls['playTimeMinutes'].setValue(0);
+    form.controls['playTimeSeconds'].setValue(0);
   }
 
   setSiegeAction(action : SiegePlayType) {

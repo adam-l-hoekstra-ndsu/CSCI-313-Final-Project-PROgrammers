@@ -19,10 +19,10 @@
                         <tr>
                         @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
                             @if($index % 12 >= 6 || $index == 13) {
-                                <td style="background-color: lightgrey;" scope="col"><img class="icon" src={{quarterOrRound.result}}></td>
+                                <td style="background-color: lightgrey;" scope="col"><img class="icon" src={{quarterOrRound.result}} alt="In Progress"></td>
                             }
                             @else {
-                                <td scope="col"><img class="icon"  src={{quarterOrRound.result}}></td>
+                                <td scope="col"><img class="icon"  alt="In Progress" src={{quarterOrRound.result}}></td>
                             }
                         }
                         </tr>
