@@ -1,11 +1,11 @@
-import { Injectable, inject} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Team } from './team';
 import { MatchService } from './match.service';
 import { TeamService } from './team.service'
 import { Sport } from './sport';
 import { Player } from './player';
 import { Play } from './play';
-import { QuarterOrRound, SiegeRoundResult} from './quarterOrRound';
+import { QuarterOrRound, SiegeRoundResult } from './quarterOrRound';
 import { Match } from './match';
 
 export enum SiegeCatagory {
@@ -55,24 +55,24 @@ export class RainbowSixSiegeService {
 
   playDescriptionBuilder(playerActing: Player, playerEffected: Player, playAction: SiegePlayType): string {
     let description = playerActing.firstName + " " + playerActing.lastName;
-    description +=  " " + playAction + " " + playerEffected.firstName + " " + playerEffected.lastName;
+    description += " " + playAction + " " + playerEffected.firstName + " " + playerEffected.lastName;
     return description;
   }
 
   playDescriptionBuilderSolo(playerActing: Player, playAction: SiegePlayType): string {
     let description = playerActing.firstName + " " + playerActing.lastName;
-    description +=  " " + playAction;
+    description += " " + playAction;
     return description;
   }
 
   siegePlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: SiegePlayType, trade: boolean): void {
     // Handle Assists and Play Description
     let playDescription = "";
-    if(playerAssisting != null) {
+    if (playerAssisting != null) {
       playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
       playerAssisting.stats[matchID][SiegeCatagory.Assists]++;
     }
-    else if(playerEffected != null) {
+    else if (playerEffected != null) {
       playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
 
     }
@@ -81,30 +81,30 @@ export class RainbowSixSiegeService {
     }
 
     // Handle Kills & Trades
-    if(action == SiegePlayType.Killed || action == SiegePlayType.Headshot) {
+    if (action == SiegePlayType.Killed || action == SiegePlayType.Headshot) {
       playerActing.stats[matchID][SiegeCatagory.Kills]++;
       playerEffected.stats[matchID][SiegeCatagory.Deaths]++;
       playerEffected.currentlyInMatch = false; // Player is dead
-      if(trade) {
+      if (trade) {
         playerActing.stats[matchID][SiegeCatagory.Trades]++;
       }
-      if(action == SiegePlayType.Headshot) {
+      if (action == SiegePlayType.Headshot) {
         playerActing.stats[matchID][SiegeCatagory.HS]++;
       }
     }
 
     // Handle Revives
-    if(action == SiegePlayType.Revived) {
+    if (action == SiegePlayType.Revived) {
       playerActing.stats[matchID][SiegeCatagory.Revives]++;
     }
 
     // Handle Objective Plays
-    if(action == SiegePlayType.Planted) {
+    if (action == SiegePlayType.Planted) {
       playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]++;
     }
 
     // Handle Clutches
-    if(action == SiegePlayType.Clutch) {
+    if (action == SiegePlayType.Clutch) {
       playerActing.stats[matchID][SiegeCatagory.Clutches]++;
     }
 
@@ -123,40 +123,40 @@ export class RainbowSixSiegeService {
 
   reverseSiegeAction(matchID: number, play: Play, quarterOrRound: QuarterOrRound) {
     // Handle Assists
-    if(play.playerAssisting != null) {
+    if (play.playerAssisting != null) {
       play.playerAssisting.stats[matchID][SiegeCatagory.Assists]--;
     }
 
     // Handle Kills, Headshots & Trades
-    if(play.playerActing != null) {
+    if (play.playerActing != null) {
 
-    if(play.playerEffected != null) {
-      if(play.playAction == SiegePlayType.Killed || play.playAction == SiegePlayType.Headshot) {
-        play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
-        play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
-        play.playerEffected.currentlyInMatch = true;
-      }
-      if(play.playAction == SiegePlayType.Headshot) {
-        play.playerActing.stats[matchID][SiegeCatagory.HS]--;
-      }
-  
-      // Handle Revives
-      if(play.playAction == SiegePlayType.Revived) {
-        play.playerActing.stats[matchID][SiegeCatagory.Revives]--;
-      }
-    }
-    
-    // Handle Clutches
-    if(play.playAction == SiegePlayType.Clutch) {
-      play.playerActing.stats[matchID][SiegeCatagory.Clutches]--;
-    }
+      if (play.playerEffected != null) {
+        if (play.playAction == SiegePlayType.Killed || play.playAction == SiegePlayType.Headshot) {
+          play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
+          play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
+          play.playerEffected.currentlyInMatch = true;
+        }
+        if (play.playAction == SiegePlayType.Headshot) {
+          play.playerActing.stats[matchID][SiegeCatagory.HS]--;
+        }
 
-    // Handle Objective Plays
-    if(play.playAction == SiegePlayType.Planted) {
-      play.playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]--;
+        // Handle Revives
+        if (play.playAction == SiegePlayType.Revived) {
+          play.playerActing.stats[matchID][SiegeCatagory.Revives]--;
+        }
+      }
+
+      // Handle Clutches
+      if (play.playAction == SiegePlayType.Clutch) {
+        play.playerActing.stats[matchID][SiegeCatagory.Clutches]--;
+      }
+
+      // Handle Objective Plays
+      if (play.playAction == SiegePlayType.Planted) {
+        play.playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]--;
+      }
+
     }
-    
-  }
 
     this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
   }
@@ -165,25 +165,25 @@ export class RainbowSixSiegeService {
     quarterOrRound.result = result;
 
     // Update the scores based on the result
-    if(result == SiegeRoundResult.TEAM1_OBJ || result == SiegeRoundResult.TEAM1_KILL || result == SiegeRoundResult.TEAM1_TIME) {
+    if (result == SiegeRoundResult.TEAM1_OBJ || result == SiegeRoundResult.TEAM1_KILL || result == SiegeRoundResult.TEAM1_TIME) {
       quarterOrRound.team1Score = 1;
       quarterOrRound.team2Score = 0;
     }
-    else if(result == SiegeRoundResult.TEAM2_OBJ || result == SiegeRoundResult.TEAM2_KILL || result == SiegeRoundResult.TEAM2_TIME) {
+    else if (result == SiegeRoundResult.TEAM2_OBJ || result == SiegeRoundResult.TEAM2_KILL || result == SiegeRoundResult.TEAM2_TIME) {
       quarterOrRound.team1Score = 0;
       quarterOrRound.team2Score = 1;
     }
-    
+
   }
 
   calculateStats(player: Player, match: Match) {
     // Rounds Survived
-    let playerRoundsSurvived =  player.stats[match.id][SiegeCatagory.RoundsSurvived];
-        let playerDeaths =  player.stats[match.id][SiegeCatagory.Deaths];
-        player.stats[match.id][SiegeCatagory.RoundsSurvived] = match.quarterOrRoundResults.length - playerDeaths;
+    let playerRoundsSurvived = player.stats[match.id][SiegeCatagory.RoundsSurvived];
+    let playerDeaths = player.stats[match.id][SiegeCatagory.Deaths];
+    player.stats[match.id][SiegeCatagory.RoundsSurvived] = match.quarterOrRoundResults.length - playerDeaths;
 
     // K/D Ratio
-    if(player.stats[match.id][SiegeCatagory.Deaths] == 0) {
+    if (player.stats[match.id][SiegeCatagory.Deaths] == 0) {
       player.stats[match.id][SiegeCatagory.KDRatio] = player.stats[match.id][SiegeCatagory.Kills];
     }
     else {
@@ -191,7 +191,7 @@ export class RainbowSixSiegeService {
     }
 
     // HS%
-    if(player.stats[match.id][SiegeCatagory.HS] == 0) {
+    if (player.stats[match.id][SiegeCatagory.HS] == 0) {
       player.stats[match.id][SiegeCatagory.HSRatio] = 0;
     }
     else {

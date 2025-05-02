@@ -6,6 +6,7 @@ import { Player } from './player';
 import { Play } from './play';
 import { Match } from './match';
 import { QuarterOrRound } from './quarterOrRound';
+import { MatchService } from './match.service';
 
 export enum BasketballCategory {
   GP,
@@ -14,18 +15,19 @@ export enum BasketballCategory {
   FG,
   P3,
   FT,
-  REB
+  REB,
+  AST
 }
 
 export enum BasketBallPlayType {
   EnteredGame = "Entered Game",
   ExitedGame = "Exited Game",
   FGMade = "Made a Field Goal",
-  FGMissed = "Missed a Field Goal",
+  // FGMissed = "Missed a Field Goal",
   P3Made = "Made a 3 Point Field Goal",
-  P3Missed = "Missed a 3 Point Field Goal",
+  // P3Missed = "Missed a 3 Point Field Goal",
   FTMade = "Made a Free Throw",
-  FTMissed = "Missed a Free Throw",
+  // FTMissed = "Missed a Free Throw",
   Rebound = "Got a rebound",
 }
 
@@ -35,10 +37,11 @@ export enum BasketBallPlayType {
 
 export class BasketballService {
 
-  statCategories: string[] = ["GP", "MIN", "PTS", "FG", "3P", "FT", "REB"]
+  statCategories: string[] = ["GP", "MIN", "PTS", "FG", "3P", "FT", "REB", "AST"]
   teams: Team[] = [];
 
   teamData = inject(TeamService);
+  matchService = inject(MatchService);
 
   constructor() { }
 
@@ -65,15 +68,90 @@ export class BasketballService {
   }
 
   basketballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: BasketBallPlayType, trade: boolean): void {
-    // To be implemented
+    // Handle Assists and Play Description
+    let playDescription = "";
+    if (playerAssisting != null) {
+      playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
+      playerAssisting.stats[matchID][BasketballCategory.AST]++;
+    }
+    else if (playerEffected != null) {
+      playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
+
+    }
+    else {
+      playDescription = this.playDescriptionBuilderSolo(playerActing, action);
+    }
+
+    // Handle FGs
+    if (action == BasketBallPlayType.FGMade) {
+      playerActing.stats[matchID][BasketballCategory.FG]++;
+      playerActing.stats[matchID][BasketballCategory.PTS] += 2;
+    }
+
+    // Handle 3pt FGs
+    if (action == BasketBallPlayType.P3Made) {
+      playerActing.stats[matchID][BasketballCategory.P3]++;
+      playerActing.stats[matchID][BasketballCategory.PTS] += 3;
+    }
+
+    // Handle FTs
+    if (action == BasketBallPlayType.FTMade) {
+      playerActing.stats[matchID][BasketballCategory.FT]++;
+      playerActing.stats[matchID][BasketballCategory.PTS]++;
+    }
+
+    // Handle Rebounds
+    if (action == BasketBallPlayType.Rebound) {
+      playerActing.stats[matchID][BasketballCategory.REB]++;
+    }
+
+    let play: Play = {
+      playerActing: playerActing,
+      playerEffected: playerEffected,
+      playerAssisting: playerAssisting,
+      playAction: action,
+      time: time,
+      description: playDescription,
+    };
+    this.matchService.addPlayToMatch(this.matchService.getMatchById(matchID), play);
   }
 
   reverseBasketballAction(matchID: number, play: Play, quarterOrRound: QuarterOrRound) {
-    // To be implemented
+    // Handle Assists and Play Description
+    if (play.playerAssisting != null) {
+      play.playerAssisting.stats[matchID][BasketballCategory.AST]++;
+    }
+
+    if (play.playerActing != null) {
+      // Handle FGs
+      if (play.playAction == BasketBallPlayType.FGMade) {
+        play.playerActing.stats[matchID][BasketballCategory.FG]++;
+        play.playerActing.stats[matchID][BasketballCategory.PTS] += 2;
+      }
+
+      // Handle 3pt FGs
+      if (play.playAction == BasketBallPlayType.P3Made) {
+        play.playerActing.stats[matchID][BasketballCategory.P3]++;
+        play.playerActing.stats[matchID][BasketballCategory.PTS] += 3;
+      }
+
+      // Handle FTs
+      if (play.playAction == BasketBallPlayType.FTMade) {
+        play.playerActing.stats[matchID][BasketballCategory.FT]++;
+        play.playerActing.stats[matchID][BasketballCategory.PTS]++;
+      }
+
+      // Handle Rebounds
+      if (play.playAction == BasketBallPlayType.Rebound) {
+        play.playerActing.stats[matchID][BasketballCategory.REB]++;
+      }
+    }
+
+    this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
   }
 
   calculateStats(player: Player, matchID: Match) {
-    // To be implemented
+    // To be implemented if need be
   }
 
 }

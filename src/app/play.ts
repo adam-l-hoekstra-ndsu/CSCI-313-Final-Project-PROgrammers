@@ -1,11 +1,15 @@
+import { BasketBallPlayType } from './basketball.service';
+import { FootballPlayType } from './football.service';
 import { Player } from './player';
 import { SiegePlayType } from './rainbow-six-siege.service';
+import { VolleyballPlayType } from './volleyball.service';
 
 export interface Play {
     time: number; // in seconds
     playerActing: Player | null; // player who made the play
     playerEffected: Player | null;
     playerAssisting: Player | null;
-    playAction: SiegePlayType | null; // action taken by the player (e.g., kill, assist, etc.), null represents other sports for now
+    playAction: SiegePlayType | FootballPlayType | VolleyballPlayType | BasketBallPlayType; // action taken by the player 
+    yards?: number
     description: string; // description of the play
 }
