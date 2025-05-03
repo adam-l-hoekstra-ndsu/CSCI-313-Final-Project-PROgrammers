@@ -61,8 +61,8 @@ export class VolleyballService {
     ); // Filter teams for Volleyball
   }
 
-    playDescriptionBuilderAssist(playerActing: Player, playerEffected: Player, playerAssisting: Player, playAction: VolleyballPlayType): string {
-      let description = this.playDescriptionBuilder(playerActing, playerEffected, playAction);
+    playDescriptionBuilderAssist(playerActing: Player, playerAssisting: Player, playAction: VolleyballPlayType): string {
+      let description = this.playDescriptionBuilderSolo(playerActing, playAction);
       description += ", assisted by " + playerAssisting.firstName + " " + playerAssisting.lastName;
       return description;
     }
@@ -79,11 +79,11 @@ export class VolleyballService {
       return description;
     }
   
-    volleyballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: VolleyballPlayType, trade: boolean): void {
+    volleyballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: VolleyballPlayType): void {
       // Handle Assists and Play Description
       let playDescription = "";
       if (playerAssisting != null) {
-        playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
+        playDescription = this.playDescriptionBuilderAssist(playerActing, playerAssisting, action);
         if(action != VolleyballPlayType.Blocked) {
           playerAssisting.stats[matchID][VolleyballCategory.Assists]++;
         }

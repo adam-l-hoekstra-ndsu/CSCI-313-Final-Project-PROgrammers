@@ -3,12 +3,14 @@ import { RainbowSixSiegeService, SiegePlayType } from '../rainbow-six-siege.serv
 import { Sport } from '../sport';
 import { Player } from '../player';
 import { Team } from '../team';
-import { Play } from '../play';
 import { TeamService } from '../team.service';
 import { Match } from '../match';
 import { MatchService } from '../match.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SiegeRoundResult } from '../quarterOrRound';
+import { FootballPlayType, FootballService } from '../football.service';
+import { VolleyballPlayType, VolleyballService } from '../volleyball.service';
+import { BasketBallPlayType, BasketballService } from '../basketball.service';
 
 @Component({
   selector: 'app-play-entry-form',
@@ -20,11 +22,16 @@ export class PlayEntryFormComponent implements OnInit {
 
   @Input() matchID!: number;
   match!: Match;
+  sport!: Sport;
+  sportEnum = Sport;  // For use in the template
 
   team1!: Team;
   team2!: Team;
 
   siegeService = inject(RainbowSixSiegeService);
+  footballService = inject(FootballService);
+  volleyballService = inject(VolleyballService);
+  basketballService = inject(BasketballService)
   teamService = inject(TeamService);
   matchService = inject(MatchService)
 
@@ -42,17 +49,37 @@ export class PlayEntryFormComponent implements OnInit {
   siegeRoundResultEnum = SiegeRoundResult; // For use in the template
   trade!: boolean;
 
+  footballAction!: FootballPlayType;
+  footballActionEnum = FootballPlayType; // For use in the template
+  yards?: number
+
+  volleyballAction!: VolleyballPlayType
+  volleyballActionEnum = VolleyballPlayType // For use in the template
+
+  basketballAction!: BasketBallPlayType
+  basketballlActionEnum = BasketBallPlayType // For use in the template
+
   ngOnInit(): void {
     this.match = this.matchService.getMatchById(Number(this.matchID));
     this.team1 = this.teamService.getTeam(this.match.team1ID);
     this.team2 = this.teamService.getTeam(this.match.team2ID);
+    this.sport = this.team1.sport;
   }
 
   onSubmit(form: NgForm) {
     this.playTime = (Number(this.playTimeMinutes * 60) + Number(this.playTimeSeconds));
     if (this.playOvertime) this.playTime = -this.playTime;
-    if(this.team1.sport == Sport.RainbowSixSiege) {
+    if(this.sport == Sport.RainbowSixSiege) {
       this.siegeService.siegePlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.siegeAction, this.trade);
+    }
+    if(this.sport == Sport.Football) {
+      this.footballService.footballPlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.footballAction, this.yards);
+    }
+    if(this.sport == Sport.Volleyball) {
+      this.volleyballService.volleyballPlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.volleyballAction);
+    }
+    if(this.sport == Sport.Basketball) {
+      this.basketballService.basketballPlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.basketballAction);
     }
 
     this.siegeService.calculateStats(this.playerActing, this.match);
@@ -68,5 +95,17 @@ export class PlayEntryFormComponent implements OnInit {
 
   setSiegeAction(action : SiegePlayType) {
     this.siegeAction = action;
+  }
+
+  setFootballAction(action : FootballPlayType) {
+    this.footballAction = action;
+  }
+
+  setVolleyballAction(action : VolleyballPlayType) {
+    this.volleyballAction = action;
+  }
+
+  setBasketballAction(action : BasketBallPlayType) {
+    this.basketballAction = action;
   }
 }

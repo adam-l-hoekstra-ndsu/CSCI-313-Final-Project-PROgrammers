@@ -38,19 +38,65 @@
                 <input class="form-control" id="playTimeSeconds" name="playTimeSeconds" [(ngModel)]="playTimeSeconds" required>
             </div>
         </div>
-        <input class="form-check-input" type="checkbox" [(ngModel)]="trade" name="trade" value="true" id="trade">
-        <label class="form-check-label" for="trade">Trade?</label>
-        <input class="form-check-input" type="checkbox" [(ngModel)]="playOvertime" name="playOvertime" value="true" id="playOvertime">
-        <label class="form-check-label" for="trade">Overtime?</label>
-        <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        @if(this.sport == sportEnum.RainbowSixSiege){
+            <input class="form-check-input" type="checkbox" [(ngModel)]="trade" name="trade" value="true" id="trade">
+            <label class="form-check-label" for="trade">Trade?</label>
+            <input class="form-check-input" type="checkbox" [(ngModel)]="playOvertime" name="playOvertime" value="true" id="playOvertime">
+            <label class="form-check-label" for="trade">Overtime?</label>
+            <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div style="margin: auto" class="btn-group mr-2" role="group" aria-label="First group">
-              <button type="submit" (click)="setSiegeAction(siegeActionEnum.Killed)" class="btn btn-secondary">Kill</button>
-              <button type="submit" (click)="setSiegeAction(siegeActionEnum.Headshot)"class="btn btn-secondary">Headshot Kill</button>
-              <button type="submit" (click)="setSiegeAction(siegeActionEnum.Revived)" class="btn btn-secondary">Revive</button>
-              <button type="submit" (click)="setSiegeAction(siegeActionEnum.Planted)" class="btn btn-secondary">Plant/Defuse</button>
-              <button type="submit" (click)="setSiegeAction(siegeActionEnum.Clutch)" class="btn btn-secondary">Clutch</button>
+                <button type="submit" (click)="setSiegeAction(siegeActionEnum.Killed)" class="btn btn-secondary">Kill</button>
+                <button type="submit" (click)="setSiegeAction(siegeActionEnum.Headshot)"class="btn btn-secondary">Headshot Kill</button>
+                <button type="submit" (click)="setSiegeAction(siegeActionEnum.Revived)" class="btn btn-secondary">Revive</button>
+                <button type="submit" (click)="setSiegeAction(siegeActionEnum.Planted)" class="btn btn-secondary">Plant/Defuse</button>
+                <button type="submit" (click)="setSiegeAction(siegeActionEnum.Clutch)" class="btn btn-secondary">Clutch</button>
+                </div>
             </div>
-        </div>
+        }
+        @if(this.sport == sportEnum.Football){
+            <label for="yards">Yards</label>
+            <input class="form-control" id="yards" name="yards" [(ngModel)]="yards">
+            <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div style="margin: auto" class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="submit" (click)="setFootballAction(footballActionEnum.EnteredGame)" class="btn btn-secondary">Entered Game</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.ExitedGame)"class="btn btn-secondary">Exited Game</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.FGMade)" class="btn btn-secondary">Made FG</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.Touchdown)" class="btn btn-secondary">TD</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.Incomplete)" class="btn btn-secondary">Incomplete Pass</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.Passed)" class="btn btn-secondary">Completed Pass</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.Run)" class="btn btn-secondary">Run</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.Penalty)" class="btn btn-secondary">Penalty</button>
+                <button type="submit" (click)="setFootballAction(footballActionEnum.Tackle)" class="btn btn-secondary">Tackle</button>
+                </div>
+            </div>
+        }
+        @if(this.sport == sportEnum.Volleyball){
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div style="margin: auto" class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.EnteredGame)" class="btn btn-secondary">Entered Game</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.ExitedGame)" class="btn btn-secondary">Exited Game</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Ace)" class="btn btn-secondary">Ace</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Blocked)" class="btn btn-secondary">Block</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Dig)" class="btn btn-secondary">Dig</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Error)" class="btn btn-secondary">Error</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Kill)" class="btn btn-secondary">Kill</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Receptions)" class="btn btn-secondary">Reception</button>
+                <button type="submit" (click)="setVolleyballAction(volleyballActionEnum.Serve)" class="btn btn-secondary">Served</button>
+                </div>
+            </div>
+        }
+        @if(this.sport == sportEnum.Basketball){
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div style="margin: auto" class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="submit" (click)="setBasketballAction(basketballlActionEnum.EnteredGame)" class="btn btn-secondary">Entered Game</button>
+                <button type="submit" (click)="setBasketballAction(basketballlActionEnum.ExitedGame)" class="btn btn-secondary">Exited Game</button>
+                <button type="submit" (click)="setBasketballAction(basketballlActionEnum.FGMade)" class="btn btn-secondary">FG</button>
+                <button type="submit" (click)="setBasketballAction(basketballlActionEnum.P3Made)" class="btn btn-secondary">3PT FG</button>
+                <button type="submit" (click)="setBasketballAction(basketballlActionEnum.Rebound)" class="btn btn-secondary">Rebound</button>
+                </div>
+            </div>
+        }
     </div>
 </form>

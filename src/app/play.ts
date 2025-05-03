@@ -9,7 +9,7 @@ export interface Play {
     playerActing: Player | null; // player who made the play
     playerEffected: Player | null;
     playerAssisting: Player | null;
-    playAction: SiegePlayType | FootballPlayType | VolleyballPlayType | BasketBallPlayType; // action taken by the player 
+    playAction: SiegePlayType | FootballPlayType | VolleyballPlayType | BasketBallPlayType | null; // action taken by the player 
     yards?: number
     description: string; // description of the play
 }

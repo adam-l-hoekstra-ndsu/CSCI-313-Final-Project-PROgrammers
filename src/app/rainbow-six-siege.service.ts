@@ -84,7 +84,7 @@ export class RainbowSixSiegeService {
     if (action == SiegePlayType.Killed || action == SiegePlayType.Headshot) {
       playerActing.stats[matchID][SiegeCatagory.Kills]++;
       playerEffected.stats[matchID][SiegeCatagory.Deaths]++;
-      playerEffected.currentlyInMatch = false; // Player is dead
+      // playerEffected.currentlyInMatch = false;
       if (trade) {
         playerActing.stats[matchID][SiegeCatagory.Trades]++;
       }
@@ -134,7 +134,7 @@ export class RainbowSixSiegeService {
         if (play.playAction == SiegePlayType.Killed || play.playAction == SiegePlayType.Headshot) {
           play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
           play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
-          play.playerEffected.currentlyInMatch = true;
+          // play.playerEffected.currentlyInMatch = true;
         }
         if (play.playAction == SiegePlayType.Headshot) {
           play.playerActing.stats[matchID][SiegeCatagory.HS]--;
@@ -178,7 +178,6 @@ export class RainbowSixSiegeService {
 
   calculateStats(player: Player, match: Match) {
     // Rounds Survived
-    let playerRoundsSurvived = player.stats[match.id][SiegeCatagory.RoundsSurvived];
     let playerDeaths = player.stats[match.id][SiegeCatagory.Deaths];
     player.stats[match.id][SiegeCatagory.RoundsSurvived] = match.quarterOrRoundResults.length - playerDeaths;
 

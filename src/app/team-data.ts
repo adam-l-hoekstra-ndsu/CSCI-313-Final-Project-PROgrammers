@@ -50,4 +50,16 @@ export const teams: Team[] = [
         draws: 2,
         legueSubsection: "South America",
     },
+    {
+        id: 5,
+        name: "Team E",
+        sport: Sport.Volleyball,
+        logoUrl: "https://example.com/logoB.png",
+        players: [2,4], // Array of player IDs
+        schedule: [], // Array of match IDs
+        wins: 8,
+        losses: 7,
+        draws: 2,
+        legueSubsection: "Europe",
+    },
 ];

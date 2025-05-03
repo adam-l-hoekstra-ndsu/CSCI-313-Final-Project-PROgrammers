@@ -49,8 +49,8 @@ export class BasketballService {
     this.teams = this.teamData.teams.filter(team => team.sport === Sport.Basketball);
   }
 
-  playDescriptionBuilderAssist(playerActing: Player, playerEffected: Player, playerAssisting: Player, playAction: BasketBallPlayType): string {
-    let description = this.playDescriptionBuilder(playerActing, playerEffected, playAction);
+  playDescriptionBuilderAssist(playerActing: Player, playerAssisting: Player, playAction: BasketBallPlayType): string {
+    let description = this.playDescriptionBuilderSolo(playerActing, playAction);
     description += ", assisted by " + playerAssisting.firstName + " " + playerAssisting.lastName;
     return description;
   }
@@ -67,16 +67,15 @@ export class BasketballService {
     return description;
   }
 
-  basketballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: BasketBallPlayType, trade: boolean): void {
+  basketballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: BasketBallPlayType): void {
     // Handle Assists and Play Description
     let playDescription = "";
     if (playerAssisting != null) {
-      playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
+      playDescription = this.playDescriptionBuilderAssist(playerActing, playerAssisting, action);
       playerAssisting.stats[matchID][BasketballCategory.AST]++;
     }
     else if (playerEffected != null) {
       playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
-
     }
     else {
       playDescription = this.playDescriptionBuilderSolo(playerActing, action);
