@@ -6,12 +6,17 @@ import { TeamEditComponent } from './team-edit/team-edit.component';
 import { PlayerEditComponent } from './player-edit/player-edit.component';
 import { RosterEditComponent } from './roster-edit/roster-edit.component';
 import { TeamViewComponent } from './team-view/team-view.component';
+import { SportsHomeComponent } from './sports-home/sports-home.component';
 
 export const routes: Routes = [
     {
         path: "",
         component: SportSelectionComponent,
         title: "Bison Base"
+    },
+    {
+        path: "sport",
+        component: SportsHomeComponent,
     },
     {
         path: "login",
@@ -40,3 +45,4 @@ export const routes: Routes = [
         component: TeamViewComponent,
         title: "Team View",
     },
+]
