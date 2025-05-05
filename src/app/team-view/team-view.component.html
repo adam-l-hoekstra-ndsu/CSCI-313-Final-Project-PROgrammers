@@ -1,6 +1,7 @@
 <div class="container">
     <div class="containerA">
-        <h1>{{team.name}}</h1>
+        <img class="custom-badge img-fluid img-thumbnail rounded thumbnail-bg" [src]="eachTeam.logoUrl" alt="">
+        <h1>{{eachTeam.name}}</h1>
     </div>
     <div class="row">
         <button class="btn btn-secondary" (click)="changeFocus('info')">Info</button>
@@ -13,10 +14,10 @@
         <app-team-header></app-team-header>
         }
         @if(focus=="roster") {
-        <app-team-roster [team]="team"></app-team-roster>
+        <app-team-roster></app-team-roster> 
         }
         @if(focus=="schedule") {
-        <app-team-schedule></app-team-schedule>
+        <app-team-schedule [tm]="tm()" [sp]="sp()" ></app-team-schedule>
         }
     </div>
 

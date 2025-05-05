@@ -8,7 +8,7 @@ export interface Team {
     sport: Sport;
     logoUrl: string;
     players: number[]; // Array of player IDs
-    schedule: number[]; // Array of match IDs
+    schedule: { [key: string]: any }[]; // Array of match IDs
     wins: number;
     losses: number;
     draws: number;

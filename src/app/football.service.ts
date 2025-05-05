@@ -13,12 +13,10 @@ import { PlayerService } from './player.service'; //PlayerService
 
 export class FootballService {
   constructor() { }
+  
   statCategories: string[] = ["GamesPlayed", "YardsGained", "Tackles", "Fouls", "Completions", "PassesAttempted"]
   teams: Team[] = [];
 
   teamData = inject(TeamService);
 
-  onInit() {
-    this.teams = this.teamData.teams.filter(team => team.sport === 2); // Filter teams for Rainbow Six Siege
-  }
 }

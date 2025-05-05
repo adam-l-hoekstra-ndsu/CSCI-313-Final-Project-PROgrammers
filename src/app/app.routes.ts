@@ -15,13 +15,18 @@ export const routes: Routes = [
         title: "Bison Base"
     },
     {
-        path: "sport",
-        component: SportsHomeComponent,
-    },
-    {
         path: "login",
         component: LoginComponent,
         title: "Admin"
+    },
+    {
+        path: "sport/:sp",
+        component: SportsHomeComponent,
+    },
+    {
+        path: "sport/:sp/team/:tm",
+        component: TeamViewComponent,
+        title: "Team View",
     },
     {
         path: "edit-team/:id",
@@ -33,16 +38,9 @@ export const routes: Routes = [
         component: RosterEditComponent,
         title: "Edit Roster"
     },
-
     {
         path: "edit-player/:teamId/:playerId",
         component: PlayerEditComponent,
         title: "Edit Player"
-    },
-
-    {
-        path: 'team-view/:id',
-        component: TeamViewComponent,
-        title: "Team View",
     },
 ]
