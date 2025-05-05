@@ -155,12 +155,6 @@ export const teams: Team[] = [
         schedule: [], // Array of match IDs
         wins: 10,
         losses: 5,
-        sport: Sport.Basketball,
-        logoUrl: "https://example.com/logoC.png",
-        players: [5,6], // Array of player IDs
-        schedule: [6], // Array of match IDs
-        wins: 12,
-        losses: 3,
         draws: 2,
         legueSubsection: "North America",
     },

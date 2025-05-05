@@ -37,7 +37,7 @@ export class SportsService {
   //This is the method used to create a dataset of information relating to the selected sport (e.g. sport name and sport picture)
   //and then save it as an array in the sport-home component 
   getSportInfo(id:number): SportInfo[] {
-    this.sportInfo = this.initSports();
+    this.sportInfo = this.getSports();
     return this.sportInfo.filter(sport => sport.sportID == id);
   }
 

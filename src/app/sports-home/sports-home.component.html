@@ -30,7 +30,7 @@
                 @for (item of sportTeams; track $index) {
                 <tr>
                     <td>
-                        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark" [routerLink]="['/sport',item.sport,'team',item.id]">
+                        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark" [routerLink]="['/team-view',item.sport,item.id]">
                             <img class="custom-ico img-fluid img-thumbnail rounded thumbnail-bg" [src]="item.logoUrl" alt="">{{item.name}}
                         </a>
                     </td>

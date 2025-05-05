@@ -46,7 +46,7 @@ export class SearchService {
       .getSports()
       .filter((sport) => sport.name.toLowerCase().includes(lowerTerm))
       .map((sport) => ({
-        id: sport.id,
+        id: sport.sportID,
         name: sport.name,
         imageUrl: sport.imageUrl,
         type: 'sport',

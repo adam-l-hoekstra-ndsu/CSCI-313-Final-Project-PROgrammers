@@ -15,20 +15,18 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class TeamViewComponent implements OnInit {
-  id = input.required<number>();
+  sportId = input.required<number>();
+  teamId = input.required<number>();
   team!:Team;
   teamService = inject(TeamService)
-  sportsService = inject(SportsService);
   focus:string= "info" //either info, roster, or schedule
   allTeams!: Team[];
-  eachTeam!: Team;
-  sportInfo!: SportInfo[];
   
   changeFocus(str:string) {
     this.focus = str
   }
 
   ngOnInit(): void {
-    this.team = this.teamService.getTeam(this.id()) 
+    this.team = this.teamService.getTeam(this.teamId()) 
   }
 }

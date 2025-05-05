@@ -60,7 +60,7 @@ export const routes: Routes = [
     },
 
     {
-        path: 'team-view/:id',
+        path: 'team-view/:sportId/:teamId',
         component: TeamViewComponent,
         title: "Team View",
     },
