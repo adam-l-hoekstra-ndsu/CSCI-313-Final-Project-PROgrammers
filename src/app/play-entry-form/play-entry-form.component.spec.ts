@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GamePlayByPlayComponent } from './game-play-by-play.component';
+import { PlayEntryFormComponent } from './play-entry-form.component';
 
-describe('GamePlayByPlayComponent', () => {
-  let component: GamePlayByPlayComponent;
-  let fixture: ComponentFixture<GamePlayByPlayComponent>;
+describe('PlayEntryFormComponent', () => {
+  let component: PlayEntryFormComponent;
+  let fixture: ComponentFixture<PlayEntryFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamePlayByPlayComponent]
+      imports: [PlayEntryFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GamePlayByPlayComponent);
+    fixture = TestBed.createComponent(PlayEntryFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

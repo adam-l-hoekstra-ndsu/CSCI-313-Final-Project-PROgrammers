@@ -1,0 +1,218 @@
+@if(sport == sportEnum.RainbowSixSiege) {
+<h2 style="margin-top: 2rem;">Round History</h2>
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+            @if($index + 1 == match.quarterOrRound) {
+            <th style="background-color: grey;">{{$index + 1}} - Active</th>
+            }
+            @else if($index % 12 >= 6 || $index == 13) {
+            <th style="background-color: lightgrey;">{{$index + 1}}</th>
+            }
+            @else {
+            <th>{{$index + 1}}</th>
+            }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+            @if($index % 12 >= 6 || $index == 13) {
+            <td style="background-color: lightgrey;" scope="col"><img class="icon" src={{quarterOrRound.result}}
+                    alt="In Progress"></td>
+            }
+            @else {
+            <td scope="col"><img class="icon" alt="In Progress" src={{quarterOrRound.result}}></td>
+            }
+            }
+        </tr>
+    </tbody>
+</table>
+}
+@else if(sport == sportEnum.Volleyball) {
+    <h2 style="margin-top: 2rem;">Score by Set</h2>
+    <table class="table table-bordered table-responsive" style="margin: auto; width: 25%; margin-bottom: 2rem;">
+        <thead>
+            <tr>
+                @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                    @if($index + 1 == match.quarterOrRound) {
+                        <th style="background-color: grey;">{{$index + 1}} - Active</th>
+                    }
+                    @else {
+                        <th>{{$index + 1}}</th>
+                    }
+                }
+                <th style="background-color: lightgrey;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+               <td>{{quarterOrRound.team1Score}}</td>
+            }
+            <td style="background-color: lightgrey;">{{match.team1Score}}</td>
+            </tr>
+            <tr>
+                @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                   <td>{{quarterOrRound.team2Score}}</td>
+                }
+                <td style="background-color: lightgrey;">{{match.team2Score}}</td>
+            </tr>
+        </tbody>
+    </table>
+}
+@else if(team1.sport == sportEnum.Basketball || team1.sport == sportEnum.Football) {
+    <h2 style="margin-top: 2rem;">Score by Quarter</h2>
+    <table class="table table-bordered table-responsive" style="margin: auto; width: 25%; margin-bottom: 2rem;">
+        <thead>
+            <tr>
+                @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                    @if($index + 1 == match.quarterOrRound) {
+                        <th style="background-color: grey;">{{$index + 1}} - Active</th>
+                    }
+                    @else {
+                        <th>{{$index + 1}}</th>
+                    }
+                }
+                <th style="background-color: lightgrey;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+               <td>{{quarterOrRound.team1Score}}</td>
+            }
+            <td style="background-color: lightgrey;">{{match.team1Score}}</td>
+            </tr>
+            <tr>
+                @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                   <td>{{quarterOrRound.team2Score}}</td>
+                }
+                <td style="background-color: lightgrey;">{{match.team2Score}}</td>
+            </tr>
+        </tbody>
+    </table>
+}
+<div class="row">
+
+@if(this.sport == sportEnum.RainbowSixSiege) {
+    <div class="col-md-4">
+        <h2>Team 1 Win</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM1_KILL)"
+                class="btn btn-secondary">Elimination</button>
+            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM1_TIME)"
+                class="btn btn-secondary">Time</button>
+            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM1_OBJ)"
+                class="btn btn-secondary">Objective</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Team 2 Win</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM2_KILL)"
+                class="btn btn-secondary">Elimination</button>
+            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM2_TIME)"
+                class="btn btn-secondary">Time</button>
+            <button type="submit" (click)="setSiegeRoundResult(siegeRoundResultEnum.TEAM2_OBJ)"
+                class="btn btn-secondary">Objective</button>
+        </div>
+    </div>
+    }
+    @if(this.sport == sportEnum.Football) {
+    <div class="col-md-4">
+        <h2>Team 1 Scoring Event</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(1, 6)" class="btn btn-secondary">TD</button>
+            <button type="submit" (click)="changeScore(1, 3)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(1, 1)" class="btn btn-secondary">XP</button>
+            <button type="submit" (click)="changeScore(1, 2)" class="btn btn-secondary">2PT/Saftey</button>
+        </div>
+        <h2>Team 1 Undo Scoring</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(1, -6)" class="btn btn-secondary">TD</button>
+            <button type="submit" (click)="changeScore(1, -3)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(1, -1)" class="btn btn-secondary">XP</button>
+            <button type="submit" (click)="changeScore(1, -2)" class="btn btn-secondary">2PT/Saftey</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Team 2 Scoring Event</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(2, 6)" class="btn btn-secondary">TD</button>
+            <button type="submit" (click)="changeScore(2, 3)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(2, 1)" class="btn btn-secondary">XP</button>
+            <button type="submit" (click)="changeScore(2, 2)" class="btn btn-secondary">2PT/Saftey</button>
+        </div>
+        <h2>Team 2 Undo Scoring</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(2, -6)" class="btn btn-secondary">TD</button>
+            <button type="submit" (click)="changeScore(2, -3)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(2, -1)" class="btn btn-secondary">XP</button>
+            <button type="submit" (click)="changeScore(2, -2)" class="btn btn-secondary">2PT/Saftey</button>
+        </div>
+    </div>
+    }
+    @if(this.sport == sportEnum.Volleyball) {
+    <div class="col-md-4">
+        <h2>Team 1 Scoring Event</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(1, 1)" class="btn btn-secondary">+1</button>
+        </div>
+        <h2>Team 1 Undo Scoring</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(1, -1)" class="btn btn-secondary">-1</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Team 2 Scoring Event</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(2, 1)" class="btn btn-secondary">+1</button>
+        </div>
+        <h2>Team 2 Undo Scoring</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(2, -1)" class="btn btn-secondary">-1</button>
+        </div>
+    </div>
+    }
+    @if(this.sport == sportEnum.Basketball) {
+    <div class="col-md-4">
+        <h2>Team 1 Scoring Event</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(1, 2)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(1, 3)" class="btn btn-secondary">3PT FG</button>
+            <button type="submit" (click)="changeScore(1, 1)" class="btn btn-secondary">FT</button>
+        </div>
+        <h2>Team 1 Undo Scoring</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(1, -2)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(1, -3)" class="btn btn-secondary">3PT FG</button>
+            <button type="submit" (click)="changeScore(1, -1)" class="btn btn-secondary">FT</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Team 2 Scoring Event</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(2, 2)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(2, 3)" class="btn btn-secondary">3PT FG</button>
+            <button type="submit" (click)="changeScore(2, 1)" class="btn btn-secondary">FT</button>
+        </div>
+        <h2>Team 2 Undo Scoring</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="changeScore(2, -2)" class="btn btn-secondary">FG</button>
+            <button type="submit" (click)="changeScore(2, -3)" class="btn btn-secondary">3PT FG</button>
+            <button type="submit" (click)="changeScore(2, -1)" class="btn btn-secondary">FT</button>
+        </div>
+    </div>
+    }
+    <div class="col-md-4">
+        <h2>Round/Quarter/Set Controls</h2>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="submit" (click)="previousRound()" class="btn btn-secondary">Previous Round</button>
+            <button type="submit" (click)="nextRound()" class="btn btn-secondary">Next Round</button>
+            <button type="submit" (click)="deleteQuarterOrRound()" class="btn btn-danger">Delete Round</button>
+        </div>
+    </div>
+</div>

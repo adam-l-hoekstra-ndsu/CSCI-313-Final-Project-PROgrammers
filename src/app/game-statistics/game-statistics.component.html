@@ -1,12 +1,50 @@
-<p>game-statistics works!</p>
-<div class="container">
-<table class="table">
-    <thead>
-        <tr>
-            @for(cat of categories; track cat) {
-                <th scope="col">{{cat}}</th>   
-            }
-        </tr>
-    </thead>
-</table>
+<div class="container-fluid">
+    <div class="row" style="background-color: lightgrey; margin-bottom: 2rem;">
+        <div class=col-md-6>
+            <h2>{{team1.name}}</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        @for(cat of categories; track cat) {
+                        <th scope="col">{{cat}}</th>
+                        }
+                    </tr>
+                    @for(player of teamService.getPlayers(team1); track player) {
+                    <tr>
+                        <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
+                        @for(stat of player.stats[matchID]; track $index) {
+                            @if($index < this.categories.length) {
+                                <td scope="col">{{stat}}</td>
+                            } 
+                        }
+                    </tr>
+                    }
+                </thead>
+            </table>
+        </div>
+        <div class=col-md-6>
+            <h2>{{team2.name}}</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        @for(cat of categories; track cat) {
+                        <th scope="col">{{cat}}</th>
+                        }
+                    </tr>
+                    @for(player of teamService.getPlayers(team2); track player) {
+                    <tr>
+                        <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
+                        @for(stat of player.stats[matchID]; track $index) {
+                            @if($index < this.categories.length) {
+                                <td scope="col">{{stat}}</td>
+                            }          
+                        }
+                    </tr>
+                    }
+                </thead>
+            </table>
+        </div>
+    </div>
 </div>
