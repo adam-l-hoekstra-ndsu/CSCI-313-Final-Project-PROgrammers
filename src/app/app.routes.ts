@@ -50,7 +50,7 @@ export const routes: Routes = [
     },
 
     {
-        path: 'edit-team/:teamId',
+        path: 'edit-team/:id',
         component: TeamEditComponent,
         title: "Edit Team",
     },

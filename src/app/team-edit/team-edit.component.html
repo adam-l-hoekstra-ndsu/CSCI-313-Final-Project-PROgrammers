@@ -29,10 +29,12 @@
                     <input class="inputText" type="text" [(ngModel)]="logo" style="width: 90%;">
                 </div>
             </div>
-            <img [src]="logo" alt="{{team.name}}'s Logo">
-            <button class="btn btn-primary" [routerLink]="['/team-view',teamId()]">Cancel</button>
-            <button class="btn btn-primary" (click)="commitChanges()"
-                [routerLink]="['/team-view',teamId()]">Commit</button>
+
+            <div class="row">
+                <img [src]="logo" alt="{{team.name}}'s Logo">
+            </div>
+            <button class="btn btn-primary" [routerLink]="['/team-view',id()]">Cancel</button>
+            <button class="btn btn-primary" (click)="commitChanges()" [routerLink]="['/team-view',id()]">Commit</button>
         </div>
     </div>
 </div>
