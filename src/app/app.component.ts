@@ -1,3 +1,6 @@
+import { Component } from '@angular/core';
+import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { Component } from '@angular/core'
 import { RouterOutlet, RouterModule, RouterLink } from '@angular/router';
 import { GameStatisticsComponent } from "./game-statistics/game-statistics.component";
@@ -10,9 +13,10 @@ import { AdminPageComponent } from "./admin-page/admin-page.component";
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, GameStatisticsComponent, AdminPageComponent, TeamViewComponent, GameViewComponent, GamePlayEntryComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 
 export class AppComponent {
+  adminLoggedIn = true;
   title = 'Bison Base';
 }

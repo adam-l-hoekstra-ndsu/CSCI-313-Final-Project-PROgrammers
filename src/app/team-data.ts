@@ -1,5 +1,5 @@
-import { Team } from "./team";
-import { Sport } from "./sport"
+import { Team } from './team';
+import { Sport } from './sport';
 
 export const teams: Team[] = [
     {
