@@ -23,6 +23,7 @@ export class TeamRosterComponent implements OnInit {
   fb = inject(FootballService)
   vb = inject(VolleyballService)
   rss = inject(RainbowSixSiegeService)
+  
   @Input() teamId!: number;  
   team!:Team;
   players!: Player[];

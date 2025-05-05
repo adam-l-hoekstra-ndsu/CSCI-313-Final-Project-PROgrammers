@@ -11,6 +11,7 @@ import { TeamEditComponent } from './team-edit/team-edit.component';
 import { PlayerEditComponent } from './player-edit/player-edit.component';
 import { RosterEditComponent } from './roster-edit/roster-edit.component';
 import { TeamViewComponent } from './team-view/team-view.component';
+import { SportsHomeComponent } from './sports-home/sports-home.component';
 import { AddPlayerRosterComponent } from './add-player-roster/add-player-roster.component';
 import { ScheduleEditComponent } from './schedule-edit/schedule-edit.component';
 import { GameViewComponent } from './game-view/game-view.component';
@@ -29,6 +30,15 @@ export const routes: Routes = [
         title: "Login"
     },
     {
+        path: "sport/:sp",
+        component: SportsHomeComponent,
+    },
+    {
+        path: "sport/:sp/team/:tm",
+        component: TeamViewComponent,
+        title: "Team View",
+    },
+    {
         path: "edit-team/:id",
         component: TeamEditComponent,
         title: "Edit Team"
@@ -38,13 +48,11 @@ export const routes: Routes = [
         component: RosterEditComponent,
         title: "Edit Roster"
     },
-
     {
         path: "edit-player/:teamId/:playerId",
         component: PlayerEditComponent,
         title: "Edit Player"
     },
-
     {
         path: "add-player-roster/:teamId",
         component: AddPlayerRosterComponent,

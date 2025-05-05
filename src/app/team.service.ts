@@ -3,6 +3,7 @@ import { Team } from './team';
 import { teams } from './team-data';
 import { Player } from './player';
 import { PlayerService } from './player.service';
+import { Sport } from './sport';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class TeamService {
   playerService = inject(PlayerService);
 
   constructor() { }
+
+  getTeam2(teamSport: Sport): Team {
+    return this.teams.filter(team => team.sport == teamSport)[0];
+  }
 
   getTeam(teamId: number): Team {
     return this.teams.filter(team => team.id == teamId)[0];

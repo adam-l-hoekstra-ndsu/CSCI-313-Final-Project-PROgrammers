@@ -9,6 +9,7 @@ import { TeamService } from '../team.service';
   templateUrl: './team-schedule.component.html',
   styleUrl: './team-schedule.component.css'
 })
+
 export class TeamScheduleComponent implements OnInit {
   matchService = inject(MatchService)
   teamService = inject(TeamService)

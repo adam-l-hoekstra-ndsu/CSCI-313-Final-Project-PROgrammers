@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, OnDestroy } from '@angular/core';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
 import { TeamRosterComponent } from '../team-roster/team-roster.component';
@@ -7,18 +7,22 @@ import { TeamHeaderComponent } from '../team-header/team-header.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-team-view',
   imports: [TeamRosterComponent, TeamScheduleComponent, TeamHeaderComponent, FormsModule, RouterLink],
   templateUrl: './team-view.component.html',
   styleUrl: './team-view.component.css'
 })
+
 export class TeamViewComponent implements OnInit {
   id = input.required<number>();
   team!:Team;
   teamService = inject(TeamService)
+  sportsService = inject(SportsService);
   focus:string= "info" //either info, roster, or schedule
+  allTeams!: Team[];
+  eachTeam!: Team;
+  sportInfo!: SportInfo[];
   
   changeFocus(str:string) {
     this.focus = str

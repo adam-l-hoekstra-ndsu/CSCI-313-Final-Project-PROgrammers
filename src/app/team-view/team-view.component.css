@@ -6,3 +6,13 @@
     float: left;
     width: 6rem;
 }
+.custom-badge {
+    height: 150px;
+    width: 150px;
+    margin-right: 10px;
+}
+.custom-ico {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+}
