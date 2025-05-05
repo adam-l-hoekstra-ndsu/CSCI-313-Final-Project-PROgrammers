@@ -1,1 +1,123 @@
-<p>game-play-entry works!</p>
+<div class="container-fluid">
+    <div class="row  justify-content-md-center">
+        <div class="col-md-auto text-center">
+            <h1>{{team1.name}} VS. {{team2.name}}</h1>
+            <h2>{{match.date.toDateString()}} - {{match.date.toLocaleTimeString()}}</h2>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table team-table table-bordered">
+                    <thead>
+                        <tr>
+                            <h2>{{team1.name}}</h2>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(player of teamService.getPlayers(team1); track player) {
+                            <tr>
+                                @if(player.currentlyInMatch){
+                                    <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
+                                }
+                                @else {
+                                    <td scope="col" style="background-color: lightgrey;">{{player.firstName[0]}}. {{player.lastName}}</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+                <div class="col-md-6">
+                    <table class="table team-table table-bordered">
+                        <thead>
+                            <tr>
+                                <h2>{{team2.name}}</h2>
+                            </tr>
+                            @for(player of teamService.getPlayers(team2); track player) {
+                            <tr>
+                                @if(player.currentlyInMatch){
+                                    <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
+                                }
+                                @else {
+                                    <td scope="col" style="background-color: lightgrey;">{{player.firstName[0]}}. {{player.lastName}}</td>
+                                }
+                            </tr>
+                            }
+                        </thead>
+                    </table>
+                </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+         <app-play-entry-form [matchID]="this.match.id"></app-play-entry-form>
+    </div>
+    <div class="col-md-4 text-center">
+        <h1 class="highlight">{{match.team1Score}} - {{match.team2Score}}</h1>
+        @if(!match.hasStarted){
+            <h1>Upcoming</h1>
+        }
+        @else if(match.hasFinished) {
+            <h3 style="font-weight: bold;">Final</h3>
+        }
+        @else {
+            @switch (team1.sport) {
+                @case (sportEnum.Volleyball) {}
+                @case (sportEnum.RainbowSixSiege) {
+                    <h3>Round {{match.quarterOrRound}} - {{match.timeRemaining | secondsToTime}}</h3>
+                }
+                @default {
+                    @if (sportEnum.Basketball || sportEnum.Football) {
+                        @if(match.quarterOrRound == 1 && match.timeRemaining) {
+                            <h3>1st Quarter - {{match.timeRemaining | secondsToTime}}</h3>
+                        }
+                        @else if(match.quarterOrRound == 2) {
+                            <h3>2nd Quarter - {{match.timeRemaining | secondsToTime}}</h3>
+                        }
+                        @else if(match.quarterOrRound == 2) {
+                            <h3>3rd Quarter - {{match.timeRemaining | secondsToTime}}</h3>
+                        }
+                        @else {
+                            <h3>4th Quarter - {{match.timeRemaining | secondsToTime}}</h3>
+                        }
+                    }
+                }
+            }
+        }
+        <hr class=""my-1/>
+        <div style="height: 300px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Play</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(quarterOrRound of match.quarterOrRoundResults; track quarterOrRound) {
+                         @for(play of quarterOrRound.plays; track play) {
+                            <tr>
+                                <td scope="col">{{play.description}}</td>
+                                @if(play.time < 0) {
+                                    <td scope="col">-{{play.time | secondsToTime}}</td>
+                                } @else {
+                                    <td scope="col">{{play.time | secondsToTime}}</td>
+                                }
+                                <td><button class="btn btn-danger" (click)="onPlayDelete(play, quarterOrRound)">Delete</button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div> 
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+                <app-play-entry-round-history [matchID]="this.match.id"></app-play-entry-round-history>
+        </div>
+    </div>
+</div>
+<app-game-statistics [matchID]="this.match.id"></app-game-statistics>

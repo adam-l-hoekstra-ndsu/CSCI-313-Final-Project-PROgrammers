@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
 import { HomeComponent } from './home/home.component';
-import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { Component } from '@angular/core'
+import { RouterOutlet, RouterModule, RouterLink } from '@angular/router';
+import { GameStatisticsComponent } from "./game-statistics/game-statistics.component";
+import { GameViewComponent } from './game-view/game-view.component';
+import { GamePlayEntryComponent } from "./game-play-entry/game-play-entry.component";
+import { TeamViewComponent } from './team-view/team-view.component';
+import { AdminPageComponent } from "./admin-page/admin-page.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, RouterLink, GameStatisticsComponent, AdminPageComponent, TeamViewComponent, GameViewComponent, GamePlayEntryComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'CSCI-313-Final-Project-PROgrammers';
 
+export class AppComponent {
   adminLoggedIn = true;
+  title = 'Bison Base';
 }

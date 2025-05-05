@@ -2,54 +2,76 @@ import { Team } from './team';
 import { Sport } from './sport';
 
 export const teams: Team[] = [
-  {
-    id: 1,
-    name: 'Team A',
-    sport: Sport.RainbowSixSiege,
-    logoUrl: 'https://example.com/logoA.png',
-    players: [1, 3], // Array of player IDs
-    schedule: [], // Array of match IDs
-    wins: 10,
-    losses: 5,
-    draws: 2,
-    legueSubsection: 'North America',
-  },
-  {
-    id: 2,
-    name: 'Team B',
-    sport: Sport.Volleyball,
-    logoUrl: 'https://example.com/logoB.png',
-    players: [2, 4], // Array of player IDs
-    schedule: [], // Array of match IDs
-    wins: 8,
-    losses: 7,
-    draws: 2,
-    legueSubsection: 'Europe',
-  },
-  {
-    id: 2,
-    name: 'NDSU Volleyball - Women Team',
-    sport: Sport.Volleyball,
-    logoUrl:
-      'https://logowik.com/content/uploads/images/ndsu-north-dakota-state-university-bison8345.logowik.com.webp',
-    players: [2, 3], // Array of player IDs
-    schedule: [], // Array of match IDs
-    wins: 13,
-    losses: 2,
-    draws: 0,
-    legueSubsection: 'North America',
-  },
-  {
-    id: 2,
-    name: 'NDSU Volleyball - Men Team',
-    sport: Sport.Volleyball,
-    logoUrl:
-      'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2FNDSUvolleyball%2F&psig=AOvVaw3R0cmbvdpnEuFbGzjiHH9q&ust=1745955109724000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi-uOS7-4wDFQAAAAAdAAAAABAU',
-    players: [1, 4], // Array of player IDs
-    schedule: [], // Array of match IDs
-    wins: 6,
-    losses: 9,
-    draws: 2,
-    legueSubsection: 'North America',
-  },
+    {
+        id: 1,
+        name: "Team A",
+        sport: Sport.RainbowSixSiege,
+        logoUrl: "https://example.com/logoA.png",
+        players: [1,3], // Array of player IDs
+        schedule: [], // Array of match IDs
+        wins: 10,
+        losses: 5,
+        draws: 2,
+        legueSubsection: "North America",
+    },
+    {
+        id: 2,
+        name: "Team B",
+        sport: Sport.Volleyball,
+        logoUrl: "https://example.com/logoB.png",
+        players: [2,4,6], // Array of player IDs
+        schedule: [1,2,3,4,5], // Array of match IDs
+        wins: 8,
+        losses: 7,
+        draws: 2,
+        legueSubsection: "Europe",
+    },
+    {
+        id: 3,
+        name: "Team C",
+        sport: Sport.Basketball,
+        logoUrl: "https://example.com/logoC.png",
+        players: [5,6], // Array of player IDs
+        schedule: [6], // Array of match IDs
+        wins: 12,
+        losses: 3,
+        draws: 2,
+        legueSubsection: "Asia",
+    },
+    {
+        id: 4,
+        name: "Team D",
+        sport: Sport.Basketball,
+        logoUrl: "https://example.com/logoD.png",
+        players: [7,8], // Array of player IDs
+        schedule: [], // Array of match IDs
+        wins: 9,
+        losses: 6,
+        draws: 2,
+        legueSubsection: "South America",
+    },
+    {
+        id: 5,
+        name: "Team E",
+        sport: Sport.Volleyball,
+        logoUrl: "https://example.com/logoB.png",
+        players: [2,4], // Array of player IDs
+        schedule: [], // Array of match IDs
+        wins: 9,
+        losses: 6,
+        draws: 2,
+        legueSubsection: "South America",
+    },
+    {
+        id: 5,
+        name: "Team B volleyball evil",
+        sport: Sport.Volleyball,
+        logoUrl: "https://example.com/logoB.png",
+        players: [2,4,6], // Array of player IDs
+        schedule: [1,2,3,4,5], // Array of match IDs
+        wins: 8,
+        losses: 7,
+        draws: 2,
+        legueSubsection: "Europe",
+    },
 ];

@@ -1,11 +1,15 @@
+import { QuarterOrRound } from "./quarterOrRound";
+
 export interface Match {
     id: number;
     date: Date;
-    sport: number; // 0 = Basketball, 1 = VolleyBall, 2 = Rainbow Six Siege, 3 = Football
     team1ID: number;
     team2ID: number;
     team1Score: number;
     team2Score: number;
     hasStarted: boolean;
+    hasFinished: boolean;
     timeRemaining: number; // in seconds
+    quarterOrRound: number; // number of current quarter or round
+    quarterOrRoundResults: QuarterOrRound[]; // round or quarter results
 }
