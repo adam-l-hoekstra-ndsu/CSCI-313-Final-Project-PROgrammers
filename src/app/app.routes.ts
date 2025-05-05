@@ -56,10 +56,13 @@ export const routes: Routes = [
         component: TeamEditComponent,
         title: "Edit Team",
     },
+
+    {
         path: "game-view/:matchID",
         component: GameViewComponent,
         title: "Game View"
     },
+
     {
         path: "game-play-entry/:matchID",
         component: GamePlayEntryComponent,

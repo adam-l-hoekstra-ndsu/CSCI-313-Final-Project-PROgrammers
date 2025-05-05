@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Team } from './team';
 import { teams } from './team-data';
 import { TeamService } from './team.service'
-import { SiegeRoundResult } from './quarterOrRound';
 import { MatchService } from './match.service';
 import { Sport } from './sport';
 import { Player } from './player';
@@ -32,16 +31,6 @@ export enum SiegePlayType {
   Clutch = "Clutched"
 }
 
-export enum SiegeCatagory {
-  Kills,
-  Deaths,
-  Assists,
-  ObjectivePlays,
-  RoundsSurvived,
-  Trades,
-  Revives,
-  Clutches
-}
 
 @Injectable({
   providedIn: 'root'
