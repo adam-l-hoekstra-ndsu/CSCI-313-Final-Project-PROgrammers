@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a
       class="navbar-brand d-flex align-items-center text-white"
-      [routerLink]=""
+      [routerLink]="'/'"
     >
       <img
         src="/images/bison logo.png"
@@ -47,30 +47,32 @@
         }
       </ol>
     </nav>
-    <app-search></app-search>
-    @if (isLoggedIn()) {
-    <div class="dropdown">
-      <a
-        class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-        href="#"
-        id="userDropdown"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <i class="bi bi-person-circle me-2 fs-4"></i>
-        My Account
-      </a>
-      <ul
-        class="dropdown-menu dropdown-menu-end"
-        aria-labelledby="userDropdown"
-      >
-        <li>
-          <a class="dropdown-item" href="/manage-account">Manage Account</a>
-        </li>
-        <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
-      </ul>
+    <div class="d-flex align-items-center ms-auto">
+      <app-search></app-search>
+      @if (isLoggedIn()) {
+      <div class="dropdown ms-3">
+        <a
+          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+          href="#"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="bi bi-person-circle me-2 fs-4"></i>
+          My Account
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="userDropdown"
+        >
+          <li>
+            <a class="dropdown-item" href="/manage-account">Manage Account</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+        </ul>
+      </div>
+      }
     </div>
-    }
   </div>
 </nav>
