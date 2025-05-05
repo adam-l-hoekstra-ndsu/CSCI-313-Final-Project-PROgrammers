@@ -23,27 +23,37 @@ export class TeamRosterComponent implements OnInit {
   fb = inject(FootballService)
   vb = inject(VolleyballService)
   rss = inject(RainbowSixSiegeService)
-  @Input() team!: Team;  
+  
+  @Input() teamId!: number;  
+  team!:Team;
   players!: Player[];
   sport!: Sport; 
   categories!:string[];
-  getAverages(plr:Player): number[] {
-    return this.playerService.calculateAvg(plr)
+  getAverages(plr:Player ): number[] {
+    return this.playerService.calculateAvg(plr, this.team)
   }
+
   ngOnInit(): void {
-      this.players = this.teamService.getPlayers(this.team)
+      this.team = this.teamService.getTeam(this.teamId)
+      this.players = this.teamService.getPlayers(this.team).sort((a:Player, b:Player)=>a.lastName.localeCompare(b.lastName))
       this.sport = this.team.sport
-      if (this.sport = Sport.Basketball) {
+      console.log(this.team.sport)
+      if (this.sport == Sport.Basketball) {
         this.categories = this.bb.statCategories
       }
-      else if (this.sport = Sport.Football) {
-        this.categories = this.fb.statCategories
-      }
-      else if (this.sport = Sport.Volleyball) {
+
+      if (this.sport == Sport.Volleyball) {
         this.categories = this.vb.statCategories
       }
-      else if (this.sport = Sport.RainbowSixSiege) {
+
+      if (this.sport == Sport.Football) {
+        this.categories = this.fb.statCategories
+      }
+
+      if (this.sport == Sport.RainbowSixSiege) {
         this.categories = this.rss.statCategories
       }
+      
+      
   }
 }

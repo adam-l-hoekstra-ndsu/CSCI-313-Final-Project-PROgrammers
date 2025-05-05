@@ -1,65 +1,64 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Schedule</title>
-</head>
-<body>
-    <div style="margin-top:10px;">
-        <h4>{{eachTeam.name}} callendar</h4>
-        <select name="" id="">
-            <option value="">2025</option>
-            <option value="">2024</option>
-            <option value="">2023</option>
-        </select>
-        @if (sp == 0) {
-            <div class="text-start">
-                <table class="table table-striped table-hover">
-                    <thead class="table-success">
-                        <tr>
-                            <th scope="col">Week</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Opposition</th>
-                            <th scope="col">Result</th>
-                            <th scope="col">W-L</th>
-                            <th scope="col">HI PASS</th>
-                            <th scope="col">HI RUSH</th>
-                            <th scope="col">HI REC</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        @for (item of eachTeam.schedule; track $index) {
-                        <tr>
-                            <td>{{item['week']}}</td>
-                            <td>{{item['date']}}</td>
-                            <td>{{item['opps']}}</td>
-                            <td>{{item['result']}}</td>
-                            <td>{{item['w_l']}}</td>
-                            <td>{{item['hi_pass']}}</td>
-                            <td>{{item['hi_rush']}}</td>
-                            <td>{{item['hi_rec']}}</td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+<div class="row">
+    <table>
+        <tr>
+            <td>Date</td>
+            <td>Against</td>
+            <td>At</td>
+            <td>Score</td>
+            <td>Status</td>
+            <td>Result</td>
+            <!-- some kind of if to see if they are admin -->
+            <td></td>
+        </tr>
+        @for (match of matches; track $index) {
+        @if($index % 2 == 0) {
+        <tr style="background-color: lightgrey;">
+            <td>{{match.date.getMonth()+1}}/{{match.date.getDate()}}/{{match.date.getFullYear()}}</td>
+            <td>{{getAgainst(match)}}</td>
+            <td>{{homeOrAway(match)}}</td>
+            <td>{{displayScore(match)}}</td>
+            <td>{{getStatus(match)}}</td>
+            @if (getResult(match) == "TBD") {
+            <td>TBD</td>
+            }
+            @if (getResult(match) == "TIE") {
+            <td>TIE</td>
+            }
+            @if (getResult(match) == "W") {
+            <td style="color: green;">W</td>
+            }
+            @if (getResult(match) == "L") {
+            <td style="color: red;">L</td>
+            }
+            <!-- some kind of if to see if they are admin -->
+            <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+        </tr>
         }
-        @if(sp == 1) {
-            <div style="border: 2px dashed black;">
-                <p>This will be where a {{sportInfo[0].name}}'s team schedule will display</p>
-            </div>
+        @else {
+        <tr>
+            <td>{{match.date.getMonth()+1}}/{{match.date.getDate()}}/{{match.date.getFullYear()}}</td>
+            <td>{{getAgainst(match)}}</td>
+            <td>{{homeOrAway(match)}}</td>
+            <td>{{displayScore(match)}}</td>
+            <td>{{getStatus(match)}}</td>
+            @if (getResult(match) == "TBD") {
+            <td>TBD</td>
+            }
+            @if (getResult(match) == "TIE") {
+            <td>TIE</td>
+            }
+            @if (getResult(match) == "W") {
+            <td style="color: green;">W</td>
+            }
+            @if (getResult(match) == "L") {
+            <td style="color: red;">L</td>
+            }
+            <!-- some kind of if to see if they are admin -->
+            <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+        </tr>
         }
-        @if (sp == 2) {
-            <div style="border: 2px dashed black;">
-                <p>This will be where a {{sportInfo[0].name}}'s team schedule will display</p>
-            </div>
         }
-        @if (sp == 3) {
-            <div style="border: 2px dashed black;">
-                <p>This will be where a {{sportInfo[0].name}}'s team schedule will display</p>
-            </div>
-        }
-    </div>
-</body>
-</html>
+
+    </table>
+
+</div>

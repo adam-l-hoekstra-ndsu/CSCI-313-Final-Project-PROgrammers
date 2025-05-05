@@ -34,7 +34,7 @@ export class GameStatisticsComponent implements OnInit {
   matchService = inject(MatchService)
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(this.matchID);
+    this.match = this.matchService.getMatchById(Number(this.matchID));
     this.team1 = this.teamService.getTeam(this.match.team1ID);
     this.team2 = this.teamService.getTeam(this.match.team2ID);
     this.setCategories(this.team1.sport);
@@ -45,15 +45,15 @@ export class GameStatisticsComponent implements OnInit {
       case Sport.RainbowSixSiege:
         this.categories = this.siegeService.statCategories;
         break;
-      // case Sport.Football:
-      //   this.categories = this.footballService.statCategories;
-      //   break;
-      // case Sport.Volleyball:
-      //   this.categories = this.volleyballService.statCategories;
-      //   break;
-      // case Sport.Basketball:
-      //   this.categories = this.basketballService.statCategories;
-      //   break;
+      case Sport.Football:
+        this.categories = this.footballService.statCategories;
+        break;
+      case Sport.Volleyball:
+        this.categories = this.volleyballService.statCategories;
+        break;
+      case Sport.Basketball:
+        this.categories = this.basketballService.statCategories;
+        break;
       default:
         this.categories = [];
     }

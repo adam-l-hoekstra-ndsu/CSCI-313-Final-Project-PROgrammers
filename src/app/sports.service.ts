@@ -20,12 +20,12 @@ export class SportsService {
   sportInfo!: SportInfo[];
 
   // This is the method used to build each sport in the sport-selection component
-  initSports(): SportInfo[] {
+  getSports(): SportInfo[] {
     return [
-      { name: 'Football', imageUrl: 'fb00.png', sportID: Sport.Football },
-      { name: 'Basketball', imageUrl: 'bb00.png', sportID: Sport.Basketball },
-      { name: 'Volleyball', imageUrl: 'vb00.png', sportID: Sport.Volleyball },
-      { name: 'Rainbow Six Seige', imageUrl: 'rbss00.png', sportID: Sport.RainbowSixSiege},
+      { name: 'Football', imageUrl: 'images/football.jpg', sportID: Sport.Football },
+      { name: 'Basketball', imageUrl: 'images/basketball.jpg', sportID: Sport.Basketball },
+      { name: 'Volleyball', imageUrl: 'images/volleyball.jpg', sportID: Sport.Volleyball },
+      { name: 'Rainbow Six Seige', imageUrl: 'images/rainbow-six-seige.jpg', sportID: Sport.RainbowSixSiege},
     ];
   }
 

@@ -5,9 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SecondsToTimePipe implements PipeTransform {
   transform(value: number): string {
-    if (isNaN(value) || value < 0) {
+    if (isNaN(value)) {
       return '00:00';
     }
+
+    value = Math.abs(value); // Ensure value is positive
 
     const hours = Math.floor(value / 3600);
     const minutes = Math.floor((value % 3600) / 60);

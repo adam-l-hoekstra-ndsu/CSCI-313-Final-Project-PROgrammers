@@ -1,24 +1,24 @@
 <div class="container" id="sport-selection">
-    <h2>All Sports</h2>
-    <div class="row">
-      @for (sport of sports; track $index) {
-      <div class="col-md-4 mt-3">
-        <div class="card h-100">
-          <img
-            class="card-img-top"
-            src="{{ sport.imageUrl }}"
-            alt="{{ sport.name }}"
-          />
-          <div class="card-body">
-            <h4 class="card-title">{{ sport.name }}</h4>
-            <p class="card-text" style="min-height: 50px">
-              Click the button below to view all {{ sport.name }} teams.
-            </p>
-            <div class="mt-auto"></div>
-            <button class="btn btn-dark mt-auto" [routerLink]="['sport', sport.sportID]">Select Sport</button>
-          </div>
+  <h2>All Sports</h2>
+  <div class="row">
+    @for (sport of sports; track $index) {
+    <div class="col-md-4 mt-3">
+      <div class="card h-100">
+        <img
+          class="card-img-top"
+          src="{{ sport.imageUrl }}"
+          alt="{{ sport.name }}"
+        />
+        <div class="card-body">
+          <h4 class="card-title">{{ sport.name }}</h4>
+          <p class="card-text" style="min-height: 50px">
+            Click the button below to view all {{ sport.name }} teams.
+          </p>
+          <div class="mt-auto"></div>
+          <button class="btn btn-dark mt-auto" [routerLink]="['sport', sport.sportID]">Select Sport</button>
         </div>
       </div>
-      }
     </div>
+    }
   </div>
+</div>

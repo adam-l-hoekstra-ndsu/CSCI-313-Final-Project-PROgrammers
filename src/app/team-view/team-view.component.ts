@@ -6,8 +6,6 @@ import { TeamScheduleComponent } from '../team-schedule/team-schedule.component'
 import { TeamHeaderComponent } from '../team-header/team-header.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SportInfo, SportsService } from '../sports.service';
-
 
 @Component({
   selector: 'app-team-view',
@@ -16,13 +14,9 @@ import { SportInfo, SportsService } from '../sports.service';
   styleUrl: './team-view.component.css'
 })
 
-export class TeamViewComponent implements OnInit, OnDestroy {
-  constructor() {};
-
-  sp = input.required<number>(); //sportID
-  tm = input.required<number>(); //TeamID
-
-  //team!:Team;
+export class TeamViewComponent implements OnInit {
+  id = input.required<number>();
+  team!:Team;
   teamService = inject(TeamService)
   sportsService = inject(SportsService);
   focus:string= "info" //either info, roster, or schedule
@@ -34,17 +28,7 @@ export class TeamViewComponent implements OnInit, OnDestroy {
     this.focus = str
   }
 
-  ngOnInit() {
-    this.allTeams = this.sportsService.genSportTeams(this.sp());
-    console.log(this.allTeams);
-    this.sportInfo = this.sportsService.getSportInfo(this.sp());
-    this.eachTeam = this.teamService.getTeam(this.tm());
-    console.log(this.eachTeam);
-    //console.log(this.id())
-    //console.log(this.allSportTeams);
-  }
-
-  ngOnDestroy() {
-    console.clear()
+  ngOnInit(): void {
+    this.team = this.teamService.getTeam(this.id()) 
   }
 }

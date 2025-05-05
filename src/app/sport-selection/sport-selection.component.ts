@@ -17,6 +17,6 @@ export class SportSelectionComponent implements OnInit {
   sportService = inject(SportsService);
 
   ngOnInit(): void {
-    this.sports = this.sportService.initSports();
+    this.sports = this.sportService.getSports();
   }
 }

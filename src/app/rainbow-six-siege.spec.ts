@@ -1,7 +1,16 @@
-import { RainbowSixSiege } from './rainbow-six-siege-player';
+import { TestBed } from '@angular/core/testing';
 
-describe('RainbowSixSiege', () => {
-  it('should create an instance', () => {
-    expect(new RainbowSixSiege()).toBeTruthy();
+import { RainbowSixSiegeService } from './rainbow-six-siege.service';
+
+describe('TeamService', () => {
+  let service: RainbowSixSiegeService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(RainbowSixSiegeService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
 });

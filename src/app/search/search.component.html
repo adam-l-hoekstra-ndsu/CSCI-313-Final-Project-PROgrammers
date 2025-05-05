@@ -1,1 +1,14 @@
-<p>search works!</p>
+<div class="ms-auto d-flex" style="width: 100%">
+  <form class="d-flex ms-auto" role="search" (ngSubmit)="onSearch()">
+    <input
+      type="search"
+      class="form-control me-2 flex-grow-1"
+      style="min-width: 250px"
+      placeholder="Search players, teams, sports..."
+      aria-label="Search"
+      [(ngModel)]="searchTerm"
+      name="searchTerm"
+    />
+    <button class="btn btn-outline-light" type="submit">Search</button>
+  </form>
+</div>
