@@ -15,7 +15,8 @@
             <td>{{item}}</td>
             }
             <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]">Manage</a></td>
+            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]"
+                    style="float: right;">Edit</a></td>
         </tr>
         }
         @else {
@@ -25,11 +26,14 @@
             <td>{{item}}</td>
             }
             <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]">Manage</a></td>
+            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]"
+                    style="float: right;">Edit</a></td>
         </tr>
         }
         }
 
     </table>
+    <!-- some kind of if to see if they are admin -->
+    <a class="btn btn-primary" [routerLink]="['/add-player-roster',team.id]">Add to Roster</a>
 
 </div>

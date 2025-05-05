@@ -19,8 +19,8 @@ export const teams: Team[] = [
         name: "Team B",
         sport: Sport.Volleyball,
         logoUrl: "https://example.com/logoB.png",
-        players: [2,4], // Array of player IDs
-        schedule: [], // Array of match IDs
+        players: [2,4,6], // Array of player IDs
+        schedule: [1,2,3,4,5], // Array of match IDs
         wins: 8,
         losses: 7,
         draws: 2,
@@ -29,10 +29,10 @@ export const teams: Team[] = [
     {
         id: 3,
         name: "Team C",
-        sport: Sport.RainbowSixSiege,
+        sport: Sport.Basketball,
         logoUrl: "https://example.com/logoC.png",
         players: [5,6], // Array of player IDs
-        schedule: [], // Array of match IDs
+        schedule: [6], // Array of match IDs
         wins: 12,
         losses: 3,
         draws: 2,
@@ -49,5 +49,17 @@ export const teams: Team[] = [
         losses: 6,
         draws: 2,
         legueSubsection: "South America",
+    },
+    {
+        id: 5,
+        name: "Team B volleyball evil",
+        sport: Sport.Volleyball,
+        logoUrl: "https://example.com/logoB.png",
+        players: [2,4,6], // Array of player IDs
+        schedule: [1,2,3,4,5], // Array of match IDs
+        wins: 8,
+        losses: 7,
+        draws: 2,
+        legueSubsection: "Europe",
     },
 ];

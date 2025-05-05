@@ -6,6 +6,8 @@ import { TeamEditComponent } from './team-edit/team-edit.component';
 import { PlayerEditComponent } from './player-edit/player-edit.component';
 import { RosterEditComponent } from './roster-edit/roster-edit.component';
 import { TeamViewComponent } from './team-view/team-view.component';
+import { AddPlayerRosterComponent } from './add-player-roster/add-player-roster.component';
+import { ScheduleEditComponent } from './schedule-edit/schedule-edit.component';
 
 export const routes: Routes = [
     {
@@ -36,7 +38,20 @@ export const routes: Routes = [
     },
 
     {
+        path: "add-player-roster/:teamId",
+        component: AddPlayerRosterComponent,
+        title: "Add Player to Roster"
+    },
+
+    {
         path: 'team-view/:id',
         component: TeamViewComponent,
         title: "Team View",
     },
+    {
+        path:"edit-schedule/:TeamId",
+        component: ScheduleEditComponent,
+        title: "Edit Schedule"
+    },
+    
+];

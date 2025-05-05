@@ -6,6 +6,7 @@ import { TeamService } from './team.service'; //TeamService
 import { Player } from './player'; //Player Class/Interface
 import { players } from './player-data'; //Player Data/Database
 import { PlayerService } from './player.service'; //PlayerService
+import { Sport } from './sport';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,6 @@ export class FootballService {
   teamData = inject(TeamService);
 
   onInit() {
-    this.teams = this.teamData.teams.filter(team => team.sport === 2); // Filter teams for Rainbow Six Siege
+    this.teams = this.teamData.teams.filter(team => team.sport === Sport.Football); // Filter teams for Rainbow Six Siege
   }
 }

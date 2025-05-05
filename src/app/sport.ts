@@ -1,6 +1,6 @@
 export enum Sport {
-    Football,
-    Basketball,
-    Volleyball,
-    RainbowSixSiege
+    Football =1,
+    Basketball=2,
+    Volleyball=3,
+    RainbowSixSiege=4,
 }

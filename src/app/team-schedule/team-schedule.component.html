@@ -1,1 +1,66 @@
-<p>team-schedule works!</p>
+<div class="row">
+    <table>
+        <tr>
+            <td>Date</td>
+            <td>Against</td>
+            <td>At</td>
+            <td>Score</td>
+            <td>Status</td>
+            <td>Result</td>
+            <!-- some kind of if to see if they are admin -->
+            <td></td>
+        </tr>
+        @for (match of matches; track $index) {
+        @if($index % 2 == 0) {
+        <tr style="background-color: lightgrey;">
+            <td>{{match.date.getMonth()+1}}/{{match.date.getDate()}}/{{match.date.getFullYear()}}</td>
+            <td>{{getAgainst(match)}}</td>
+            <td>{{homeOrAway(match)}}</td>
+            <td>{{displayScore(match)}}</td>
+            <td>{{getStatus(match)}}</td>
+            @if (getResult(match) == "TBD") {
+            <td>TBD</td>
+            }
+            @if (getResult(match) == "TIE") {
+            <td>TIE</td>
+            }
+            @if (getResult(match) == "W") {
+            <td style="color: green;">W</td>
+            }
+            @if (getResult(match) == "L") {
+            <td style="color: red;">L</td>
+            }
+            <!-- some kind of if to see if they are admin -->
+            <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+        </tr>
+        }
+        @else {
+        <tr>
+            <td>{{match.date.getMonth()+1}}/{{match.date.getDate()}}/{{match.date.getFullYear()}}</td>
+            <td>{{getAgainst(match)}}</td>
+            <td>{{homeOrAway(match)}}</td>
+            <td>{{displayScore(match)}}</td>
+            <td>{{getStatus(match)}}</td>
+            @if (getResult(match) == "TBD") {
+            <td>TBD</td>
+            }
+            @if (getResult(match) == "TIE") {
+            <td>TIE</td>
+            }
+            @if (getResult(match) == "W") {
+            <td style="color: green;">W</td>
+            }
+            @if (getResult(match) == "L") {
+            <td style="color: red;">L</td>
+            }
+            <!-- some kind of if to see if they are admin -->
+            <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+        </tr>
+        }
+        }
+
+    </table>
+    <!-- some kind of if to see if they are admin -->
+    <!-- <a class="btn btn-primary" [routerLink]="['/add-player-roster',team.id]">Add to Roster</a> -->
+
+</div>

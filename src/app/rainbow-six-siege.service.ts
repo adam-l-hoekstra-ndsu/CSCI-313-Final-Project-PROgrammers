@@ -29,7 +29,7 @@ export class RainbowSixSiegeService {
   constructor() { }
 
   onInit() {
-    this.teams = this.teamData.teams.filter(team => team.sport === Sport.Football); // Filter teams for Rainbow Six Siege
+    this.teams = this.teamData.teams.filter(team => team.sport === Sport.RainbowSixSiege); // Filter teams for Rainbow Six Siege
   }
 
 }

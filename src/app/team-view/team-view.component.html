@@ -13,10 +13,10 @@
         <app-team-header></app-team-header>
         }
         @if(focus=="roster") {
-        <app-team-roster [team]="team"></app-team-roster>
+        <app-team-roster [teamId]="team.id"></app-team-roster>
         }
         @if(focus=="schedule") {
-        <app-team-schedule></app-team-schedule>
+        <app-team-schedule [teamId]="team.id"></app-team-schedule>
         }
     </div>
 
