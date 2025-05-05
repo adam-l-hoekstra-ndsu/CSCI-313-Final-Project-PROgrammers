@@ -85,6 +85,7 @@
                     </tbody>
                 </table>
             </div>  
+            <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
         } 
     </div>
     <div class="col-md-4 text-center">
@@ -177,4 +178,4 @@
         </div>
     </div>
 </div>
-<app-game-statistics [matchID]="matchID"></app-game-statistics>
+<app-game-statistics [matchID]="matchID()"></app-game-statistics>

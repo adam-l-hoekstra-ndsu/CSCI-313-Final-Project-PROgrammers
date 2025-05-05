@@ -53,54 +53,10 @@
         </div>
     </div>
     <div class="col-md-4 text-center">
-        <form #playerActionForm="ngForm" (ngSubmit)="onSubmit(playerActionForm)">
-            <div class="form-group">
-                <label for="playerActing">Player Acting</label>
-                <select class="form-control" id="playerActing" name="playerActing" [(ngModel)]="playerActing" required>
-                    @for(player of teamService.getPlayers(team1); track player) {
-                        <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
-                    }
-                    @for(player of teamService.getPlayers(team2); track player) {
-                        <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
-                    }
-                </select>
-                <label for="playerEffected">Player Effected</label>
-                <select class="form-control" id="playerEffected" name="playerEffected" [(ngModel)]="playerEffected" required>
-                    @for(player of teamService.getPlayers(team1); track player) {
-                        <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
-                    }
-                    @for(player of teamService.getPlayers(team2); track player) {
-                        <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
-                    }
-                </select>
-                <label for="playerAssisting">Player Assisting</label>
-                <select class="form-control" id="playerAssisting" name="playerAssisting" [(ngModel)]="playerAssisting" required>
-                    @for(player of teamService.getPlayers(team1); track player) {
-                        <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
-                    }
-                    @for(player of teamService.getPlayers(team2); track player) {
-                        <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
-                    }
-                    <option [ngValue]="null">None</option>
-                </select>
-                <label for="playerTimeMinutes">Minutes</label>
-                <input class="form-control" id="playTimeMinutes" name="playTimeMinutes" [(ngModel)]="playTimeMinutes" required>
-                <label for="playerTimeSeconds">Seconds</label>
-                <input class="form-control" id="playTimeSeconds" name="playTimeSeconds" [(ngModel)]="playTimeSeconds" required>
-                <input type="hidden" name="clickedButton" ngModel #buttonValue="ngModel">
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
-                      <button type="submit" (click)="setAction('Killed')" class="btn btn-secondary">Kill</button>
-                      <button type="submit" (click)="setAction('Headshot')"class="btn btn-secondary">Headshot Kill</button>
-                      <button type="submit" (click)="setAction('Revived')" class="btn btn-secondary">Revive</button>
-                      <button type="submit" (click)="setAction('Planted/Disabled the Defuser')" class="btn btn-secondary">Plant/Defuse</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-         
+         <app-play-entry-form [matchID]="this.match.id"></app-play-entry-form>
     </div>
     <div class="col-md-4 text-center">
+        <h1 class="highlight">{{match.team1Score}} - {{match.team2Score}}</h1>
         @if(!match.hasStarted){
             <h1>Upcoming</h1>
         }
@@ -108,7 +64,6 @@
             <h3 style="font-weight: bold;">Final</h3>
         }
         @else {
-            <h1 class="highlight">{{match.team1Score}} - {{match.team2Score}}</h1>
             @switch (team1.sport) {
                 @case (sportEnum.Volleyball) {}
                 @case (sportEnum.RainbowSixSiege) {
@@ -116,7 +71,7 @@
                 }
                 @default {
                     @if (sportEnum.Basketball || sportEnum.Football) {
-                        @if(match.quarterOrRound == 1) {
+                        @if(match.quarterOrRound == 1 && match.timeRemaining) {
                             <h3>1st Quarter - {{match.timeRemaining | secondsToTime}}</h3>
                         }
                         @else if(match.quarterOrRound == 2) {
@@ -142,11 +97,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                    @for(quarterOrRound of match.quarterOrRoundResults; track quarterOrRound) {
                          @for(play of quarterOrRound.plays; track play) {
-                                <tr>
+                            <tr>
                                 <td scope="col">{{play.description}}</td>
-                                <td scope="col">{{play.time | secondsToTime}}</td>
+                                @if(play.time < 0) {
+                                    <td scope="col">-{{play.time | secondsToTime}}</td>
+                                } @else {
+                                    <td scope="col">{{play.time | secondsToTime}}</td>
+                                }
+                                <td><button class="btn btn-danger" (click)="onPlayDelete(play, quarterOrRound)">Delete</button></td>
                             </tr>
                         }
                     }
@@ -155,65 +115,9 @@
         </div> 
     </div>
     <div class="row text-center">
-        <!-- <div class="col-md-12">
-            @if(team1.sport == sportEnum.RainbowSixSiege && match.hasStarted) {
-                <h2 style="margin-top: 2rem;">Round History</h2>
-                <table class="table table-bordered table-responsive">
-                    <thead>
-                        <tr>
-                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                                @if($index % 12 >= 6 || $index == 13) {
-                                    <th style="background-color: lightgrey;">{{$index + 1}}</th>
-                                }
-                                @else {
-                                    <th>{{$index + 1}}</th> 
-                                }
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                            @if($index % 12 >= 6 || $index == 13) {
-                                <td style="background-color: lightgrey;" scope="col"><img class="icon" src={{quarterOrRound.result}}></td>
-                            }
-                            @else {
-                                <td scope="col"><img class="icon"  src={{quarterOrRound.result}}></td>
-                            }
-                        }
-                        </tr>
-                    </tbody>
-                </table>
-            }
-            @else if(team1.sport == sportEnum.Basketball || team1.sport == sportEnum.Football) {
-                <h2 style="margin-top: 2rem;">Score by Quarter</h2>
-                <table class="table table-bordered table-responsive" style="margin: auto; width: 25%; margin-bottom: 2rem;">
-                    <thead>
-                        <tr>
-                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                                <th>{{$index + 1}}</th>
-                            }
-                            <th style="background-color: lightgrey;">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                           <td>{{quarterOrRound.team1Score}}</td>
-                        }
-                        <td style="background-color: lightgrey;">{{match.team1Score}}</td>
-                        </tr>
-                        <tr>
-                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
-                               <td>{{quarterOrRound.team2Score}}</td>
-                            }
-                            <td style="background-color: lightgrey;">{{match.team2Score}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            }
-        </div> -->
+        <div class="col-md-12">
+                <app-play-entry-round-history [matchID]="this.match.id"></app-play-entry-round-history>
+        </div>
     </div>
 </div>
-
-<app-game-statistics [matchID]="matchID"></app-game-statistics>
+<app-game-statistics [matchID]="this.match.id"></app-game-statistics>

@@ -8,6 +8,8 @@ import { RosterEditComponent } from './roster-edit/roster-edit.component';
 import { TeamViewComponent } from './team-view/team-view.component';
 import { AddPlayerRosterComponent } from './add-player-roster/add-player-roster.component';
 import { ScheduleEditComponent } from './schedule-edit/schedule-edit.component';
+import { GameViewComponent } from './game-view/game-view.component';
+import { GamePlayEntryComponent } from './game-play-entry/game-play-entry.component';
 
 export const routes: Routes = [
     {
@@ -54,5 +56,13 @@ export const routes: Routes = [
         component: TeamEditComponent,
         title: "Edit Team",
     },
-    
+        path: "game-view/:matchID",
+        component: GameViewComponent,
+        title: "Game View"
+    },
+    {
+        path: "game-play-entry/:matchID",
+        component: GamePlayEntryComponent,
+        title: "Game Play Entry"
+    },
 ];
