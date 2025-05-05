@@ -3,6 +3,8 @@ import { inject } from '@angular/core';
 import { Team } from './team'; //Team Class/Interface
 import { TeamService } from './team.service'; //TeamService
 import { Player } from './player'; //Player Class/Interface
+import { players } from './player-data'; //Player Data/Database
+import { PlayerService } from './player.service'; //PlayerService
 import { Play } from './play'; //Play Class/Interface
 import { Match } from './match'; //Match Class/Interface
 import { QuarterOrRound } from './quarterOrRound'; //QuarterOrRound Class/Interface
@@ -32,7 +34,6 @@ export enum FootballPlayType {
   Run = "Ran the Ball",
   Touchdown = "Scored a Touchdown",
 }
-
 
 @Injectable({
   providedIn: 'root'

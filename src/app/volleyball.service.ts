@@ -60,7 +60,7 @@ export class VolleyballService {
       (team) => team.sport === Sport.Volleyball
     ); // Filter teams for Volleyball
   }
-
+  
     playDescriptionBuilderAssist(playerActing: Player, playerAssisting: Player, playAction: VolleyballPlayType): string {
       let description = this.playDescriptionBuilderSolo(playerActing, playAction);
       description += ", assisted by " + playerAssisting.firstName + " " + playerAssisting.lastName;

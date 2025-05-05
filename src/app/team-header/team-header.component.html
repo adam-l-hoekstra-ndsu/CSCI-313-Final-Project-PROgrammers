@@ -1,1 +1,3 @@
-<p>team-header works!</p>
+<!-- some kind of if to see if they are admin -->
+<h2>{{team.id}}</h2>
+<button class="btn btn-primary" [routerLink]="['/edit-team', team.id]" style="margin-top: 2rem;">Edit Team</button>

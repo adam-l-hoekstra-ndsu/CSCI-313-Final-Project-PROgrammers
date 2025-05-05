@@ -1,11 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Player } from '../player';
+import { PlayerService } from '../player.service';
+import { FormsModule } from '@angular/forms';
+import { TeamService } from '../team.service';
+import { Team } from '../team';
 
 @Component({
   selector: 'app-player-edit',
-  imports: [],
+  imports: [RouterLink, FormsModule],
   templateUrl: './player-edit.component.html',
   styleUrl: './player-edit.component.css'
 })
-export class PlayerEditComponent {
+export class PlayerEditComponent implements OnInit{
+  teamId = input.required<number>()
+  playerId = input.required<number>()
+  teamService = inject(TeamService)
+  playerService = inject(PlayerService)
+  player!:Player;
+  team!:Team;
+  firstName!:string;
+  lastName!:string;
+  bio!:string;
+  age!:number;
 
+  commitChanges() {
+    this.playerService.editPlayer(this.player, this.firstName, this.lastName, this.bio, this.age)
+  }
+
+  removePlayer(plr: Player) {
+    this.playerService.leaveTeam(plr, this.team)
+    this.teamService.playerLeave(plr, this.team)
+  }
+
+  ngOnInit(): void {
+      this.player = this.playerService.getPlayerById(this.playerId())
+      this.team = this.teamService.getTeam(this.teamId())
+      this.firstName = this.player.firstName
+      this.lastName = this.player.lastName
+      this.bio = this.player.bio
+      this.age = this.player.age
+  }
 }

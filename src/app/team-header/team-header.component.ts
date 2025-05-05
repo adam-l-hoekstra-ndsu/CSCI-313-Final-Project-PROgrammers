@@ -1,11 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Team } from '../team';
+import { TeamService } from '../team.service';
 
 @Component({
   selector: 'app-team-header',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './team-header.component.html',
   styleUrl: './team-header.component.css'
 })
-export class TeamHeaderComponent {
-
+export class TeamHeaderComponent implements OnInit{
+  @Input() teamId!: number;
+  teamService = inject(TeamService)
+  team !: Team;
+  ngOnInit(): void {
+    this.team = this.teamService.getTeam(this.teamId)
+  }
 }

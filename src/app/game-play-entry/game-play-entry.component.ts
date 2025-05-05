@@ -28,7 +28,6 @@ export class GamePlayEntryComponent {
   team1!: Team;
   team2!: Team;
 
-
   sportEnum = Sport; // For use in the template
   siegeActionEnum = SiegePlayType; // For use in the template
   siegeRoundResultEnum = SiegeRoundResult; // For use in the template
@@ -50,8 +49,6 @@ export class GamePlayEntryComponent {
       this.siegeService.reverseSiegeAction(Number(this.matchID()), play, quarterOrRound)
     }
   }
-
-  
 
   // Known Issue: Delete Quarter or Round does not remove the stats from plays from the match.
   // Known Issue: Trade stats are irreversable.

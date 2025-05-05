@@ -1,7 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Team } from './team';
-import { MatchService } from './match.service';
+import { teams } from './team-data';
 import { TeamService } from './team.service'
+import { SiegeRoundResult } from './quarterOrRound';
+import { MatchService } from './match.service';
 import { Sport } from './sport';
 import { Player } from './player';
 import { Play } from './play';
@@ -30,6 +32,17 @@ export enum SiegePlayType {
   Clutch = "Clutched"
 }
 
+export enum SiegeCatagory {
+  Kills,
+  Deaths,
+  Assists,
+  ObjectivePlays,
+  RoundsSurvived,
+  Trades,
+  Revives,
+  Clutches
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,7 +57,7 @@ export class RainbowSixSiegeService {
   constructor() { }
 
   onInit() {
-    this.teams = this.teamData.teams.filter(team => team.sport === Sport.Football); // Filter teams for Rainbow Six Siege
+    this.teams = this.teamData.teams.filter(team => team.sport === Sport.RainbowSixSiege); // Filter teams for Rainbow Six Siege
   }
 
   playDescriptionBuilderAssist(playerActing: Player, playerEffected: Player, playerAssisting: Player, playAction: SiegePlayType): string {

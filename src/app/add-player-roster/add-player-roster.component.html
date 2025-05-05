@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="containerA">
+        <h1>Add Players to {{team.name}} {{team.id}}</h1>
+    </div>
+    <div class="row">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td></td>
+            </tr>
+            @for (player of playersFiltered; track $index) {
+            @if($index % 2 == 0) {
+            <tr style="background-color: lightgrey;">
+                <td>{{player.firstName}} {{player.lastName}}</td>
+
+                <!-- some kind of if to see if they are admin -->
+                <td><a class="btn btn-success" (click)="onConfirm(player)" [routerLink]="['/team-view',teamId()]"
+                        style="float: right;">Add</a></td>
+            </tr>
+            }
+            @else {
+            <tr>
+                <td>{{player.firstName}} {{player.lastName}}</td>
+
+                <!-- some kind of if to see if they are admin -->
+                <td><a class="btn btn-success" (click)="onConfirm(player)" [routerLink]="['/team-view',teamId()]"
+                        style="float: right;">Add</a></td>
+            </tr>
+            }
+            }
+
+        </table>
+        <!-- some kind of if to see if they are admin -->
+        <button class="btn btn-primary" [routerLink]="['/team-view',teamId()]">Cancel</button>
+
+    </div>
+</div>
