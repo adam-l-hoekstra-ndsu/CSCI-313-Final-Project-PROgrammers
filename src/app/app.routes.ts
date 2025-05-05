@@ -7,8 +7,6 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SportSelectionComponent } from './sport-selection/sport-selection.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { AppComponent } from './app.component';
-import { SportSelectionComponent } from './sport-selection/sport-selection.component';
-import { LoginComponent } from './login/login.component';
 import { TeamEditComponent } from './team-edit/team-edit.component';
 import { PlayerEditComponent } from './player-edit/player-edit.component';
 import { RosterEditComponent } from './roster-edit/roster-edit.component';
