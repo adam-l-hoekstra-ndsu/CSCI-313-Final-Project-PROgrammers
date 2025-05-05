@@ -48,10 +48,11 @@ export const routes: Routes = [
         component: TeamViewComponent,
         title: "Team View",
     },
+
     {
-        path:"edit-schedule/:TeamId",
-        component: ScheduleEditComponent,
-        title: "Edit Schedule"
+        path: 'edit-team/:teamId',
+        component: TeamEditComponent,
+        title: "Edit Team",
     },
     
 ];
