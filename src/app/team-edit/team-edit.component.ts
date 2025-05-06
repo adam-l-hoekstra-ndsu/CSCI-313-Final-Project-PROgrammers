@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
+import { Sport } from '../sport';
 
 @Component({
   selector: 'app-team-edit',
@@ -17,8 +18,10 @@ export class TeamEditComponent implements OnInit {
   name!: string
   league!: string
   logo!: string
+  sport!: Sport
 
   commitChanges() {
+    console.log("errors to focus on below")
     this.teamService.editTeam(this.team, this.name, this.league, this.logo)
   }
 
@@ -26,8 +29,13 @@ export class TeamEditComponent implements OnInit {
     console.log(this.id())
     // this.team = this.teamService.getTeam(this.id())
     this.teamService.getTeam(this.id()).subscribe(data => this.team = data) 
-    this.name = this.team.name
-    this.logo = this.team.logoUrl
-    this.league = this.team.legueSubsection
+    this.teamService.getTeam(this.id()).subscribe(data => this.name = data.name) 
+    this.teamService.getTeam(this.id()).subscribe(data => this.league = data.leagueSubsection) 
+    this.teamService.getTeam(this.id()).subscribe(data => this.logo = data.logoUrl) 
+    this.teamService.getTeam(this.id()).subscribe(data => this.sport = data.sport) 
+    
+    // this.name = this.team.name
+    // this.logo = this.team.logoUrl
+    // this.league = this.team.legueSubsection
   }
 }

@@ -16,10 +16,10 @@ export class CreateTeamComponent {
   teamService = inject(TeamService)
   sportEnum = Sport
   team!: Team
-  name!: string
-  league!: string
-  logo!: string
-  sport!: Sport
+  name: string=""
+  league: string=""
+  logo: string =""
+  sport: Sport = Sport.Basketball
 
   commitChanges() {
     this.teamService.createTeam(this.name, this.sport, this.logo, this.league)

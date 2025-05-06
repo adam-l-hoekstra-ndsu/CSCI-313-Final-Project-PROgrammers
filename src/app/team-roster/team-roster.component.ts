@@ -34,8 +34,11 @@ export class TeamRosterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.teamId)
     this.teamService.getTeam(this.teamId).subscribe(data => this.team = data) 
-      this.players = this.teamService.getPlayers(this.team).sort((a:Player, b:Player)=>a.lastName.localeCompare(b.lastName))
+    this.teamService.getPlayers(this.teamId).subscribe(data => this.players = data.filter(plr => plr.teams.includes(this.teamId)))
+      // this.players = this.teamService.getPlayers(this.team.id).sort((a:Player, b:Player)=>a.lastName.localeCompare(b.lastName))
+    
       this.sport = this.team.sport
       console.log(this.team.sport)
       if (this.sport == Sport.Basketball) {

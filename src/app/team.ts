@@ -12,5 +12,5 @@ export interface Team {
     wins: number;
     losses: number;
     draws: number;
-    legueSubsection: string;
+    leagueSubsection: string;
 }

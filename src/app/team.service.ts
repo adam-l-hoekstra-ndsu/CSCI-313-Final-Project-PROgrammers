@@ -49,12 +49,13 @@ export class TeamService implements OnInit {
   }
 
   updateTeam(id: string, team : Partial<Team>): Promise<void> {
+    console.log("called "+"new name: "+team.name)
     const teamDoc = doc(this.firestore, `team-data/${id}`);
-    return updateDoc(teamDoc, team);
+    return updateDoc(teamDoc, {... team});
   }
 
   deleteTeam(id: string): Promise<void> {
-    const teamDoc = doc(this.firestore, `team-data/${id}`);
+    const teamDoc = doc(this.firestore, 'team-data/${id}');
     return deleteDoc(teamDoc);
   }
 
@@ -77,7 +78,7 @@ export class TeamService implements OnInit {
 
   createTeam(named: string, sports: Sport, logo:string, league:string){
     let t:Team = {
-      id: "changeme",
+      id: "",
       name: named,
       sport: sports,
       logoUrl: logo,
@@ -86,15 +87,16 @@ export class TeamService implements OnInit {
       wins: 0,
       losses: 0,
       draws: 0,
-      legueSubsection: league
+      leagueSubsection: league
     }
     this.addTeam(t);
   }
 
   editTeam(t:Team, name: string, league: string, logo: string) {
     t.name = name
-    t.legueSubsection = league
+    t.leagueSubsection = league
     t.logoUrl = logo
+    this.updateTeam(t.id, t)
   }
 
   getPlayerIDs(teamId: string): string[] {
@@ -115,10 +117,18 @@ export class TeamService implements OnInit {
     team.players.push(plr.id);
   }
 
-  getPlayers(team: Team): Player[] {
-    let toReturn:Player[] = []
-    team.players.forEach((playerId) => {
-      toReturn.push(this.playerService.getPlayerById(playerId))});
-    return toReturn;
+  // getPlayers(teamId: string): Player[] {
+  //   console.log("being called "+teamId)
+  //   let toReturn: Player[] =[]
+  //   this.playerService.getPlayers().subscribe( data => toReturn = data.filter(plr => plr.teams.includes(teamId) ) )
+  //   return toReturn
+  //   // let toReturn:Player[] = []
+  //   // team.players.forEach((playerId) => {
+  //   //   toReturn.push(this.playerService.getPlayerById(playerId))});
+  //   // return toReturn;
+  // }
+
+  getPlayers(teamId: string): Observable<Player[]> {
+    return collectionData(this.playerService.playerCollection, ({idField: 'id'})) as Observable<Player[]>
   }
 }

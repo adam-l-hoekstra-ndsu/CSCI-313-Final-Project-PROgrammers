@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for(player of teamService.getPlayers(team1); track player) {
+                        @for(player of teamService.getPlayers(team1.id); track player) {
                             <tr>
                                 @if(player.currentlyInMatch){
                                     <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
@@ -37,7 +37,7 @@
                             <tr>
                                 <h2>{{team2.name}}</h2>
                             </tr>
-                            @for(player of teamService.getPlayers(team2); track player) {
+                            @for(player of teamService.getPlayers(team2.id); track player) {
                             <tr>
                                 @if(player.currentlyInMatch){
                                     <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>

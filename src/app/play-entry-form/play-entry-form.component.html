@@ -2,28 +2,28 @@
     <div class="form-group">
         <label for="playerActing">Player Acting</label>
         <select class="form-control" id="playerActing" name="playerActing" [(ngModel)]="playerActing" required>
-            @for(player of teamService.getPlayers(team1); track player) {
+            @for(player of teamService.getPlayers(team1.id); track player) {
                 <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
             }
-            @for(player of teamService.getPlayers(team2); track player) {
+            @for(player of teamService.getPlayers(team2.id); track player) {
                 <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
             }
         </select>
         <label for="playerEffected">Player Effected</label>
         <select class="form-control" id="playerEffected" name="playerEffected" [(ngModel)]="playerEffected" required>
-            @for(player of teamService.getPlayers(team1); track player) {
+            @for(player of teamService.getPlayers(team1.id); track player) {
                 <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
             }
-            @for(player of teamService.getPlayers(team2); track player) {
+            @for(player of teamService.getPlayers(team2.id); track player) {
                 <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
             }
         </select>
         <label for="playerAssisting">Player Assisting</label>
         <select class="form-control" id="playerAssisting" name="playerAssisting" [(ngModel)]="playerAssisting" required>
-            @for(player of teamService.getPlayers(team1); track player) {
+            @for(player of teamService.getPlayers(team1.id); track player) {
                 <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
             }
-            @for(player of teamService.getPlayers(team2); track player) {
+            @for(player of teamService.getPlayers(team2.id); track player) {
                 <option [ngValue]="player">{{player.firstName[0]}}. {{player.lastName}}</option>
             }
             <option [ngValue]="null">None</option>
