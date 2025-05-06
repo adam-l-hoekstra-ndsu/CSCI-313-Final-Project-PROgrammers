@@ -19,12 +19,8 @@ export class SportSelectionComponent implements OnInit {
   sportService = inject(SportsService);
   teamService = inject(TeamService)
 
-  teams: Team[] = [];
-
   ngOnInit(): void {
     this.sports = this.sportService.getSports();
-    // this.teamService.getTeams().subscribe(data => this.teams = data);
-    this.teams = this.teamService.teams;
-    console.log(this.teams);
+    this.teamService.getTeams().subscribe(data => console.log(data));
   }
 }
