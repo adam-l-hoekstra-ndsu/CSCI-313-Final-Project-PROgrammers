@@ -1,17 +1,26 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnInit } from '@angular/core';
 import { Team } from './team';
 import { Player } from './player';
-import { players } from './player-data';
+// import { players } from './player-data';
 import { TeamService } from './team.service';
+import { collection, collectionData, deleteDoc, doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class PlayerService {
+export class PlayerService implements OnInit {
   constructor() { }
   
-  players = players;
+  players!: Player[]
+
+  private firestore = inject(Firestore);
+  playerCollection = collection(this.firestore, 'player-data');
+
+  ngOnInit(): void {
+      this.getPlayers().subscribe(data => this.players = data);
+  }
   
   editPlayer(plr: Player, fname:string,  lname:string, bio:string, age:string) {
     plr.firstName = fname;
@@ -60,9 +69,36 @@ export class PlayerService {
     plr.teams.push(team.id)
   }
 
-  getPlayerById(id: number): Player {
+  getPlayerById(id: string): Player {
     return this.players.filter(player => player.id == id)[0];
   }
+
+  // Firestore Methods
+    getPlayer(id: string): Observable<Player> {
+      const playerDocRef = doc(this.firestore, `player-data/${id}`);
+      return docData(playerDocRef, { idField: 'id' }) as Observable<Player>;
+    }
+  
+    getPlayers(): Observable<Player[]>{
+      return collectionData(this.playerCollection, ({idField: 'id'})) as Observable<Player[]>
+    }
+  
+    addTeam(newTeam: Team){
+      const playerRef = doc(this.playerCollection);
+      const newId = playerRef.id;
+      newTeam.id = newId;
+      setDoc(playerRef, newTeam);
+    }
+  
+    updateTeam(id: string, team : Partial<Team>): Promise<void> {
+      const teamDoc = doc(this.firestore, `team-data/${id}`);
+      return updateDoc(teamDoc, team);
+    }
+  
+    deleteTeam(id: string): Promise<void> {
+      const teamDoc = doc(this.firestore, `team-data/${id}`);
+      return deleteDoc(teamDoc);
+    }
 
   calculateAvg(player: Player, team: Team): number[] {
     const totalStats: number[] = [];

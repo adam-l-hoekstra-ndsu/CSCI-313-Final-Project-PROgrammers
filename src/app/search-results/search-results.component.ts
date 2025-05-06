@@ -27,7 +27,7 @@ export class SearchResultsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.query = params['q'] || '';
       if (this.query) {
-        this.results = this.searchService.search(this.query);
+        // this.results = this.searchService.search(this.query);      needs to be updated for id string
       } else {
         this.results = [];
       }

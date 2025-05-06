@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './add-player-roster.component.css'
 })
 export class AddPlayerRosterComponent implements OnInit{
-  teamId = input.required<number>()
+  teamId = input.required<string>()
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
   team!: Team;
@@ -24,7 +24,7 @@ export class AddPlayerRosterComponent implements OnInit{
     this.playerService.joinTeam(plr, this.team)
   }
   ngOnInit(): void {
-      this.team = this.teamService.getTeam(this.teamId());
+      this.teamService.getTeam(this.teamId()).subscribe(data => this.team = data);
       this.playersFiltered = this.playerService.players.filter(player => !this.team.players.includes(player.id,0))
   }
 }

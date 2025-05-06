@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,9 @@ export class NavbarComponent implements OnInit {
   selectedTeam: string | null = null;
   selectedPlayer: string | null = null;
   selectedGame: string | null = null;
+  
+  private authService = inject(AuthService);
+  user = this.authService.getUser();
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
@@ -34,6 +38,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    // write logout method here
+    this.authService.logout();
   }
+
+  
 }
