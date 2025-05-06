@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Sport } from './sport';
 import { Team } from './team';
 import { teams } from './team-data';
+import { collection, Firestore, collectionData, doc, setDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 export interface SportInfo {
   name: string;
@@ -16,8 +18,23 @@ export interface SportInfo {
 export class SportsService {
   constructor() {}
 
+  private firestore = inject(Firestore);
+  teamCollection = collection(this.firestore, 'team-data');
+
   allTeams: Team[] = teams;
   sportInfo!: SportInfo[];
+
+  gt(){
+    return this.teamCollection;
+  }
+
+  getTeams(): Observable<Team[]>{
+    return collectionData(this.teamCollection, ({idField: 'id'})) as Observable<Team[]>
+  }
+
+  addTeam(newTeam: Team){
+    const teamRef = doc(this.teamCollection);
+  }
 
   // This is the method used to build each sport in the sport-selection component
   getSports(): SportInfo[] {
