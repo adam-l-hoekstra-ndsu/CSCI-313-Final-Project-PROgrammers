@@ -15,7 +15,24 @@ export interface SportInfo {
 })
 
 export class SportsService {
+  
+  sportInfo!: SportInfo[];
+  
   constructor() {}
 
   // I moved all the getTeam methods to team service - Adam
+
+  getSports(): SportInfo[] {
+    return [
+      { name: 'Football', imageUrl: 'images/football.jpg', sportID: Sport.Football },
+      { name: 'Basketball', imageUrl: 'images/basketball.jpg', sportID: Sport.Basketball },
+      { name: 'Volleyball', imageUrl: 'images/volleyball.jpg', sportID: Sport.Volleyball },
+      { name: 'Rainbow Six Seige', imageUrl: 'images/rainbow-six-seige.jpg', sportID: Sport.RainbowSixSiege},
+    ];
+  }
+
+  getSportInfo(sport: Sport): SportInfo[] {
+    this.sportInfo = this.getSports();
+    return this.sportInfo.filter(sportInfo => sportInfo.sportID == sport);
+  }
 }

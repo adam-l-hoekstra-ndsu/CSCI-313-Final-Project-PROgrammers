@@ -3,8 +3,8 @@ import { QuarterOrRound } from "./quarterOrRound";
 export interface Match {
     id: number;
     date: Date;
-    team1ID: number;
-    team2ID: number;
+    team1ID: string;
+    team2ID: string;
     team1Score: number;
     team2Score: number;
     hasStarted: boolean;

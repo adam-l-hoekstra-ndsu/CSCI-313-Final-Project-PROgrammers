@@ -10,10 +10,11 @@ import { TeamService } from '../team.service';
   styleUrl: './team-header.component.css'
 })
 export class TeamHeaderComponent implements OnInit{
-  @Input() teamId!: number;
+  @Input() teamId!: string;
   teamService = inject(TeamService)
   team !: Team;
   ngOnInit(): void {
-    this.team = this.teamService.getTeam(this.teamId)
+    // this.team = this.teamService.getTeam(this.teamId)
+    this.teamService.getTeam(this.teamId).subscribe(data => this.team = data) 
   }
 }

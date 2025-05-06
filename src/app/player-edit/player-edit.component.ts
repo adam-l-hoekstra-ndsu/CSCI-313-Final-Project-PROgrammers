@@ -13,7 +13,7 @@ import { Team } from '../team';
   styleUrl: './player-edit.component.css'
 })
 export class PlayerEditComponent implements OnInit{
-  teamId = input.required<number>()
+  teamId = input.required<string>()
   playerId = input.required<number>()
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
@@ -35,7 +35,8 @@ export class PlayerEditComponent implements OnInit{
 
   ngOnInit(): void {
       this.player = this.playerService.getPlayerById(this.playerId())
-      this.team = this.teamService.getTeam(this.teamId())
+      // this.team = this.teamService.getTeam(this.teamId())
+      this.teamService.getTeam(this.teamId()).subscribe(data => this.team = data) 
       this.firstName = this.player.firstName
       this.lastName = this.player.lastName
       this.bio = this.player.bio

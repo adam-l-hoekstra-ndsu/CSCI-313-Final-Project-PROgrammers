@@ -11,7 +11,7 @@ import { Team } from '../team';
   styleUrl: './team-edit.component.css'
 })
 export class TeamEditComponent implements OnInit {
-  id = input.required<number>()
+  id = input.required<string>()
   teamService = inject(TeamService)
   team!: Team
   name!: string
@@ -24,7 +24,8 @@ export class TeamEditComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.id())
-    this.team = this.teamService.getTeam(this.id())
+    // this.team = this.teamService.getTeam(this.id())
+    this.teamService.getTeam(this.id()).subscribe(data => this.team = data) 
     this.name = this.team.name
     this.logo = this.team.logoUrl
     this.league = this.team.legueSubsection

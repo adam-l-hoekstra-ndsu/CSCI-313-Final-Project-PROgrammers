@@ -24,7 +24,7 @@ export class TeamRosterComponent implements OnInit {
   vb = inject(VolleyballService)
   rss = inject(RainbowSixSiegeService)
   
-  @Input() teamId!: number;  
+  @Input() teamId!: string;  
   team!:Team;
   players!: Player[];
   sport!: Sport; 
@@ -34,7 +34,7 @@ export class TeamRosterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.team = this.teamService.getTeam(this.teamId)
+    this.teamService.getTeam(this.teamId).subscribe(data => this.team = data) 
       this.players = this.teamService.getPlayers(this.team).sort((a:Player, b:Player)=>a.lastName.localeCompare(b.lastName))
       this.sport = this.team.sport
       console.log(this.team.sport)

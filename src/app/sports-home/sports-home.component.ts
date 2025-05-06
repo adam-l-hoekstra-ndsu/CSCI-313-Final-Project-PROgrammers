@@ -21,9 +21,9 @@ export class SportsHomeComponent implements OnInit, OnDestroy {
   sportTeams!: Team[];  
   
   ngOnInit() {
-    console.log(this.sportsService.allTeams);
+    console.log(this.teamService.teams);
     //this.sportsService.getTeams().subscribe((teams: Team[]) => {this.sportTeams = teams})
-    console.log(this.sportsService.teamCollection);
+    // console.log(this.sportsService.teamCollection);
     // this.sportTeams = this.sportsService.genSportTeams(this.sp());
     // this.sportInfo = this.sportsService.getSportInfo(this.sp());
     //console.log(this.id())

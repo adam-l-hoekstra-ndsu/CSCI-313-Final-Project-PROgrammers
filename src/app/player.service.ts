@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Team } from './team';
 import { Player } from './player';
-import { players } from './player-data';
+// import { players } from './player-data';
 import { TeamService } from './team.service';
 
 @Injectable({
