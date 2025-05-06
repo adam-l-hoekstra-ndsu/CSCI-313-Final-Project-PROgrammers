@@ -19,17 +19,17 @@ export class SearchService {
 
     // Get and transform players
     const players = this.playerService.players
-      // .filter((player) =>
-      //   (player.firstName + ' ' + player.lastName)
-      //     .toLowerCase()
-      //     .includes(lowerTerm)
-      // )
-      // .map((player) => ({
-      //   id: player.id,
-      //   name: player.firstName + ' ' + player.lastName,
-      //   imageUrl: player.photoUrl,
-      //   type: 'player',
-      // }));
+      .filter((player) =>
+        (player.firstName + ' ' + player.lastName)
+          .toLowerCase()
+          .includes(lowerTerm)
+      )
+      .map((player) => ({
+        id: player.id,
+        name: player.firstName + ' ' + player.lastName,
+        imageUrl: player.photoUrl,
+        type: 'player',
+      }));
 
     // Get and transform teams
     const teams = this.teamService.teams

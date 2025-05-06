@@ -1,7 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SearchService } from '../search.service';
 import { SearchResult } from '../search-result';
+import { PlayerService } from '../player.service';
+import { TeamService } from '../team.service';
+import { SportsService } from '../sports.service';
 
 @Component({
   selector: 'app-search-results',
@@ -14,7 +17,11 @@ export class SearchResultsComponent implements OnInit {
   query = '';
 
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private searchService = inject(SearchService);
+  private playerService = inject(PlayerService);
+  private teamService = inject(TeamService);
+  private sportService = inject(SportsService);
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -25,5 +32,26 @@ export class SearchResultsComponent implements OnInit {
         this.results = [];
       }
     });
+  }
+
+  navigateToResult(result: SearchResult): void {
+    if (result.type === 'player') {
+      //Needs fixing
+      const player = this.playerService.getPlayerById(result.id.toString());
+      //const sport = player.; // or player.sportId
+      const team = player.teams; // or player.teamId
+      const playerId = player.id; // or use player.id if needed
+      //this.router.navigate(['/player', sport, team, playerId]);
+    } else if (result.type === 'team') {
+      const team = this.teamService
+        .getTeam(result.id.toString())
+        .subscribe((team) => {
+          const sportId = team;
+          const teamId = team.id;
+          this.router.navigate(['/team-view', sportId, teamId]);
+        });
+    } else if (result.type === 'sport') {
+      this.router.navigate(['/sport', result.id]);
+    }
   }
 }
