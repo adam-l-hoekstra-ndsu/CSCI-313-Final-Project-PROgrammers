@@ -3,7 +3,7 @@ import { Sport } from './sport';
 
 export const teams: Team[] = [
     {
-        id: 0.1,
+        id: 4,
         name: "Buffalo Bills",
         sport: Sport.Football,
         logoUrl: "fb01.png",
@@ -15,7 +15,7 @@ export const teams: Team[] = [
         legueSubsection: "South America",
     },
     {
-        id: 0.1,
+        id: 5,
         name: "Buffalo Bills",
         sport: Sport.Football,
         logoUrl: "fb01.png",

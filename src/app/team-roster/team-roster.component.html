@@ -15,7 +15,7 @@
             <td>{{item}}</td>
             }
             <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]"
+            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.sport,team.id,player.id]"
                     style="float: right;">Edit</a></td>
         </tr>
         }
@@ -26,14 +26,17 @@
             <td>{{item}}</td>
             }
             <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.id,player.id]"
+            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.sport,team.id,player.id]"
                     style="float: right;">Edit</a></td>
         </tr>
         }
         }
 
     </table>
-    <!-- some kind of if to see if they are admin -->
-    <a class="btn btn-primary" [routerLink]="['/add-player-roster',team.id]">Add to Roster</a>
 
+
+</div>
+<div class="text-center">
+    <!-- some kind of if to see if they are admin -->
+    <a class="btn btn-primary" [routerLink]="['/add-player-roster',team.sport,team.id]">Add to Roster</a>
 </div>

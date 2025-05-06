@@ -1,10 +1,10 @@
 <div class="container" style="align-self: center;">
     <div class="containerA">
-        <h1> {{name}}</h1>
+        <h1>Create Team</h1>
     </div>
     <div class="card">
         <div class="container">
-            <h3>Edit Team</h3>
+            <h3>Create Team</h3>
             <div class="row">
                 <div class="col-sm-2 col-form-label">
                     Team Name:
@@ -21,6 +21,21 @@
                     <input class="inputText" type="text" [(ngModel)]="league" style="width: 90%;">
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-2 col-form-label">
+                    Sport:
+                </div>
+                <div class="col-sm-10">
+                    <select name="Sport" [(ngModel)]="sport">
+                        <option [value]="sportEnum.Basketball">Basketball</option>
+                        <option [value]="sportEnum.Volleyball">Volleyball</option>
+                        <option [value]="sportEnum.Football">Football</option>
+                        <option [value]="sportEnum.RainbowSixSiege">Rainbow Six Seige</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-2 col-form-label">
                     Logo:
@@ -31,10 +46,13 @@
             </div>
 
             <div class="row">
-                <img [src]="logo" alt="{{team.name}}'s Logo">
+                <img [src]="logo" alt="{{name}}'s Logo">
             </div>
-            <button class="btn btn-primary" [routerLink]="['/team-view',team.sport,id()]">Cancel</button>
-            <button class="btn btn-primary" (click)="commitChanges()" [routerLink]="['/team-view',team.sport,id()]">Commit</button>
+
+
+
+            <button class="btn btn-primary" [routerLink]="['/sport',sport]">Cancel</button>
+            <button class="btn btn-primary" (click)="commitChanges()" [routerLink]="['/sport',sport]">Commit</button>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+ import { Component, inject, input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TeamService } from '../team.service';
@@ -19,7 +19,7 @@ export class TeamEditComponent implements OnInit {
   logo!: string
 
   commitChanges() {
-
+    this.teamService.editTeam(this.team, this.name, this.league, this.logo)
   }
 
   ngOnInit(): void {

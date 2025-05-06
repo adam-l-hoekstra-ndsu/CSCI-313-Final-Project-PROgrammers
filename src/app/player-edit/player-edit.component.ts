@@ -14,6 +14,7 @@ import { Team } from '../team';
 })
 export class PlayerEditComponent implements OnInit{
   teamId = input.required<number>()
+  sportId = input.required<number>()
   playerId = input.required<number>()
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
@@ -22,7 +23,7 @@ export class PlayerEditComponent implements OnInit{
   firstName!:string;
   lastName!:string;
   bio!:string;
-  age!:number;
+  age!:string;
 
   commitChanges() {
     this.playerService.editPlayer(this.player, this.firstName, this.lastName, this.bio, this.age)
@@ -39,6 +40,6 @@ export class PlayerEditComponent implements OnInit{
       this.firstName = this.player.firstName
       this.lastName = this.player.lastName
       this.bio = this.player.bio
-      this.age = this.player.age
+      this.age = String(this.player.age)
   }
 }

@@ -16,6 +16,8 @@ import { AddPlayerRosterComponent } from './add-player-roster/add-player-roster.
 import { ScheduleEditComponent } from './schedule-edit/schedule-edit.component';
 import { GameViewComponent } from './game-view/game-view.component';
 import { GamePlayEntryComponent } from './game-play-entry/game-play-entry.component';
+import { CreateTeamComponent } from './create-team/create-team.component';
+import { CreatePlayerComponent } from './create-player/create-player.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -49,12 +51,12 @@ export const routes: Routes = [
         title: "Edit Roster"
     },
     {
-        path: "edit-player/:teamId/:playerId",
+        path: "edit-player/:sportId/:teamId/:playerId",
         component: PlayerEditComponent,
         title: "Edit Player"
     },
     {
-        path: "add-player-roster/:teamId",
+        path: "add-player-roster/:sportId/:teamId",
         component: AddPlayerRosterComponent,
         title: "Add Player to Roster"
     },
@@ -81,5 +83,17 @@ export const routes: Routes = [
         path: "game-play-entry/:matchID",
         component: GamePlayEntryComponent,
         title: "Game Play Entry"
+    },
+
+    {
+        path: "create-team/:sportId",
+        component: CreateTeamComponent,
+        title: "Create Team"
+    },
+
+    {
+        path: "create-player/:sportId/:teamId",
+        component: CreatePlayerComponent,
+        title: "Create Player"
     },
 ];
