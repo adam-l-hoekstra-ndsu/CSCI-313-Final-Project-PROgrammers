@@ -11,7 +11,7 @@ import { Sport } from '../sport';
   styleUrl: './team-header.component.css'
 })
 export class TeamHeaderComponent implements OnInit{
-  @Input() teamId!: number;
+  @Input() teamId!: string;
   teamService = inject(TeamService)
   team !: Team;
   getSport(t:Team) {
@@ -30,6 +30,7 @@ export class TeamHeaderComponent implements OnInit{
     return "Not Found"
   }
   ngOnInit(): void {
-    this.team = this.teamService.getTeam(this.teamId)
+    // this.team = this.teamService.getTeam(this.teamId)
+    this.teamService.getTeam(this.teamId).subscribe(data => this.team = data) 
   }
 }

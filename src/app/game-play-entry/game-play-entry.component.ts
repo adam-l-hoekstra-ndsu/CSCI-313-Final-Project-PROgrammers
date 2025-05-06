@@ -40,8 +40,8 @@ export class GamePlayEntryComponent {
 
   ngOnInit(): void {
     this.match = this.matchService.getMatchById(Number(this.matchID()));
-    this.team1 = this.teamService.getTeam(this.match.team1ID);
-    this.team2 = this.teamService.getTeam(this.match.team2ID);
+    this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
+    this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
   }
 
   onPlayDelete(play : Play, quarterOrRound: QuarterOrRound) {

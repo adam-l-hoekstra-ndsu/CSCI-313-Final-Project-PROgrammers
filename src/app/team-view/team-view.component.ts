@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 
 export class TeamViewComponent implements OnInit {
   sportId = input.required<number>();
-  teamId = input.required<number>();
+  teamId = input.required<string>();
   team!:Team;
   teamService = inject(TeamService)
   focus:string= "info" //either info, roster, or schedule
@@ -27,6 +27,6 @@ export class TeamViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.team = this.teamService.getTeam(this.teamId()) 
+    this.teamService.getTeam(this.teamId()).subscribe(data => this.team = data) 
   }
 }

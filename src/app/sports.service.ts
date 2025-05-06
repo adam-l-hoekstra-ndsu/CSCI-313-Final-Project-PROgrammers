@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Sport } from './sport';
 import { Team } from './team';
-import { teams } from './team-data';
+import { collection, Firestore, collectionData, doc, setDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 export interface SportInfo {
   name: string;
@@ -14,12 +15,13 @@ export interface SportInfo {
 })
 
 export class SportsService {
+  
+  sportInfo!: SportInfo[];
+  
   constructor() {}
 
-  allTeams: Team[] = teams;
-  sportInfo!: SportInfo[];
+  // I moved all the getTeam methods to team service - Adam
 
-  // This is the method used to build each sport in the sport-selection component
   getSports(): SportInfo[] {
     return [
       { name: 'Football', imageUrl: 'images/football.jpg', sportID: Sport.Football },
@@ -29,20 +31,8 @@ export class SportsService {
     ];
   }
 
-  //This is the method used to create a dataset of teams based on the sport selected and save it as an array in the sport-home component.
-  getSportTeams(id:number): Team[] {
-    return this.allTeams.filter(team => team.sport == id);
-  }
-
-  //This is the method used to create a dataset of information relating to the selected sport (e.g. sport name and sport picture)
-  //and then save it as an array in the sport-home component 
-  getSportInfo(id:number): SportInfo[] {
+  getSportInfo(sport: Sport): SportInfo[] {
     this.sportInfo = this.getSports();
-    return this.sportInfo.filter(sport => sport.sportID == id);
-  }
-
-  //this is the method used to generate all the teams for the sport selected in the sport-selection component
-  genSportTeams(id:number): Team[] {
-    return this.allTeams.filter(team => team.sport == id);
+    return this.sportInfo.filter(sportInfo => sportInfo.sportID == sport);
   }
 }

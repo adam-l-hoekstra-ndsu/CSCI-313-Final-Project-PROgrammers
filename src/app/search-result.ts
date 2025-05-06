@@ -2,5 +2,5 @@ export interface SearchResult {
   type: string;
   name: string;
   imageUrl: string;
-  id: number;
+  id: string | number;
 }

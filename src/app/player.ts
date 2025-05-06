@@ -1,8 +1,8 @@
 import { KeyValue } from "@angular/common";
 
 export interface Player {
-    id: number;
-    teams: number[];
+    id: string;
+    teams: string[];
     firstName: string;
     lastName: string;
     age: number;

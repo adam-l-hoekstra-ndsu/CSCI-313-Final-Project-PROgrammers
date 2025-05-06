@@ -2,6 +2,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { MatchService } from '../match.service';
 import { Match } from '../match';
 import { TeamService } from '../team.service';
+import { Team } from '../team';
 
 @Component({
   selector: 'app-team-schedule',
@@ -14,7 +15,7 @@ export class TeamScheduleComponent implements OnInit {
   matchService = inject(MatchService)
   teamService = inject(TeamService)
   matches!:Match[]
-  @Input() teamId !: number
+  @Input() teamId !: string
 
   homeOrAway(m:Match) {
     if (m.team1ID == this.teamId) {
@@ -27,10 +28,14 @@ export class TeamScheduleComponent implements OnInit {
 
   getAgainst(m:Match) {
     if (m.team1ID == this.teamId) {
-      return this.teamService.getTeam(m.team2ID).name
+      let teamRef!: Team;
+      this.teamService.getTeam(m.team2ID).subscribe(data => teamRef = data)
+      return teamRef.name
     }
     else {
-      return this.teamService.getTeam(m.team1ID).name
+      let teamRef!: Team;
+      this.teamService.getTeam(m.team2ID).subscribe(data => teamRef = data)
+      return teamRef.name
     }
   }
 
