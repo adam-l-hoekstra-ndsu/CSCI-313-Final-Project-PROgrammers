@@ -13,7 +13,7 @@ import { Sport } from './sport';
 
 export class TeamService implements OnInit {
   
-  teams!: Team[]  //Note: This is a local SNAPSHOT of the firebase databse. Changes made to this array WILL NOT be updated on the Database
+  teams: Team[] = [] //Note: This is a local SNAPSHOT of the firebase databse. Changes made to this array WILL NOT be updated on the Database
 
   playerService = inject(PlayerService);
 
@@ -24,6 +24,7 @@ export class TeamService implements OnInit {
 
   ngOnInit() {
     this.getTeams().subscribe(data => this.teams = data);
+    console.log(this.teams);
   }
 
   // gt(){
@@ -32,12 +33,12 @@ export class TeamService implements OnInit {
 
   // Firestore Methods
   getTeam(id: string): Observable<Team> {
-    const teamDocRef = doc(this.firestore, `teams/${id}`);
+    const teamDocRef = doc(this.firestore, `team-data/${id}`);
     return docData(teamDocRef, { idField: 'id' }) as Observable<Team>;
   }
 
   getTeams(): Observable<Team[]>{
-    return collectionData(this.teamCollection, ({idField: 'id'})) as Observable<Team[]>
+    return collectionData(this.teamCollection, ({idField: 'id'})) as Observable<Team[]>;
   }
 
   addTeam(newTeam: Team){
@@ -75,7 +76,7 @@ export class TeamService implements OnInit {
   }
 
 
-  getPlayerIDs(teamId: string): number[] {
+  getPlayerIDs(teamId: string): string[] {
     return this.teams.filter(team => team.id == teamId)[0].players;
   }
 

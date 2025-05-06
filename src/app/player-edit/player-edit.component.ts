@@ -14,7 +14,7 @@ import { Team } from '../team';
 })
 export class PlayerEditComponent implements OnInit{
   teamId = input.required<string>()
-  playerId = input.required<number>()
+  playerId = input.required<string>()
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
   player!:Player;

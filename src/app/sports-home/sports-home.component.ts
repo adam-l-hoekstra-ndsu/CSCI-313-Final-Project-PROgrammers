@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { SportsService, SportInfo } from '../sports.service';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-sports-home',
@@ -18,15 +19,15 @@ export class SportsHomeComponent implements OnInit, OnDestroy {
   teamService = inject(TeamService);
   sportsService = inject(SportsService);
   sportInfo!: SportInfo[];
-  sportTeams!: Team[];  
+  sportTeams!: Team[]; 
+  firestore = inject(Firestore) 
   
   ngOnInit() {
     console.log(this.teamService.teams);
-    //this.sportsService.getTeams().subscribe((teams: Team[]) => {this.sportTeams = teams})
-    // console.log(this.sportsService.teamCollection);
-    // this.sportTeams = this.sportsService.genSportTeams(this.sp());
-    // this.sportInfo = this.sportsService.getSportInfo(this.sp());
-    //console.log(this.id())
+    this.teamService.getTeams().subscribe(data => this.sportTeams = data)
+    console.log(this.teamService.teams);
+    this.sportTeams = this.teamService.genSportTeams(this.sp());
+    this.sportInfo = this.sportsService.getSportInfo(this.sp());
     console.log(this.sportTeams);
   }
 
