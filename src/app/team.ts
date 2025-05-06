@@ -3,7 +3,7 @@ import { Player } from './player';
 import { Sport } from './sport';
 
 export interface Team {
-    id: number;
+    id: string;
     name: string;
     sport: Sport;
     logoUrl: string;
