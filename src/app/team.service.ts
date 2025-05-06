@@ -77,7 +77,7 @@ export class TeamService implements OnInit {
 
   createTeam(named: string, sports: Sport, logo:string, league:string){
     let t:Team = {
-      id: teams.length,
+      id: "changeme",
       name: named,
       sport: sports,
       logoUrl: logo,
@@ -88,7 +88,7 @@ export class TeamService implements OnInit {
       draws: 0,
       legueSubsection: league
     }
-    teams.push(t)
+    this.addTeam(t);
   }
 
   editTeam(t:Team, name: string, league: string, logo: string) {

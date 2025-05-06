@@ -41,8 +41,8 @@ export const matches: Match[] = [
     {
         id: 3,
         date: new Date("2023-10-03T18:00:00"),
-        team1ID: '6',
-        team2ID: '6',
+        team1ID: "MYmGN5My4T6wK7q579vm",
+        team2ID: 'XKQH1Wo5d27fdohQ7n2Z',
         team1Score: 7,
         team2Score: 5,
         hasStarted: true,

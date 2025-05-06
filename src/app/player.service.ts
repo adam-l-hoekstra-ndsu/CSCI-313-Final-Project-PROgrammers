@@ -43,9 +43,9 @@ export class PlayerService implements OnInit {
     else {
       testAge = -1
     }
+    const playerRef = doc(this.playerCollection)
     let plr : Player = {
-
-      id: players.length,
+      id: "changeme",
       teams:[],
       firstName: fname,
       lastName: lname,
@@ -56,7 +56,7 @@ export class PlayerService implements OnInit {
       avgStats: [],
       currentlyInMatch: false
     }
-    players.push(plr)
+    this.addPlayer(plr)
     
   }
 
@@ -83,11 +83,11 @@ export class PlayerService implements OnInit {
       return collectionData(this.playerCollection, ({idField: 'id'})) as Observable<Player[]>
     }
   
-    addTeam(newTeam: Team){
+    addPlayer(newPlayer: Player){
       const playerRef = doc(this.playerCollection);
       const newId = playerRef.id;
-      newTeam.id = newId;
-      setDoc(playerRef, newTeam);
+      newPlayer.id = newId;
+      setDoc(playerRef, newPlayer);
     }
   
     updateTeam(id: string, team : Partial<Team>): Promise<void> {
