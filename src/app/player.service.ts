@@ -22,13 +22,42 @@ export class PlayerService implements OnInit {
       this.getPlayers().subscribe(data => this.players = data);
   }
   
-  editPlayer(plr: Player, fname:string,  lname:string, bio:string, age:number) {
+  editPlayer(plr: Player, fname:string,  lname:string, bio:string, age:string) {
     plr.firstName = fname;
     plr.lastName = lname;
     plr.bio = bio;
     if (!Number.isNaN(Number(age))) {
-      plr.age = age
+      plr.age = Number(age)
     }    
+    else {
+      plr.age = -1
+    }
+  }
+
+  createPlayer(fname:string, lname:string, bios:string, age:string) {
+
+    let testAge :number = 0
+    if (!Number.isNaN(Number(age))) {
+      testAge = Number(age)
+    }    
+    else {
+      testAge = -1
+    }
+    let plr : Player = {
+
+      id: players.length,
+      teams:[],
+      firstName: fname,
+      lastName: lname,
+      age: testAge,
+      bio: bios,
+      photoUrl: "",
+      stats: {},
+      avgStats: [],
+      currentlyInMatch: false
+    }
+    players.push(plr)
+    
   }
 
   leaveTeam(plr: Player, team: Team) {

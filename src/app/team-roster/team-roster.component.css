@@ -1,3 +1,9 @@
+td{
+    font-size:small;
+}
 table {
     table-layout : fixed;
+}
+.spec {
+    margin: 1rem;
 }
