@@ -13,6 +13,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { QuarterOrRound, SiegeRoundResult } from '../quarterOrRound';
 import { PlayEntryFormComponent } from "../play-entry-form/play-entry-form.component";
 import { PlayEntryRoundHistoryComponent } from "../play-entry-round-history/play-entry-round-history.component";
+import { PlayerService } from '../player.service';
 
 
 @Component({
@@ -22,11 +23,14 @@ import { PlayEntryRoundHistoryComponent } from "../play-entry-round-history/play
   styleUrl: './game-play-entry.component.css'
 })
 export class GamePlayEntryComponent {
-  matchID = input.required<number>();
+  matchID = input.required<string>();
   match!: Match;
   
   team1!: Team;
   team2!: Team;
+
+  team1Players!: Player[]
+  team2Players!: Player[]
 
   sportEnum = Sport; // For use in the template
   siegeActionEnum = SiegePlayType; // For use in the template
@@ -37,16 +41,19 @@ export class GamePlayEntryComponent {
   siegeService = inject(RainbowSixSiegeService);
   teamService = inject(TeamService);
   matchService = inject(MatchService)
+  playerService = inject(PlayerService)
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(Number(this.matchID()));
+    this.matchService.getMatchById(this.matchID()).subscribe(data => this.match = data);
     this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
     this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
+    this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
+    this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
   }
 
   onPlayDelete(play : Play, quarterOrRound: QuarterOrRound) {
     if(typeof play.playerActing == typeof SiegePlayType) {
-      this.siegeService.reverseSiegeAction(Number(this.matchID()), play, quarterOrRound)
+      this.siegeService.reverseSiegeAction(this.match, play, quarterOrRound)
     }
   }
 

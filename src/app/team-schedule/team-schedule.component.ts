@@ -88,6 +88,6 @@ export class TeamScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.matches = this.matchService.matches.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.getTime()-a.date.getTime()})
+   this.matchService.getMatches().subscribe(data => this.matches = data.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.toDate().getTime()-a.date.toDate().getTime()}));
   }
 }

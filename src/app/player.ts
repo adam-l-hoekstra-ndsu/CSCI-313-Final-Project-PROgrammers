@@ -8,7 +8,7 @@ export interface Player {
     age: number;
     bio: string;
     photoUrl: string;
-    stats: { [key: number]: number[] };
+    stats: { [key: string]: number[] };
     avgStats: number[]
     currentlyInMatch: boolean;
 }

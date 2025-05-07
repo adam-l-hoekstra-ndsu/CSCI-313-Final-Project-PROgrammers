@@ -2,7 +2,7 @@
     <div class="row  justify-content-md-center">
         <div class="col-md-auto text-center">
             <h1>{{team1.name}} VS. {{team2.name}}</h1>
-            <h2>{{match.date.toDateString()}} - {{match.date.toLocaleTimeString()}}</h2>
+            <h2>{{match.date.toDate().toDateString()}} - {{match.date.toDate().toLocaleTimeString()}}</h2>
 
         </div>
     </div>
@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(player of teamService.getPlayers(team1.id); track player) {
+                    @for(player of team1Players; track player) {
                         <tr>
                             @if(player.currentlyInMatch){
                                 <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
@@ -95,7 +95,7 @@
                     <tr>
                         <h2>{{team2.name}}</h2>
                     </tr>
-                    @for(player of teamService.getPlayers(team2.id); track player) {
+                    @for(player of team2Players; track player) {
                     <tr>
                         @if(player.currentlyInMatch){
                             <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>

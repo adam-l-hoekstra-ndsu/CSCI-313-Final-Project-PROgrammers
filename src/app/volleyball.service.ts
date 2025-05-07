@@ -79,13 +79,13 @@ export class VolleyballService {
       return description;
     }
   
-    volleyballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: VolleyballPlayType): void {
+    volleyballPlayBuilder(match: Match, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: VolleyballPlayType): void {
       // Handle Assists and Play Description
       let playDescription = "";
       if (playerAssisting != null) {
         playDescription = this.playDescriptionBuilderAssist(playerActing, playerAssisting, action);
         if(action != VolleyballPlayType.Blocked) {
-          playerAssisting.stats[matchID][VolleyballCategory.Assists]++;
+          playerAssisting.stats[match.id][VolleyballCategory.Assists]++;
         }
       }
       else if (playerEffected != null) {
@@ -98,42 +98,42 @@ export class VolleyballService {
 
       // Handle Serves
       if(action == VolleyballPlayType.Serve) {
-        playerActing.stats[matchID][VolleyballCategory.Serves]++;
+        playerActing.stats[match.id][VolleyballCategory.Serves]++;
       }
 
       // Handle Kills
       if(action == VolleyballPlayType.Kill) {
-        playerActing.stats[matchID][VolleyballCategory.Kills]++;
+        playerActing.stats[match.id][VolleyballCategory.Kills]++;
       }
 
       // Handle Aces
       if(action == VolleyballPlayType.Ace) {
-        playerActing.stats[matchID][VolleyballCategory.Aces]++;
+        playerActing.stats[match.id][VolleyballCategory.Aces]++;
       }
 
       // Handle Digs
       if(action == VolleyballPlayType.Dig) {
-        playerActing.stats[matchID][VolleyballCategory.Digs]++;
+        playerActing.stats[match.id][VolleyballCategory.Digs]++;
       }
 
       // Handle Receptions
       if(action == VolleyballPlayType.Receptions) {
-        playerActing.stats[matchID][VolleyballCategory.Receptions]++;
+        playerActing.stats[match.id][VolleyballCategory.Receptions]++;
       }
 
       // Handle Errors
       if(action == VolleyballPlayType.Error) {
-        playerActing.stats[matchID][VolleyballCategory.Errors]++;
+        playerActing.stats[match.id][VolleyballCategory.Errors]++;
       }
 
       // Handle Blocks
       if(action == VolleyballPlayType.Blocked) {
         if(playerAssisting != null) {
-          playerActing.stats[matchID][VolleyballCategory.BlockAssists]++;
-          playerAssisting.stats[matchID][VolleyballCategory.BlockAssists]++;
+          playerActing.stats[match.id][VolleyballCategory.BlockAssists]++;
+          playerAssisting.stats[match.id][VolleyballCategory.BlockAssists]++;
         }
         else {
-          playerActing.stats[matchID][VolleyballCategory.SoloBlocks]++;
+          playerActing.stats[match.id][VolleyballCategory.SoloBlocks]++;
         }
       }
 
@@ -146,60 +146,60 @@ export class VolleyballService {
         time: time,
         description: playDescription,
       };
-      this.matchService.addPlayToMatch(this.matchService.getMatchById(matchID), play);
+      this.matchService.addPlayToMatch(match, play);
     }
   
-    reverseVolleyballAction(matchID: number, play: Play, quarterOrRound: QuarterOrRound) {
+    reverseVolleyballAction(match: Match, play: Play, quarterOrRound: QuarterOrRound) {
       // Handle Assists and Play Description
       if (play.playerAssisting != null && play.playAction != VolleyballPlayType.Blocked) {
-        play.playerAssisting.stats[matchID][VolleyballCategory.Assists]--;
+        play.playerAssisting.stats[match.id][VolleyballCategory.Assists]--;
       }
 
       if(play.playerActing != null) {
         // Handle Serves
       if(play.playAction == VolleyballPlayType.Serve) {
-        play.playerActing.stats[matchID][VolleyballCategory.Serves]--;
+        play.playerActing.stats[match.id][VolleyballCategory.Serves]--;
       }
 
       // Handle Kills
       if(play.playAction == VolleyballPlayType.Kill) {
-        play.playerActing.stats[matchID][VolleyballCategory.Kills]++;
+        play.playerActing.stats[match.id][VolleyballCategory.Kills]++;
       }
 
       // Handle Aces
       if(play.playAction == VolleyballPlayType.Ace) {
-        play.playerActing.stats[matchID][VolleyballCategory.Aces]++;
+        play.playerActing.stats[match.id][VolleyballCategory.Aces]++;
       }
 
       // Handle Digs
       if(play.playAction == VolleyballPlayType.Dig) {
-        play.playerActing.stats[matchID][VolleyballCategory.Digs]++;
+        play.playerActing.stats[match.id][VolleyballCategory.Digs]++;
       }
 
       // Handle Receptions
       if(play.playAction == VolleyballPlayType.Receptions) {
-        play.playerActing.stats[matchID][VolleyballCategory.Receptions]++;
+        play.playerActing.stats[match.id][VolleyballCategory.Receptions]++;
       }
 
       // Handle Errors
       if(play.playAction == VolleyballPlayType.Error) {
-        play.playerActing.stats[matchID][VolleyballCategory.Errors]++;
+        play.playerActing.stats[match.id][VolleyballCategory.Errors]++;
       }
 
       // Handle Blocks
       if(play.playAction == VolleyballPlayType.Blocked) {
         if(play.playerAssisting != null) {
-          play.playerActing.stats[matchID][VolleyballCategory.BlockAssists]++;
-          play.playerAssisting.stats[matchID][VolleyballCategory.BlockAssists]++;
+          play.playerActing.stats[match.id][VolleyballCategory.BlockAssists]++;
+          play.playerAssisting.stats[match.id][VolleyballCategory.BlockAssists]++;
         }
         else {
-          play.playerActing.stats[matchID][VolleyballCategory.SoloBlocks]++;
+          play.playerActing.stats[match.id][VolleyballCategory.SoloBlocks]++;
         }
       }
       }
 
       // Remove Play
-      this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
+      this.matchService.removePlayFromMatch(match, play, quarterOrRound);
     }
   
     calculateStats(player: Player, matchID: Match) {

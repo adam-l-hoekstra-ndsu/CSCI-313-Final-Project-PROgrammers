@@ -9,6 +9,8 @@ import { GameStatisticsComponent } from '../game-statistics/game-statistics.comp
 import { SecondsToTimePipe } from '../seconds-to-time.pipe';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
+import { PlayerService } from '../player.service';
+import { Player } from '../player';
 
 @Component({
   selector: 'app-game-view',
@@ -19,11 +21,14 @@ import { Firestore } from '@angular/fire/firestore';
 export class GameViewComponent {
   categories: string[] = [];
 
-  matchID = input.required<number>();
+  matchID = input.required<string>();
   match!: Match;
   
   team1!: Team;
   team2!: Team;
+
+    team1Players!: Player[]
+    team2Players!: Player[]
 
   sportEnum = Sport; // For use in the template
 
@@ -33,12 +38,17 @@ export class GameViewComponent {
   teamService = inject(TeamService);
   matchService = inject(MatchService)
   firestore = inject(Firestore);
+  playerService = inject(PlayerService)
 
   ngOnInit(): void {
     this.categories = this.siegeService.statCategories;
-    this.match = this.matchService.getMatchById(Number(this.matchID()));
-    this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
-    this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
+    this.matchService.getMatchById(this.matchID()).subscribe(data => {
+       this.match = data;
+       this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
+       this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
+      });
+    this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
+    this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
   }
 
 }

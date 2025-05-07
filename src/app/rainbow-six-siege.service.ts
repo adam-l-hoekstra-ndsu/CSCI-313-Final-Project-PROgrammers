@@ -40,13 +40,13 @@ export class RainbowSixSiegeService {
   statCategories: string[] = ["Kills", "Deaths", "Assists", "Objective Plays", "Rounds Survied", "Trades", "Revives", "Clutches", "K/D", "HS%"]
   teams: Team[] = [];
 
-  teamData = inject(TeamService);
+  teamService = inject(TeamService);
   matchService = inject(MatchService);
 
   constructor() { }
 
   onInit() {
-    this.teams = this.teamData.teams.filter(team => team.sport === Sport.RainbowSixSiege); // Filter teams for Rainbow Six Siege
+    this.teamService.getTeams().subscribe(data => this.teams = data.filter(team => team.sport === Sport.RainbowSixSiege)); // Filter teams for Rainbow Six Siege
   }
 
   playDescriptionBuilderAssist(playerActing: Player, playerEffected: Player, playerAssisting: Player, playAction: SiegePlayType): string {
@@ -67,12 +67,12 @@ export class RainbowSixSiegeService {
     return description;
   }
 
-  siegePlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: SiegePlayType, trade: boolean): void {
+  siegePlayBuilder(match: Match, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: SiegePlayType, trade: boolean): void {
     // Handle Assists and Play Description
     let playDescription = "";
     if (playerAssisting != null) {
       playDescription = this.playDescriptionBuilderAssist(playerActing, playerEffected, playerAssisting, action);
-      playerAssisting.stats[matchID][SiegeCatagory.Assists]++;
+      playerAssisting.stats[match.id][SiegeCatagory.Assists]++;
     }
     else if (playerEffected != null) {
       playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
@@ -84,30 +84,30 @@ export class RainbowSixSiegeService {
 
     // Handle Kills & Trades
     if (action == SiegePlayType.Killed || action == SiegePlayType.Headshot) {
-      playerActing.stats[matchID][SiegeCatagory.Kills]++;
-      playerEffected.stats[matchID][SiegeCatagory.Deaths]++;
+      playerActing.stats[match.id][SiegeCatagory.Kills]++;
+      playerEffected.stats[match.id][SiegeCatagory.Deaths]++;
       // playerEffected.currentlyInMatch = false;
       if (trade) {
-        playerActing.stats[matchID][SiegeCatagory.Trades]++;
+        playerActing.stats[match.id][SiegeCatagory.Trades]++;
       }
       if (action == SiegePlayType.Headshot) {
-        playerActing.stats[matchID][SiegeCatagory.HS]++;
+        playerActing.stats[match.id][SiegeCatagory.HS]++;
       }
     }
 
     // Handle Revives
     if (action == SiegePlayType.Revived) {
-      playerActing.stats[matchID][SiegeCatagory.Revives]++;
+      playerActing.stats[match.id][SiegeCatagory.Revives]++;
     }
 
     // Handle Objective Plays
     if (action == SiegePlayType.Planted) {
-      playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]++;
+      playerActing.stats[match.id][SiegeCatagory.ObjectivePlays]++;
     }
 
     // Handle Clutches
     if (action == SiegePlayType.Clutch) {
-      playerActing.stats[matchID][SiegeCatagory.Clutches]++;
+      playerActing.stats[match.id][SiegeCatagory.Clutches]++;
     }
 
 
@@ -120,13 +120,13 @@ export class RainbowSixSiegeService {
       time: time,
       description: playDescription,
     };
-    this.matchService.addPlayToMatch(this.matchService.getMatchById(matchID), play);
+    this.matchService.addPlayToMatch(match, play);
   }
 
-  reverseSiegeAction(matchID: number, play: Play, quarterOrRound: QuarterOrRound) {
+  reverseSiegeAction(match: Match, play: Play, quarterOrRound: QuarterOrRound) {
     // Handle Assists
     if (play.playerAssisting != null) {
-      play.playerAssisting.stats[matchID][SiegeCatagory.Assists]--;
+      play.playerAssisting.stats[match.id][SiegeCatagory.Assists]--;
     }
 
     // Handle Kills, Headshots & Trades
@@ -134,33 +134,33 @@ export class RainbowSixSiegeService {
 
       if (play.playerEffected != null) {
         if (play.playAction == SiegePlayType.Killed || play.playAction == SiegePlayType.Headshot) {
-          play.playerActing.stats[matchID][SiegeCatagory.Kills]--;
-          play.playerEffected.stats[matchID][SiegeCatagory.Deaths]--;
+          play.playerActing.stats[match.id][SiegeCatagory.Kills]--;
+          play.playerEffected.stats[match.id][SiegeCatagory.Deaths]--;
           // play.playerEffected.currentlyInMatch = true;
         }
         if (play.playAction == SiegePlayType.Headshot) {
-          play.playerActing.stats[matchID][SiegeCatagory.HS]--;
+          play.playerActing.stats[match.id][SiegeCatagory.HS]--;
         }
 
         // Handle Revives
         if (play.playAction == SiegePlayType.Revived) {
-          play.playerActing.stats[matchID][SiegeCatagory.Revives]--;
+          play.playerActing.stats[match.id][SiegeCatagory.Revives]--;
         }
       }
 
       // Handle Clutches
       if (play.playAction == SiegePlayType.Clutch) {
-        play.playerActing.stats[matchID][SiegeCatagory.Clutches]--;
+        play.playerActing.stats[match.id][SiegeCatagory.Clutches]--;
       }
 
       // Handle Objective Plays
       if (play.playAction == SiegePlayType.Planted) {
-        play.playerActing.stats[matchID][SiegeCatagory.ObjectivePlays]--;
+        play.playerActing.stats[match.id][SiegeCatagory.ObjectivePlays]--;
       }
 
     }
 
-    this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
+    this.matchService.removePlayFromMatch(match, play, quarterOrRound);
   }
 
   setSiegeRoundResult(quarterOrRound: QuarterOrRound, result: SiegeRoundResult) {

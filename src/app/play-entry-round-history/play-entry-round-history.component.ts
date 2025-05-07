@@ -16,7 +16,7 @@ import { PlayerService } from '../player.service';
 })
 export class PlayEntryRoundHistoryComponent implements OnInit {
 
-  @Input() matchID!: number;
+  @Input() matchID!: string;
   match!: Match;
   sport!: Sport;
 
@@ -33,7 +33,7 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
   sportEnum = Sport
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(Number(this.matchID));
+    this.matchService.getMatchById(this.matchID).subscribe(data => this.match);
     this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
     this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
     this.sport = this.team1.sport;
@@ -67,7 +67,7 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
       this.matchService.removeQuarterOrRoundFromMatch(this.match, this.match.quarterOrRoundResults[this.match.quarterOrRound - 1]);
       if(this.team1.sport == Sport.RainbowSixSiege) {
         for(let i = 0; i < this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays.length; i++) {
-          this.siegeService.reverseSiegeAction(this.match.id, this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays[i], this.match.quarterOrRoundResults[this.match.quarterOrRound - 1]);
+          this.siegeService.reverseSiegeAction(this.match, this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays[i], this.match.quarterOrRoundResults[this.match.quarterOrRound - 1]);
         }
         for(let i = 0; i < this.team1.players.length; i++) {
           this.siegeService.calculateStats(this.playerService.getPlayerById(this.team1.players[i]), this.match)

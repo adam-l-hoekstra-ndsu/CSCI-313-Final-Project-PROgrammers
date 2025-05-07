@@ -128,7 +128,7 @@ export class TeamService implements OnInit {
   //   // return toReturn;
   // }
 
-  getPlayers(teamId: string): Observable<Player[]> {
-    return collectionData(this.playerService.playerCollection, ({idField: 'id'})) as Observable<Player[]>
-  }
+  // getPlayers(): Observable<Player[]> {
+  //   return collectionData(this.playerService.playerCollection, ({idField: 'id'})) as Observable<Player[]>
+  // }
 }

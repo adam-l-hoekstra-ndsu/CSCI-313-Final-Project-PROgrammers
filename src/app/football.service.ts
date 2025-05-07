@@ -75,7 +75,7 @@ export class FootballService {
     return description;
   }
 
-  footballPlayBuilder(matchID: number, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: FootballPlayType, yards?: number): void {
+  footballPlayBuilder(match: Match, time: number, playerActing: Player, playerEffected: Player, playerAssisting: Player, action: FootballPlayType, yards?: number): void {
     // Handle Play Description
     let playDescription = "";
     if (playerEffected != null) {
@@ -92,30 +92,30 @@ export class FootballService {
 
     // Handle Passes
     if ((action == FootballPlayType.Passed || action == FootballPlayType.Incomplete) && yards != null) {
-      playerActing.stats[matchID][FootballCategory.PassesAttempted]++;
+      playerActing.stats[match.id][FootballCategory.PassesAttempted]++;
       if (action == FootballPlayType.Passed) {
-        playerActing.stats[matchID][FootballCategory.Completions]++;
-        playerActing.stats[matchID][FootballCategory.YardsGained] += yards;
-        playerEffected.stats[matchID][FootballCategory.YardsGained] += yards
+        playerActing.stats[match.id][FootballCategory.Completions]++;
+        playerActing.stats[match.id][FootballCategory.YardsGained] += yards;
+        playerEffected.stats[match.id][FootballCategory.YardsGained] += yards
       }
     }
 
     // Handle Runs
     if (action == FootballPlayType.Run && yards != null) {
-      playerActing.stats[matchID][FootballCategory.YardsGained] += yards;
+      playerActing.stats[match.id][FootballCategory.YardsGained] += yards;
     }
 
     // Handle Touchdowns
     if (action == FootballPlayType.Touchdown) {
-      playerActing.stats[matchID][FootballCategory.TDs]++;
+      playerActing.stats[match.id][FootballCategory.TDs]++;
     }
 
     // Handle Field Goals
     if (action == FootballPlayType.FGMade) {
-      playerActing.stats[matchID][FootballCategory.FGsMade]++;
+      playerActing.stats[match.id][FootballCategory.FGsMade]++;
     }
     if (action == FootballPlayType.FGMissed) {
-      playerActing.stats[matchID][FootballCategory.FGsMissed]++;
+      playerActing.stats[match.id][FootballCategory.FGsMissed]++;
     }
 
     // Handle Game Entry / Exit
@@ -128,12 +128,12 @@ export class FootballService {
 
     // Handle Tackles
     if (action == FootballPlayType.Tackle) {
-      playerActing.stats[matchID][FootballCategory.Tackles]++;
+      playerActing.stats[match.id][FootballCategory.Tackles]++;
     }
 
     // Handle Penlty
     if (action == FootballPlayType.Penalty) {
-      playerActing.stats[matchID][FootballCategory.Fouls]++;
+      playerActing.stats[match.id][FootballCategory.Fouls]++;
     }
 
     // Create and add the play object
@@ -146,41 +146,41 @@ export class FootballService {
       description: playDescription,
       yards: yards
     };
-    this.matchService.addPlayToMatch(this.matchService.getMatchById(matchID), play);
+    this.matchService.addPlayToMatch(match, play);
   }
 
-  reverseFootballAction(matchID: number, play: Play, quarterOrRound: QuarterOrRound) {
+  reverseFootballAction(match: Match, play: Play, quarterOrRound: QuarterOrRound) {
 
     if (play.playerActing != null) {
       if (play.yards != null) {
         // Handle Passes
         if (play.playAction == FootballPlayType.Passed || play.playAction == FootballPlayType.Incomplete) {
-          play.playerActing.stats[matchID][FootballCategory.PassesAttempted]++;
+          play.playerActing.stats[match.id][FootballCategory.PassesAttempted]++;
           if (play.playAction == FootballPlayType.Passed) {
-            play.playerActing.stats[matchID][FootballCategory.Completions]++;
-            play.playerActing.stats[matchID][FootballCategory.YardsGained] -= play.yards;
+            play.playerActing.stats[match.id][FootballCategory.Completions]++;
+            play.playerActing.stats[match.id][FootballCategory.YardsGained] -= play.yards;
             if (play.playerEffected != null) {
-              play.playerEffected.stats[matchID][FootballCategory.YardsGained] -= play.yards
+              play.playerEffected.stats[match.id][FootballCategory.YardsGained] -= play.yards
             }
           }
         }
 
         // Handle Runs
         if (play.playAction == FootballPlayType.Run) {
-          play.playerActing.stats[matchID][FootballCategory.YardsGained] -= play.yards;
+          play.playerActing.stats[match.id][FootballCategory.YardsGained] -= play.yards;
         }
       }
       // Handle Touchdowns
       if (play.playAction == FootballPlayType.Touchdown) {
-        play.playerActing.stats[matchID][FootballCategory.TDs]--;
+        play.playerActing.stats[match.id][FootballCategory.TDs]--;
       }
 
       // Handle Field Goals
       if (play.playAction == FootballPlayType.FGMade) {
-        play.playerActing.stats[matchID][FootballCategory.FGsMade]--;
+        play.playerActing.stats[match.id][FootballCategory.FGsMade]--;
       }
       if (play.playAction == FootballPlayType.FGMissed) {
-        play.playerActing.stats[matchID][FootballCategory.FGsMissed]--;
+        play.playerActing.stats[match.id][FootballCategory.FGsMissed]--;
       }
 
       // Handle Game Entry / Exit
@@ -193,15 +193,15 @@ export class FootballService {
 
       // Handle Tackles
       if (play.playAction == FootballPlayType.Tackle) {
-        play.playerActing.stats[matchID][FootballCategory.Tackles]--;
+        play.playerActing.stats[match.id][FootballCategory.Tackles]--;
       }
 
       // Handle Penlty
       if (play.playAction == FootballPlayType.Penalty) {
-        play.playerActing.stats[matchID][FootballCategory.Fouls]--;
+        play.playerActing.stats[match.id][FootballCategory.Fouls]--;
       }
     }
-    this.matchService.removePlayFromMatch(this.matchService.getMatchById(matchID), play, quarterOrRound);
+    this.matchService.removePlayFromMatch(match, play, quarterOrRound);
   }
 
 }

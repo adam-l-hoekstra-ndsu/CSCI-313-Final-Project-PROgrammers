@@ -1,8 +1,9 @@
+import { Timestamp } from "@angular/fire/firestore";
 import { QuarterOrRound } from "./quarterOrRound";
 
 export interface Match {
-    id: number;
-    date: Date;
+    id: string;
+    date: Timestamp;
     team1ID: string;
     team2ID: string;
     team1Score: number;
