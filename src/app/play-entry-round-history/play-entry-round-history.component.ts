@@ -58,13 +58,14 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
         }
       }
     }
-    this.match.timeRemaining = this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays[this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays.length - 1].time
+    this.matchService.updateMatch(this.match.id, this.match);
   }
 
   previousRound() {
     if(this.match.quarterOrRound > 1) {
       this.match.quarterOrRound--;
-      this.match.timeRemaining = this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays[this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays.length - 1].time
+      // this.match.timeRemaining = this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays[this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].plays.length - 1].time
+      this.matchService.updateMatch(this.match.id, this.match);
     }
   }
 
@@ -86,20 +87,23 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
     if(this.match.quarterOrRound > 1) {
       this.match.quarterOrRound--;
     }
+    this.matchService.updateMatch(this.match.id, this.match);
     this.matchService.calculateMatchScore(this.match);
   }
 
   setSiegeRoundResult(result: SiegeRoundResult) {
-    this.siegeService.setSiegeRoundResult( this.match.quarterOrRoundResults[this.match.quarterOrRound - 1], result);
+    this.siegeService.setSiegeRoundResult( this.match, result);
     this.matchService.calculateMatchScore(this.match);
   }
 
   changeScore(teamNumber: number, scoreAdjustment: number) {
     if(teamNumber == 1) {
       this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].team1Score += scoreAdjustment;
+      this.matchService.updateMatch(this.match.id, this.match);
     }
     if(teamNumber == 2) {
       this.match.quarterOrRoundResults[this.match.quarterOrRound - 1].team2Score += scoreAdjustment;
+      this.matchService.updateMatch(this.match.id, this.match);
     }
     this.matchService.calculateMatchScore(this.match);
   }

@@ -8,6 +8,7 @@ import { Player } from './player';
 import { Play } from './play';
 import { QuarterOrRound, SiegeRoundResult } from './quarterOrRound';
 import { Match } from './match';
+import { PlayerService } from './player.service';
 
 export enum SiegeCatagory {
   Kills,
@@ -42,6 +43,7 @@ export class RainbowSixSiegeService {
 
   teamService = inject(TeamService);
   matchService = inject(MatchService);
+  playerService = inject(PlayerService);
 
   constructor() { }
 
@@ -76,7 +78,6 @@ export class RainbowSixSiegeService {
     }
     else if (playerEffected != null) {
       playDescription = this.playDescriptionBuilder(playerActing, playerEffected, action);
-
     }
     else {
       playDescription = this.playDescriptionBuilderSolo(playerActing, action);
@@ -121,6 +122,11 @@ export class RainbowSixSiegeService {
       description: playDescription,
     };
     this.matchService.addPlayToMatch(match, play);
+    this.playerService.updatePlayer(playerActing.id, playerActing);
+    this.playerService.updatePlayer(playerEffected.id, playerEffected);
+    if (playerAssisting != null) {
+      this.playerService.updatePlayer(playerAssisting.id, playerAssisting);
+    }
   }
 
   reverseSiegeAction(match: Match, play: Play, quarterOrRound: QuarterOrRound) {
@@ -161,21 +167,26 @@ export class RainbowSixSiegeService {
     }
 
     this.matchService.removePlayFromMatch(match, play, quarterOrRound);
+    if(play.playerActing != null) this.playerService.updatePlayer(play.playerActing.id, play.playerActing);
+    if(play.playerEffected != null) this.playerService.updatePlayer(play.playerEffected.id, play.playerEffected);
+    if (play.playerAssisting != null) {
+      this.playerService.updatePlayer(play.playerAssisting.id, play.playerAssisting);
+    }
   }
 
-  setSiegeRoundResult(quarterOrRound: QuarterOrRound, result: SiegeRoundResult) {
-    quarterOrRound.result = result;
+  setSiegeRoundResult(match: Match, result: SiegeRoundResult) {
+    match.quarterOrRoundResults[match.quarterOrRound - 1].result = result;
 
     // Update the scores based on the result
     if (result == SiegeRoundResult.TEAM1_OBJ || result == SiegeRoundResult.TEAM1_KILL || result == SiegeRoundResult.TEAM1_TIME) {
-      quarterOrRound.team1Score = 1;
-      quarterOrRound.team2Score = 0;
+      match.quarterOrRoundResults[match.quarterOrRound - 1].team1Score = 1;
+      match.quarterOrRoundResults[match.quarterOrRound - 1].team2Score = 0;
     }
     else if (result == SiegeRoundResult.TEAM2_OBJ || result == SiegeRoundResult.TEAM2_KILL || result == SiegeRoundResult.TEAM2_TIME) {
-      quarterOrRound.team1Score = 0;
-      quarterOrRound.team2Score = 1;
+      match.quarterOrRoundResults[match.quarterOrRound - 1].team1Score = 0;
+      match.quarterOrRoundResults[match.quarterOrRound - 1].team2Score = 1;
     }
-
+    this.matchService.updateMatch(match.id, match);
   }
 
   calculateStats(player: Player, match: Match) {
@@ -198,6 +209,7 @@ export class RainbowSixSiegeService {
     else {
       player.stats[match.id][SiegeCatagory.HSRatio] = (player.stats[match.id][SiegeCatagory.HS] / player.stats[match.id][SiegeCatagory.Kills]) * 100;
     }
+    this.playerService.updatePlayer(player.id, player);
   };
 
 }

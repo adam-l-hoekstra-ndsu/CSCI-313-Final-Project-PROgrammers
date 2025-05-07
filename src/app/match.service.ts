@@ -16,25 +16,22 @@ export class MatchService {
 
   addPlayToMatch(match: Match, play: Play) {
     match.quarterOrRoundResults[match.quarterOrRound - 1].plays.push(play);
+    this.updateMatch(match.id, match);
   }
-
-  // matches = matches;
 
   private firestore = inject(Firestore);
   matchCollection = collection(this.firestore, 'match-data');
 
   constructor() { }
 
-  // getMatchById(id: number): Match {
-  //   return this.matches.filter(match => match.id === id)[0];
-  // }
-
   removePlayFromMatch(match: Match, playToRemove: Play, quarterOrRound: QuarterOrRound) {
     quarterOrRound.plays = quarterOrRound.plays.filter(play => play != playToRemove );
+    this.updateMatch(match.id, match);
   }
 
   removeQuarterOrRoundFromMatch(match: Match, quarterOrRound: QuarterOrRound) {
     match.quarterOrRoundResults = match.quarterOrRoundResults.filter(qr => qr != quarterOrRound);
+    this.updateMatch(match.id, match);
   }
 
   // Firestore Methods
@@ -78,19 +75,6 @@ export class MatchService {
       return deleteDoc(teamDoc);
     }
 
-    // // Match Stats
-    // getStatById(id: string): Observable<MatchStats> {
-    //   const statDocRef = doc(this.firestore, `stat-data/${id}`);
-    //   return docData(statDocRef, { idField: 'id' }) as Observable<MatchStats>;
-    // }
-
-    // // Get Quarter or Round
-    // getQuarterOrRoundById(id: string): Observable<QuarterOrRound> {
-    //   const quarterOrRoundDocRef = doc(this.firestore, `quarter-or-round-data/${id}`);
-    //   return docData(quarterOrRoundDocRef, { idField: 'id' }) as Observable<QuarterOrRound>;
-    // }
-
-
   calculateMatchScore(match: Match) {
     let t1Score = 0;
     let t2Score = 0;
@@ -102,6 +86,7 @@ export class MatchService {
 
     match.team1Score = t1Score;
     match.team2Score = t2Score;
+    this.updateMatch(match.id, match);
   }
 
 }
