@@ -33,10 +33,16 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
   sportEnum = Sport
 
   ngOnInit(): void {
-    this.matchService.getMatchById(this.matchID).subscribe(data => this.match);
-    this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
-    this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
-    this.sport = this.team1.sport;
+    this.matchService.getMatchById(this.matchID).subscribe(data => {
+      this.match = data
+      this.teamService.getTeam(this.match.team1ID).subscribe(data => {
+        this.team1 = data
+        this.sport = this.team1.sport;
+      });
+      this.teamService.getTeam(this.match.team2ID).subscribe(data => {
+        this.team2 = data
+      });
+    });
   }
 
   nextRound() {
