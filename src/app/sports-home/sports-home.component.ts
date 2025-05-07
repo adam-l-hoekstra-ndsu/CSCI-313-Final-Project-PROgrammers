@@ -4,6 +4,7 @@ import { SportsService, SportInfo } from '../sports.service';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
 import { Firestore } from '@angular/fire/firestore';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-sports-home',
@@ -18,6 +19,7 @@ export class SportsHomeComponent implements OnInit, OnDestroy {
   sp = input.required<number>();
   teamService = inject(TeamService);
   sportsService = inject(SportsService);
+  authService = inject(AuthService);
   sportInfo!: SportInfo[];
   sportTeams!: Team[]; 
   firestore = inject(Firestore) 

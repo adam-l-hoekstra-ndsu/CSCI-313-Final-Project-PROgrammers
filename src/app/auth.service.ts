@@ -14,25 +14,35 @@ export interface UserInfo{
 })
 
 export class AuthService {
+  [x: string]: any;
 
+  readonly token: string | null = localStorage.getItem('token');
+  private _token: string | null = localStorage.getItem('token');
+
+  get tokenF(): string | null {
+    return this._token;
+  }
+  
   private auth = inject(Auth);
   private router = inject(Router);
 
   login(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password).then(() => {
       localStorage.setItem('token', 'true');
-      this.router.navigate(['/dashboard'])
+      this.router.navigate(['']);
+      window.location.reload();
     }, err => {
-      alert(`Something went wrong: ${err.message} `);
+      alert(`User not found: ${err.message} `);
       this.router.navigate(['/login'])
     })
   }
 
-  logout(){
+  logOut(){
     signOut(this.auth)
       .then(() => {
         localStorage.removeItem('token');
-        this.router.navigate(['/login'])
+        this.router.navigate(['']);
+        window.location.reload();
       })
       .catch(err => {
         alert(err.message);
@@ -52,6 +62,4 @@ export class AuthService {
   getUser(): User | null {
     return this.auth.currentUser;
   }
-
-
 }

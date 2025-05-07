@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
 import { Team } from '../team';
 import { TeamService } from '../team.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-sport-selection',
@@ -17,10 +18,13 @@ export class SportSelectionComponent implements OnInit {
   sports: SportInfo[] = [];
   userService = inject(UserService);
   sportService = inject(SportsService);
-  teamService = inject(TeamService)
+  teamService = inject(TeamService);
+  authService = inject(AuthService);
 
   ngOnInit(): void {
     this.sports = this.sportService.getSports();
     this.teamService.getTeams().subscribe(data => console.log(data));
+    const token = localStorage.getItem('token');
+    //this.authService['localStorage'].getItem();
   }
 }

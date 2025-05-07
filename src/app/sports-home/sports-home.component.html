@@ -47,7 +47,9 @@
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-primary" [routerLink]="['/create-team',sp()]">Create team</button>
+        @if (this.authService.token == 'true') {
+            <button class="btn btn-primary" [routerLink]="['/create-team',sp()]">Create team</button>
+        }   
     </div>
 </body>
 

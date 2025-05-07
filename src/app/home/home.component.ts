@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { SportSelectionComponent } from '../sport-selection/sport-selection.component';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,10 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
-  adminLoggedIn = true;
+export class HomeComponent implements OnInit {
+  authService = inject(AuthService);
+
+  ngOnInit(): void {
+    //const token = this.authService.token;
+  }
 }
