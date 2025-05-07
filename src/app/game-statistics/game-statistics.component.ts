@@ -44,11 +44,13 @@ export class GameStatisticsComponent implements OnInit {
       this.match = data
       this.teamService.getTeam(this.match.team1ID).subscribe(data => {
         this.team1 = data;
+        this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
         this.setCategories(this.team1.sport);
       });
-      this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
-      this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
-      this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
+      this.teamService.getTeam(this.match.team2ID).subscribe(data => { 
+        this.team2 = data
+        this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
+      });  
     });
   }
 

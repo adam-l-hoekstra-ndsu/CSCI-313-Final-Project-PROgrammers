@@ -44,11 +44,19 @@ export class GameViewComponent {
     this.categories = this.siegeService.statCategories;
     this.matchService.getMatchById(this.matchID()).subscribe(data => {
        this.match = data;
-       this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
-       this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
+       console.log(this.match);
+       this.teamService.getTeam(this.match.team1ID).subscribe(data => {
+       this.team1 = data
+       this.playerService.getPlayers().subscribe(data => {
+        this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id))
+       });
       });
-    this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
-    this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
+       this.teamService.getTeam(this.match.team2ID).subscribe(data => {
+        this.team2 = data
+        this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
+      });
+      });
+    
   }
 
 }
