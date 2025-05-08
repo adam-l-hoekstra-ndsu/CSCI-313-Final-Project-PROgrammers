@@ -4,7 +4,7 @@ import { Match } from './match';
 import { Play } from './play';
 import { QuarterOrRound } from './quarterOrRound';
 import { Observable } from 'rxjs';
-import { collection, collectionData, deleteDoc, doc, docData, setDoc, updateDoc } from '@angular/fire/firestore';
+import { collection, collectionData, deleteDoc, doc, docData, setDoc, Timestamp, updateDoc } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { Team } from './team';
 import { MatchStats } from './stat';
@@ -45,7 +45,7 @@ export class MatchService {
       return collectionData(this.matchCollection, ({idField: 'id'})) as Observable<Match[]>;
     }
   
-    addMatch(team1: Team, team2: Team, date: Date){
+    addMatch(team1: Team, team2: Team, date: Timestamp){
       let newMatch = {
         id: "notreasigned",
         date: date,
@@ -63,6 +63,7 @@ export class MatchService {
       const newId = teamRef.id;
       newMatch.id = newId;
       setDoc(teamRef, newMatch);
+      return newId;
     }
   
     updateMatch(id: string, match : Partial<Match>): Promise<void> {

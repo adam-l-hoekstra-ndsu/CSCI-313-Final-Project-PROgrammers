@@ -13,8 +13,7 @@
         @for (match of this.matches; track $index) {
         @if($index % 2 == 0) {
         <tr style="background-color: lightgrey;">
-            <td><a [routerLink]="['/game-view', match.id]">{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}</a>
-            </td>
+            <td><a [routerLink]="['/game-view', match.id]">{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}</a></td>
             <td>{{getAgainst(match)}}</td>
             <td>{{homeOrAway(match)}}</td>
             <td>{{displayScore(match)}}</td>
@@ -38,8 +37,7 @@
         }
         @else {
         <tr>
-            <td>{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}
-            </td>
+            <td><a [routerLink]="['/game-view', match.id]">{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}</a></td>
             <td>{{getAgainst(match)}}</td>
             <td>{{homeOrAway(match)}}</td>
             <td>{{displayScore(match)}}</td>
@@ -67,4 +65,9 @@
 
     </table>
 
+</div>
+<div class="text-center">
+    @if (this.authService.token == 'true') {
+        <a class="btn btn-primary" [routerLink]="['/add-match-schedule',team.sport,team.id]">Add Match</a>
+    }
 </div>

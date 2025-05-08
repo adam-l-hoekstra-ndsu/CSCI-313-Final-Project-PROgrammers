@@ -48,7 +48,6 @@
 
 </div>
 <div class="text-center">
-    <!-- some kind of if to see if they are admin -->
     @if (this.authService.token == 'true') {
     <a class="btn btn-primary" [routerLink]="['/add-player-roster',team.sport,team.id]">Add to Roster</a>
     }

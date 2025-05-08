@@ -19,6 +19,7 @@ import { CreateTeamComponent } from './create-team/create-team.component';
 import { CreatePlayerComponent } from './create-player/create-player.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { AuthGuard } from '@angular/fire/auth-guard';
+import { MatchCreateComponent } from './match-create/match-create.component';
 
 export const routes: Routes = [
     { 
@@ -114,4 +115,10 @@ export const routes: Routes = [
         component: ComingSoonComponent,
         title: "Sorry"
     },
+    {
+        path: "add-match-schedule/:sportId/:teamId",
+        component: MatchCreateComponent,
+        title: "Create Match",
+        canActivate: [AuthGuard]
+    }
 ];

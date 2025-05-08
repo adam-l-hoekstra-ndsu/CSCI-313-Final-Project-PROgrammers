@@ -11,7 +11,7 @@ import { PlayerService } from '../player.service';
 })
 export class CreatePlayerComponent {
   sportId = input.required<number>()
-  teamId = input.required<number>()
+  teamId = input.required<string>()
   playerService = inject(PlayerService)
   
   firstName: string = ""

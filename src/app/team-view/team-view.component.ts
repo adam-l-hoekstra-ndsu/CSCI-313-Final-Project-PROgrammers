@@ -6,6 +6,7 @@ import { TeamScheduleComponent } from '../team-schedule/team-schedule.component'
 import { TeamHeaderComponent } from '../team-header/team-header.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-team-view',
@@ -19,6 +20,7 @@ export class TeamViewComponent implements OnInit {
   teamId = input.required<string>();
   team!:Team;
   teamService = inject(TeamService)
+  authService = inject(AuthService)
   focus:string= "info" //either info, roster, or schedule
   allTeams!: Team[];
   
