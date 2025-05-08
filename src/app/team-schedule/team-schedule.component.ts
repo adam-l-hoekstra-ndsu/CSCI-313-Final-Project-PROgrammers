@@ -23,6 +23,7 @@ export class TeamScheduleComponent implements OnInit {
   teams1:Team[] = []
   teams2:Team[] = []
   @Input() teamId !: string
+  team!:Team
 
   homeOrAway(m:Match) {
     if (m.team1ID == this.teamId) {
@@ -131,6 +132,7 @@ export class TeamScheduleComponent implements OnInit {
 //     this.teams = this.teamService.getTeam(t =)
 // });
   this.matchService.getMatches().subscribe(data => {
+    this.teamService.getTeam(this.teamId).subscribe(data => this.team = data) 
     this.matches = data.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.toDate().getTime()-a.date.toDate().getTime()})
       for (let match of this.matches) {
         this.teamService.getTeam(match.team1ID).subscribe(d => {

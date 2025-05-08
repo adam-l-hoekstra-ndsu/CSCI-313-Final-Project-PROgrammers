@@ -21,6 +21,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { AuthGuard } from '@angular/fire/auth-guard';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { NgModule } from '@angular/core';
+import { MatchCreateComponent } from './match-create/match-create.component';
 
 export const routes: Routes = [
     { 
@@ -120,5 +121,11 @@ export const routes: Routes = [
         path: "verify-email",
         component: VerifyEmailComponent,
         title: "Reset Password",
+    },
+    {
+        path: "add-match-schedule/:sportId/:teamId",
+        component: MatchCreateComponent,
+        title: "Create Match",
+        canActivate: [AuthGuard]
     }
 ];

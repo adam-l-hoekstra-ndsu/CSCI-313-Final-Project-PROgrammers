@@ -85,10 +85,11 @@
                     </tbody>
                 </table>
             </div>
-            @if (this.authService.token == 'true') {
-                <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
-            }  
-        } 
+             
+        }
+        @if (this.authService.token == 'true') {
+            <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
+        }  
     </div>
     <div class="col-md-4 text-center">
         @if(match.hasStarted) {
