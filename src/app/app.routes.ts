@@ -56,6 +56,11 @@ export const routes: Routes = [
         title: "Edit Player"
     },
     {
+        path: "view-player/:sportId/:teamId/:playerId",
+        component: PlayerViewComponent,
+        title: "View Player"
+    },
+    {
         path: "add-player-roster/:sportId/:teamId",
         component: AddPlayerRosterComponent,
         title: "Add Player to Roster"

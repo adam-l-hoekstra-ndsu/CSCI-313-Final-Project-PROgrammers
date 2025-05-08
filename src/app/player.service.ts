@@ -63,10 +63,12 @@ export class PlayerService implements OnInit {
   leaveTeam(plr: Player, team: Team) {
     const index = plr.teams.indexOf(team.id,0)
     plr.teams.splice(index,1)
+    this.updatePlayer(plr.id, plr)
   }
 
   joinTeam(plr: Player, team: Team) {
     plr.teams.push(team.id)
+    this.updatePlayer(plr.id, plr)
   }
 
   getPlayerById(id: string): Player {

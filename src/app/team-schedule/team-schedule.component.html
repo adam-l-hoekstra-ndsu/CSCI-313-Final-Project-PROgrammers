@@ -8,12 +8,13 @@
             <td>Status</td>
             <td>Result</td>
             <!-- some kind of if to see if they are admin -->
-            <td></td>
+            <!-- <td></td> -->
         </tr>
-        @for (match of matches; track $index) {
+        @for (match of this.matches; track $index) {
         @if($index % 2 == 0) {
         <tr style="background-color: lightgrey;">
-            <td>{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}</td>
+            <td>{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}
+            </td>
             <td>{{getAgainst(match)}}</td>
             <td>{{homeOrAway(match)}}</td>
             <td>{{displayScore(match)}}</td>
@@ -31,12 +32,14 @@
             <td style="color: red;">L</td>
             }
             <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+
+            <!-- <td><a class="btn btn-primary" style="float: right;">Edit</a></td> -->
         </tr>
         }
         @else {
         <tr>
-            <td>{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}</td>
+            <td>{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}
+            </td>
             <td>{{getAgainst(match)}}</td>
             <td>{{homeOrAway(match)}}</td>
             <td>{{displayScore(match)}}</td>
@@ -53,8 +56,11 @@
             @if (getResult(match) == "L") {
             <td style="color: red;">L</td>
             }
+            <!-- @if (this.authService.token == 'true') { -->
             <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+            <!-- <td><a class="btn btn-primary" style="float: right;">Edit</a></td>
+            } -->
+
         </tr>
         }
         }

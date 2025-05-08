@@ -14,9 +14,15 @@
             @for (item of getAverages(player); track $index) {
             <td>{{item}}</td>
             }
-            <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.sport,team.id,player.id]"
-                    style="float: right;">Edit</a></td>
+            <td>
+                @if (this.authService.token == 'true') {
+                <a class="btn btn-primary" [routerLink]="['/edit-player',team.sport,team.id,player.id]"
+                    style="float: right;">Edit</a>
+                }
+                <a class="btn btn-primary" [routerLink]="['/view-player',team.sport,team.id,player.id]"
+                    style="float: right;">View</a>
+            </td>
+
         </tr>
         }
         @else {
@@ -25,9 +31,14 @@
             @for (item of getAverages(player); track $index) {
             <td>{{item}}</td>
             }
-            <!-- some kind of if to see if they are admin -->
-            <td><a class="btn btn-primary" [routerLink]="['/edit-player',team.sport,team.id,player.id]"
-                    style="float: right;">Edit</a></td>
+            <td>
+                @if (this.authService.token == 'true') {
+                <a class="btn btn-primary" [routerLink]="['/edit-player',team.sport,team.id,player.id]"
+                    style="float: right;">Edit</a>
+                }
+                <a class="btn btn-primary" [routerLink]="['/view-player',team.sport,team.id,player.id]"
+                    style="float: right;">View</a>
+            </td>
         </tr>
         }
         }
@@ -38,5 +49,8 @@
 </div>
 <div class="text-center">
     <!-- some kind of if to see if they are admin -->
+    @if (this.authService.token == 'true') {
     <a class="btn btn-primary" [routerLink]="['/add-player-roster',team.sport,team.id]">Add to Roster</a>
+    }
+
 </div>

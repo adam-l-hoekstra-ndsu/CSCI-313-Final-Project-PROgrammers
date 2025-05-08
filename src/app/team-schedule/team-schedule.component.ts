@@ -3,6 +3,8 @@ import { MatchService } from '../match.service';
 import { Match } from '../match';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
+import { AuthService } from '../auth.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-team-schedule',
@@ -14,7 +16,11 @@ import { Team } from '../team';
 export class TeamScheduleComponent implements OnInit {
   matchService = inject(MatchService)
   teamService = inject(TeamService)
+  authService = inject(AuthService);
+  
   matches!:Match[]
+  teams1:Team[] = []
+  teams2:Team[] = []
   @Input() teamId !: string
 
   homeOrAway(m:Match) {
@@ -27,17 +33,28 @@ export class TeamScheduleComponent implements OnInit {
   }
 
   getAgainst(m:Match) {
-    if (m.team1ID == this.teamId) {
-      let teamRef!: Team;
-      this.teamService.getTeam(m.team2ID).subscribe(data => teamRef = data)
-      return teamRef.name
+    if (m.team2ID == this.teamId) {
+      for(const t of this.teams1) {
+        if (t.id = m.team1ID) {
+          return t.name
+        }
+      }
+      
     }
     else {
-      let teamRef!: Team;
-      this.teamService.getTeam(m.team2ID).subscribe(data => teamRef = data)
-      return teamRef.name
+      for(const t of this.teams2) {
+        if (t.id = m.team2ID) {
+          return t.name
+        }
+      }
     }
+    return "not found"
   }
+
+  // getAgainst(m: Match): Observable<string> {
+  //   const id = m.team1ID === this.teamId ? m.team1ID : m.team2ID;
+  //   return this.teamService.getName(id);
+  // }
 
   displayScore(m:Match) {
     if (m.team1ID == this.teamId) {
@@ -88,6 +105,21 @@ export class TeamScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.matchService.getMatches().subscribe(data => this.matches = data.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.toDate().getTime()-a.date.toDate().getTime()}));
+  //this.matchService.getMatches().subscribe(data => this.matches = data.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.toDate().getTime()-a.date.toDate().getTime()}));
+//   this.matchService.getMatches().subscribe(data => {
+//     this.matches = data.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.toDate().getTime()-a.date.toDate().getTime()})
+//     this.teams = this.teamService.getTeam(t =)
+// });
+  this.matchService.getMatches().subscribe(data => {
+    this.matches = data.filter(match => match.team1ID == this.teamId || match.team2ID == this.teamId).sort((a:Match, b:Match)=>{return b.date.toDate().getTime()-a.date.toDate().getTime()})
+      for (let match of this.matches) {
+        this.teamService.getTeam(match.team1ID).subscribe(d => {
+          this.teams1.push(d)
+        });
+        this.teamService.getTeam(match.team2ID).subscribe(d => {
+          this.teams2.push(d)
+        });
+      }
+    });
   }
 }

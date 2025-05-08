@@ -34,8 +34,10 @@
                 <img [src]="logo" alt="{{this.name}}'s Logo">
             </div>
             <button class="btn btn-primary" [routerLink]="['/team-view',team.sport,id()]">Cancel</button>
-            <button class="btn btn-primary" (click)="commitChanges()"
+            @if (this.authService.token == 'true') {
+                <button class="btn btn-primary" (click)="commitChanges()"
                 [routerLink]="['/team-view',team.sport,id()]">Commit</button>
+            }
         </div>
     </div>
 </div>

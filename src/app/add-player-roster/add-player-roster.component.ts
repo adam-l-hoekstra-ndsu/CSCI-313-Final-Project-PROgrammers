@@ -4,6 +4,7 @@ import { TeamService } from '../team.service';
 import { PlayerService } from '../player.service';
 import { Player } from '../player';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-add-player-roster',
@@ -15,6 +16,7 @@ export class AddPlayerRosterComponent implements OnInit{
   teamId = input.required<string>()
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
+  authService = inject(AuthService);
   team!: Team;
   playersFiltered!:Player[]
   playersToAdd!:Player[]
@@ -25,6 +27,7 @@ export class AddPlayerRosterComponent implements OnInit{
   }
   ngOnInit(): void {
       this.teamService.getTeam(this.teamId()).subscribe(data => this.team = data);
-      this.playersFiltered = this.playerService.players.filter(player => !this.team.players.includes(player.id,0))
+      this.playerService.getPlayers().subscribe(data => this.playersFiltered = data.filter( plr => !plr.teams.includes(this.teamId())) )
+      //this.playersFiltered = this.playerService.players.filter(player => !this.team.players.includes(player.id,0))
   }
 }

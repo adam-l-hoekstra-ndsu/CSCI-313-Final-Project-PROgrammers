@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
 import { Sport } from '../sport';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-team-edit',
@@ -14,6 +15,7 @@ import { Sport } from '../sport';
 export class TeamEditComponent implements OnInit {
   id = input.required<string>()
   teamService = inject(TeamService)
+  authService = inject(AuthService);
   team!: Team
   name!: string
   league!: string

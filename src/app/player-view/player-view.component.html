@@ -1,1 +1,25 @@
-<p>player-view works!</p>
+<div class="container" style="align-self: center;">
+    <div class="containerA">
+        <h1> {{this.firstName}} {{this.lastName}}</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            Age: {{age}}
+        </div>
+        <div class="row">
+            Bio: {{this.bio}}
+        </div>
+        <div class="row">
+            Playing for:
+            @for (item of teams; track $index) {
+            <p>{{item.name}}</p>
+            }
+        </div>
+        <div class="text-center">
+            @if (this.authService.token == 'true') {
+            <button class="btn btn-primary" [routerLink]="['/edit-player',sportId(),teamId(),playerId()]">Edit</button>
+            }
+            <button class="btn btn-primary" [routerLink]="['/team-view',sportId(),teamId()]">Back to team</button>
+        </div>
+    </div>
+</div>

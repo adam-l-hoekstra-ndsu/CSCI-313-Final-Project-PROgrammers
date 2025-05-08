@@ -1,6 +1,6 @@
 <div class="container">
     <div class="containerA">
-        <h1>Add Players to {{team.name}} {{team.id}}</h1>
+        <h1>Add Players to {{this.team.name}} {{this.team.id}}</h1>
     </div>
     <div class="row">
         <table>
@@ -13,9 +13,11 @@
             <tr style="background-color: lightgrey;">
                 <td>{{player.firstName}} {{player.lastName}}</td>
 
-                <!-- some kind of if to see if they are admin -->
-                <td><a class="btn btn-success" (click)="onConfirm(player)" [routerLink]="['/team-view',teamId()]"
+                @if (this.authService.token == 'true') {
+                    <td><a class="btn btn-success" (click)="onConfirm(player)" [routerLink]="['/team-view',team.sport,teamId()]"
                         style="float: right;">Add</a></td>
+                }
+                
             </tr>
             }
             @else {
@@ -23,8 +25,10 @@
                 <td>{{player.firstName}} {{player.lastName}}</td>
 
                 <!-- some kind of if to see if they are admin -->
-                <td><a class="btn btn-success" (click)="onConfirm(player)" [routerLink]="['/team-view',teamId()]"
+                @if (this.authService.token == 'true') {
+                    <td><a class="btn btn-success" (click)="onConfirm(player)" [routerLink]="['/team-view',team.sport,teamId()]"
                         style="float: right;">Add</a></td>
+                } 
             </tr>
             }
             }
@@ -34,8 +38,10 @@
 
     </div>
     <div class="container text-center">
-        <button class="btn btn-primary spec" [routerLink]="['/create-player',team.sport,teamId()]">Create
-            Player</button>
+        @if (this.authService.token == 'true') {
+            <button class="btn btn-primary spec" [routerLink]="['/create-player',team.sport,teamId()]">Create
+                Player</button>
+        }
         <button class="btn btn-primary spec" [routerLink]="['/team-view',team.sport,teamId()]">Cancel</button>
     </div>
 

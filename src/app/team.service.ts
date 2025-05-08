@@ -3,7 +3,7 @@ import { Team } from './team';
 import { Player } from './player';
 import { PlayerService } from './player.service';
 import { collection, Firestore, collectionData, doc, setDoc, DocumentReference, updateDoc, deleteDoc, docData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { SportInfo, SportsService } from './sports.service';
 import { Sport } from './sport';
 
@@ -32,6 +32,7 @@ export class TeamService implements OnInit {
   // }
 
   // Firestore Methods
+
   getTeam(id: string): Observable<Team> {
     const teamDocRef = doc(this.firestore, `team-data/${id}`);
     return docData(teamDocRef, { idField: 'id' }) as Observable<Team>;
@@ -40,6 +41,17 @@ export class TeamService implements OnInit {
   getTeams(): Observable<Team[]>{
     return collectionData(this.teamCollection, ({idField: 'id'})) as Observable<Team[]>;
   }
+
+  getName(id: string): Observable<string> {
+    return this.getTeam(id).pipe(
+      map((team: Team) => team.name)
+    );
+  }
+  // getName(id:string)  {
+  //   let t!: Team 
+  //   this.getTeam(id).subscribe(data => t = data)
+  //   return t.name
+  // }
 
   addTeam(newTeam: Team){
     const teamRef = doc(this.teamCollection);
@@ -108,6 +120,7 @@ export class TeamService implements OnInit {
     // const index = team.players.indexOf(player)
     // teamSpec.players.splice(index,1)
     team.players = team.players.filter(player => player != playerToRemove.id);
+    this.updateTeam(team.id, team)
   }
 
   playerJoin(plr :Player, team: Team) {
@@ -115,6 +128,7 @@ export class TeamService implements OnInit {
     // const index = teamSpec.players.indexOf(plr.id,0)
     // teamSpec.players.push(plr.id)
     team.players.push(plr.id);
+    this.updateTeam(team.id, team)
   }
 
   // getPlayers(teamId: string): Player[] {
