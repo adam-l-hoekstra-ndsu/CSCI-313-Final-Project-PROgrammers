@@ -13,7 +13,7 @@
         @for (match of this.matches; track $index) {
         @if($index % 2 == 0) {
         <tr style="background-color: lightgrey;">
-            <td>{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}
+            <td><a [routerLink]="['/game-view', match.id]">{{match.date.toDate().getMonth()+1}}/{{match.date.toDate().getDate()}}/{{match.date.toDate().getFullYear()}}</a>
             </td>
             <td>{{getAgainst(match)}}</td>
             <td>{{homeOrAway(match)}}</td>

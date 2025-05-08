@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { PlayerViewComponent } from './player-view/player-view.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -20,6 +20,7 @@ import { CreatePlayerComponent } from './create-player/create-player.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { AuthGuard } from '@angular/fire/auth-guard';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
     { 

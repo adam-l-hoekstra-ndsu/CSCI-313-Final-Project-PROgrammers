@@ -1,6 +1,6 @@
 <div class="row">
     <td class="col-sm-10">
-        <img [src]="team.logoUrl" alt="{{team.name}}'s Logo">
+        <!-- <img [src]="team.logoUrl" alt="{{team.name}}'s Logo"> -->
     </td>
     <td>
         <h2>Sport: {{getSport(team)}}</h2>
@@ -9,5 +9,6 @@
         <h2>Losses: {{team.losses}}</h2>
     </td>
 </div>
-
-<button class="btn btn-primary" [routerLink]="['/edit-team', team.id]" style="margin-top: 2rem;">Edit Team</button>
+@if (this.authService.token == 'true') {
+    <button class="btn btn-primary" [routerLink]="['/edit-team', team.id]" style="margin-top: 2rem;">Edit Team</button>
+}

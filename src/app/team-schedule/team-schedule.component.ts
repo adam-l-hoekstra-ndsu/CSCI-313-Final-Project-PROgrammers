@@ -5,10 +5,11 @@ import { TeamService } from '../team.service';
 import { Team } from '../team';
 import { AuthService } from '../auth.service';
 import { map, Observable } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-team-schedule',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './team-schedule.component.html',
   styleUrl: './team-schedule.component.css'
 })
@@ -49,6 +50,25 @@ export class TeamScheduleComponent implements OnInit {
       }
     }
     return "not found"
+  }
+
+  getAgainstTeam(m:Match) {
+    if (m.team2ID == this.teamId) {
+      for(const t of this.teams1) {
+        if (t.id = m.team1ID) {
+          return t
+        }
+      }
+      
+    }
+    else {
+      for(const t of this.teams2) {
+        if (t.id = m.team2ID) {
+          return t
+        }
+      }
+    }
+    return this.teams1[0]
   }
 
   // getAgainst(m: Match): Observable<string> {
