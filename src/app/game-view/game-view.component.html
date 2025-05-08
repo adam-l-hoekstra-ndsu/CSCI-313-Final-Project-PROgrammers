@@ -84,8 +84,10 @@
                         }
                     </tbody>
                 </table>
-            </div>  
-            <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
+            </div>
+            @if (this.authService.token == 'true') {
+                <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
+            }  
         } 
     </div>
     <div class="col-md-4 text-center">

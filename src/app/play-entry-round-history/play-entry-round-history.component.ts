@@ -108,4 +108,14 @@ export class PlayEntryRoundHistoryComponent implements OnInit {
     this.matchService.calculateMatchScore(this.match);
   }
 
+  toggleStarted() {
+    this.match.hasStarted = !this.match.hasStarted;
+    this.matchService.updateMatch(this.match.id, this.match);
+  }
+
+  toggleFinished() {
+    this.match.hasFinished = !this.match.hasFinished;
+    this.matchService.updateMatch(this.match.id, this.match);
+  }
+
 }

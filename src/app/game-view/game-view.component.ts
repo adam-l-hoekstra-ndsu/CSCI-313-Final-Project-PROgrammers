@@ -11,6 +11,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { PlayerService } from '../player.service';
 import { Player } from '../player';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-game-view',
@@ -39,6 +40,7 @@ export class GameViewComponent {
   matchService = inject(MatchService)
   firestore = inject(Firestore);
   playerService = inject(PlayerService)
+  readonly authService = inject(AuthService);
 
   ngOnInit(): void {
     this.categories = this.siegeService.statCategories;
