@@ -7,6 +7,7 @@ import { Play } from './play';
 import { Match } from './match';
 import { QuarterOrRound } from './quarterOrRound';
 import { MatchService } from './match.service';
+import { PlayerService } from './player.service';
 
 export enum BasketballCategory {
   GP,
@@ -42,6 +43,7 @@ export class BasketballService {
 
   teamData = inject(TeamService);
   matchService = inject(MatchService);
+  playerService = inject(PlayerService);
 
   constructor() { }
 
@@ -113,6 +115,11 @@ export class BasketballService {
       description: playDescription,
     };
     this.matchService.addPlayToMatch(match, play);
+    this.playerService.updatePlayer(playerActing.id, playerActing);
+    this.playerService.updatePlayer(playerEffected.id, playerEffected);
+    if (playerAssisting != null) {
+      this.playerService.updatePlayer(playerAssisting.id, playerAssisting);
+    }
   }
 
   reverseBasketballAction(match: Match, play: Play, quarterOrRound: QuarterOrRound) {
@@ -147,10 +154,11 @@ export class BasketballService {
     }
 
     this.matchService.removePlayFromMatch(match, play, quarterOrRound);
-  }
-
-  calculateStats(player: Player, matchID: Match) {
-    // To be implemented if need be
+    if(play.playerActing != null) this.playerService.updatePlayer(play.playerActing.id, play.playerActing);
+    if(play.playerEffected != null) this.playerService.updatePlayer(play.playerEffected.id, play.playerEffected);
+    if (play.playerAssisting != null) {
+      this.playerService.updatePlayer(play.playerAssisting.id, play.playerAssisting);
+    }
   }
 
 }

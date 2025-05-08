@@ -42,7 +42,7 @@ export class PlayEntryFormComponent implements OnInit {
 
   playerActing!: Player;
   playerEffected!: Player;
-  playerAssisting!: Player;
+  playerAssisting!: Player
   playTimeMinutes: number = 0;
   playTimeSeconds: number = 0;
   playTime!: number;
@@ -100,6 +100,7 @@ export class PlayEntryFormComponent implements OnInit {
 
     //Set current match time
     this.match.timeRemaining = this.playTime;
+    this.matchService.updateMatch(this.match.id, this.match);
 
     //Reset form values
     form.resetForm();

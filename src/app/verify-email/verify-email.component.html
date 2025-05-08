@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thank You</title>
+</head>
+
+<body>
+    <div class="container text-center" style="margin-top: 20px;">
+        <h5>Forgot Password?</h5>
+        <p>Enter your email to get a password reset link. If you don't have access to the email address associated with your account, and are in need of urgent help please contact our helpline at either: <span style="font-weight: bold;"><a href="mailto:fixityourself@bisonbase.com">{{bbEmail}}</a></span> or <span style="font-weight: bold;">801-211-9887</span></p>
+        <div style="margin-top: 35px; margin-bottom: 20px;">
+        <form class="text-start form-control" action="">
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-control" type="text" for="email" placeholder="someone@example.com" [(ngModel)]="email">
+        </form>
+        </div>
+        <button class="btn btn-danger" (click)="this.authService.forgotPassword(email)">Get Link</button>
+    </div>
+</body>
+
+</html>

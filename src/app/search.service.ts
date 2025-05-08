@@ -18,7 +18,7 @@ export class SearchService {
     const lowerTerm = searchTerm.toLowerCase();
 
     // Get and transform players
-    const players = this.playerService.players
+    const players = (this.playerService.players ?? [])
       .filter((player) =>
         (player.firstName + ' ' + player.lastName)
           .toLowerCase()
@@ -32,7 +32,7 @@ export class SearchService {
       }));
 
     // Get and transform teams
-    const teams = this.teamService.teams
+    const teams = (this.teamService.teams ?? [])
       .filter((team) => team.name.toLowerCase().includes(lowerTerm))
       .map((team) => ({
         id: team.id,
@@ -42,7 +42,7 @@ export class SearchService {
       }));
 
     // Get and transform sports
-    const sports = this.sportService
+    const sports = (this.sportService ?? [])
       .getSports()
       .filter((sport) => sport.name.toLowerCase().includes(lowerTerm))
       .map((sport) => ({

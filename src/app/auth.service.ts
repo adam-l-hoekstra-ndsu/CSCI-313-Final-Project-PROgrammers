@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
+import { Auth, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile, user, User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 export interface UserInfo{
@@ -14,34 +14,27 @@ export interface UserInfo{
 })
 
 export class AuthService {
-  [x: string]: any;
-
   readonly token: string | null = localStorage.getItem('token');
-  private _token: string | null = localStorage.getItem('token');
-
-  get tokenF(): string | null {
-    return this._token;
-  }
   
   private auth = inject(Auth);
   private router = inject(Router);
+  //private afAuth = inject(AngularFireAuth);
 
   login(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password).then(() => {
+    signInWithEmailAndPassword(this.auth, email, password).then(
+      () => {
       localStorage.setItem('token', 'true');
-      this.router.navigate(['']);
-      window.location.reload();
+      window.location.href="";
     }, err => {
       alert(`User not found: ${err.message} `);
       this.router.navigate(['/login'])
     })
   }
 
-  logOut(){
+  logOut() {
     signOut(this.auth)
       .then(() => {
         localStorage.removeItem('token');
-        this.router.navigate(['']);
         window.location.reload();
       })
       .catch(err => {
@@ -52,14 +45,11 @@ export class AuthService {
   forgotPassword(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
-        this.router.navigate(['/verify-email']);
+        alert(`Password reset link was sent!`)
+        this.router.navigate(['/login']);
       })
       .catch( err => {
         alert(`Something went wrong: ${ err.message }`);
       })
-  }
-
-  getUser(): User | null {
-    return this.auth.currentUser;
   }
 }

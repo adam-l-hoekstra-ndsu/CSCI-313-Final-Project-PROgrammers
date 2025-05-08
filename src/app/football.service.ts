@@ -41,11 +41,12 @@ export enum FootballPlayType {
 
 export class FootballService {
   constructor() { }
-  statCategories: string[] = ["YardsGained", "Tackles", "Penalties", "Completions", "PassesAttempted", "TDs", "FGs Made", "FGs Missed"]
+  statCategories: string[] = ["Yards Gained", "Tackles", "Penalties", "Completions", "Passes Attempted", "TDs", "FGs Made", "FGs Missed"]
   teams: Team[] = [];
 
   teamData = inject(TeamService);
   matchService = inject(MatchService)
+  playerService = inject(PlayerService)
 
   onInit() {
     this.teams = this.teamData.teams.filter(team => team.sport === Sport.Football); // Filter teams for Football
@@ -147,6 +148,11 @@ export class FootballService {
       yards: yards
     };
     this.matchService.addPlayToMatch(match, play);
+    this.playerService.updatePlayer(playerActing.id, playerActing);
+    this.playerService.updatePlayer(playerEffected.id, playerEffected);
+    if (playerAssisting != null) {
+      this.playerService.updatePlayer(playerAssisting.id, playerAssisting);
+    }
   }
 
   reverseFootballAction(match: Match, play: Play, quarterOrRound: QuarterOrRound) {
@@ -202,6 +208,11 @@ export class FootballService {
       }
     }
     this.matchService.removePlayFromMatch(match, play, quarterOrRound);
+    if(play.playerActing != null) this.playerService.updatePlayer(play.playerActing.id, play.playerActing);
+    if(play.playerEffected != null) this.playerService.updatePlayer(play.playerEffected.id, play.playerEffected);
+    if (play.playerAssisting != null) {
+      this.playerService.updatePlayer(play.playerAssisting.id, play.playerAssisting);
+    }
   }
 
 }

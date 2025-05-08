@@ -11,13 +11,22 @@ import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, GameStatisticsComponent, AdminPageComponent, TeamViewComponent, GameViewComponent, GamePlayEntryComponent, NavbarComponent],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    GameStatisticsComponent,
+    AdminPageComponent,
+    TeamViewComponent,
+    GameViewComponent, 
+    GamePlayEntryComponent,
+    NavbarComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 
 export class AppComponent implements OnDestroy {
-  authService = inject(AuthService);
+  readonly authService = inject(AuthService);
   title = 'Bison Base';
 
   ngOnDestroy(): void {

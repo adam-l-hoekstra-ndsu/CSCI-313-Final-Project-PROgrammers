@@ -84,8 +84,10 @@
                         }
                     </tbody>
                 </table>
-            </div>  
-            <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
+            </div>
+            @if (this.authService.token == 'true') {
+                <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
+            }  
         } 
     </div>
     <div class="col-md-4 text-center">
@@ -136,6 +138,38 @@
                                 <td scope="col"><img class="icon"  src={{quarterOrRound.result}}></td>
                             }
                         }
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @else if(team1.sport == sportEnum.Volleyball) {
+                <h2 style="margin-top: 2rem;">Score by Set</h2>
+                <table class="table table-bordered table-responsive" style="margin: auto; width: 25%; margin-bottom: 2rem;">
+                    <thead>
+                        <tr>
+                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                                @if($index + 1 == match.quarterOrRound) {
+                                    <th style="background-color: grey;">{{$index + 1}} - Active</th>
+                                }
+                                @else {
+                                    <th>{{$index + 1}}</th>
+                                }
+                            }
+                            <th style="background-color: lightgrey;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                           <td>{{quarterOrRound.team1Score}}</td>
+                        }
+                        <td style="background-color: lightgrey;">{{match.team1Score}}</td>
+                        </tr>
+                        <tr>
+                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                               <td>{{quarterOrRound.team2Score}}</td>
+                            }
+                            <td style="background-color: lightgrey;">{{match.team2Score}}</td>
                         </tr>
                     </tbody>
                 </table>
