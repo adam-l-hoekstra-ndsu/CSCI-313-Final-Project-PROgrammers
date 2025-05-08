@@ -9,10 +9,11 @@ import { AuthService } from '../auth.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
+
 export class HomeComponent implements OnInit {
-  authService = inject(AuthService);
+  readonly authService = inject(AuthService);
 
   ngOnInit(): void {
-    //const token = this.authService.token;
+    
   }
 }

@@ -10,23 +10,20 @@ import { AuthService } from '../auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
+
 export class NavbarComponent implements OnInit {
-  userStatus = 'true';
-  token!: string | null; 
   selectedSport: string | null = null;
   selectedTeam: string | null = null;
   selectedPlayer: string | null = null;
   selectedGame: string | null = null;
   
   readonly authService = inject(AuthService);
-  user = this.authService.getUser();
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.token = this.authService.token;
+    // Capture the parameters for Sport, Team, Player, and Game
     this.router.events.subscribe(() => {
-      // Capture the parameters for Sport, Team, Player, and Game
       this.selectedSport = this.activatedRoute.snapshot.paramMap.get('sport');
       this.selectedTeam = this.activatedRoute.snapshot.paramMap.get('team');
       this.selectedPlayer = this.activatedRoute.snapshot.paramMap.get('player');
@@ -34,14 +31,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  // isLoggedIn(): boolean {
-  //   // write method to check user status here
-  //   return this.userStatus;
-  // }
-
   logOut() {
     this.authService.logOut();
   }
-
-  
 }

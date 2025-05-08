@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{sportInfo[0].name}}</title>
 </head>
 
 <body>
@@ -48,7 +47,7 @@
             </table>
         </div>
         @if (this.authService.token == 'true') {
-            <button class="btn btn-primary" [routerLink]="['/create-team',sp()]">Create team</button>
+            <button class="btn btn-primary" [routerLink]="['/create-team',sp]">Create team</button>
         }   
     </div>
 </body>

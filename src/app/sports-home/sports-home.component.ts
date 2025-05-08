@@ -1,10 +1,11 @@
-import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, input, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SportsService, SportInfo } from '../sports.service';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
 import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../auth.service';
+import { Sport } from '../sport';
 
 @Component({
   selector: 'app-sports-home',
@@ -14,23 +15,19 @@ import { AuthService } from '../auth.service';
 })
 
 export class SportsHomeComponent implements OnInit, OnDestroy {
-  constructor() {}
-
-  sp = input.required<number>();
   teamService = inject(TeamService);
   sportsService = inject(SportsService);
-  authService = inject(AuthService);
+  readonly authService = inject(AuthService);
+
+  @Input() sp!: number; //sport ID passed through router
+  @Input() id!: string; //sport ID passed through router
+
   sportInfo!: SportInfo[];
   sportTeams!: Team[]; 
-  firestore = inject(Firestore) 
-  
+
   ngOnInit() {
-    console.log(this.teamService.teams);
-    this.teamService.getTeams().subscribe(data => this.sportTeams = data)
-    console.log(this.teamService.teams);
-    this.sportTeams = this.teamService.genSportTeams(this.sp());
-    this.sportInfo = this.sportsService.getSportInfo(this.sp());
-    console.log(this.sportTeams);
+    this.sportInfo = this.sportsService.getSportInfo(this.sp);
+    this.teamService.getTeams().subscribe(data => this.sportTeams = data.filter(team => team.sport == this.sp)); // Filter teams for based on sport 
   }
 
   ngOnDestroy() {

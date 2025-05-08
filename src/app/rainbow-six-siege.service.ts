@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { Team } from './team';
-// import { teams } from './team-data';
 import { TeamService } from './team.service'
 import { MatchService } from './match.service';
 import { Sport } from './sport';

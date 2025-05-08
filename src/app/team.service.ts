@@ -2,7 +2,7 @@ import { Injectable, OnInit, inject } from '@angular/core';
 import { Team } from './team';
 import { Player } from './player';
 import { PlayerService } from './player.service';
-import { collection, Firestore, collectionData, doc, setDoc, DocumentReference, updateDoc, deleteDoc, docData } from '@angular/fire/firestore';
+import { collection, Firestore, collectionData, doc, setDoc, DocumentReference, updateDoc, deleteDoc, docData, query, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { SportInfo, SportsService } from './sports.service';
 import { Sport } from './sport';
@@ -11,7 +11,7 @@ import { Sport } from './sport';
   providedIn: 'root'
 })
 
-export class TeamService implements OnInit {
+export class TeamService  {
   
   teams: Team[] = [] //Note: This is a local SNAPSHOT of the firebase databse. Changes made to this array WILL NOT be updated on the Database
 
@@ -22,10 +22,10 @@ export class TeamService implements OnInit {
   private firestore = inject(Firestore);
   teamCollection = collection(this.firestore, 'team-data');
 
-  ngOnInit() {
-    this.getTeams().subscribe(data => this.teams = data);
-    console.log(this.teams);
-  }
+  // ngOnInit() {
+  //   this.getTeams().subscribe(data => this.teams = data);
+  //   console.log(this.teams);
+  // }
 
   // gt(){
   //   return this.teamCollection;
@@ -70,11 +70,6 @@ export class TeamService implements OnInit {
   //This is the method used to create a dataset of information relating to the selected sport (e.g. sport name and sport picture)
   //and then save it as an array in the sport-home component 
   
-
-  //this is the method used to generate all the teams for the sport selected in the sport-selection component
-  genSportTeams(sport: Sport): Team[] {
-    return this.teams.filter(team => team.sport == sport);
-  }
 
   createTeam(named: string, sports: Sport, logo:string, league:string){
     let t:Team = {

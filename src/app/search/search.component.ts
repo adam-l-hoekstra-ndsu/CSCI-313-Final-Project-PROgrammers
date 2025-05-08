@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
+
 export class SearchComponent implements OnInit {
   searchTerm = '';
   previousSearchTerm = '';
