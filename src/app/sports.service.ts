@@ -42,7 +42,7 @@ export class SportsService {
         sportID: Sport.Volleyball,
       },
       {
-        name: 'Rainbow Six Seige',
+        name: 'Rainbow Six Siege',
         imageUrl: 'images/rainbow-six-seige.jpg',
         sportID: Sport.RainbowSixSiege,
       },
