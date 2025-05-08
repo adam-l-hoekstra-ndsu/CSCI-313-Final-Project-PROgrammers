@@ -1,8 +1,9 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterState } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
 import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,12 +13,15 @@ import { AuthService } from '../auth.service';
 })
 
 export class NavbarComponent implements OnInit {
+  [x: string]: any;
   selectedSport: string | null = null;
   selectedTeam: string | null = null;
   selectedPlayer: string | null = null;
   selectedGame: string | null = null;
   
   readonly authService = inject(AuthService);
+  readonly userService = inject(UserService);
+  routeR = inject(Router); //Used to display the back button in navbar.component.html
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 

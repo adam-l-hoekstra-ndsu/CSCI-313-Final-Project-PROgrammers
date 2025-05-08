@@ -43,6 +43,7 @@ export class AuthService {
   }
 
   forgotPassword(email: string) {
+    console.log(email)
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
         alert(`Password reset link was sent!`)

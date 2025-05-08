@@ -33,11 +33,12 @@
             <div class="row">
                 <img [src]="logo" alt="{{this.name}}'s Logo">
             </div>
-            <button class="btn btn-primary" [routerLink]="['/team-view',team.sport,id()]">Cancel</button>
+
             @if (this.authService.token == 'true') {
                 <button class="btn btn-primary" (click)="commitChanges()"
-                [routerLink]="['/team-view',team.sport,id()]">Commit</button>
+                [routerLink]="['/team-view',team.sport,id()]">Save</button>
             }
+            <button style="margin-left: 10px;" class="btn btn-primary" (click)="userService.goBack()">Cancel</button>
         </div>
     </div>
 </div>

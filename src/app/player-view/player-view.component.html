@@ -35,8 +35,9 @@
       </button>
       }
       <button
+        style="margin-left: 10px;"
         class="btn btn-primary"
-        [routerLink]="['/team-view', sportId(), teamId()]"
+        (click)="userService.goBack()"
       >
         Back to team
       </button>

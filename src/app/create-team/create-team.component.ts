@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TeamService } from '../team.service';
 import { Team } from '../team';
 import { Sport } from '../sport';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-create-team',
@@ -13,7 +14,8 @@ import { Sport } from '../sport';
 })
 export class CreateTeamComponent {
   id = input.required<number>()
-  teamService = inject(TeamService)
+  teamService = inject(TeamService);
+  readonly userService = inject(UserService)
   sportEnum = Sport
   team!: Team
   name: string=""

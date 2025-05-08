@@ -5,6 +5,7 @@ import { Player } from '../player';
 import { Team } from '../team';
 import { AuthService } from '../auth.service';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-player-view',
@@ -16,7 +17,8 @@ export class PlayerViewComponent implements OnInit {
   teamId = input.required<string>()
   playerId = input.required<string>()
   sportId = input.required<number>()
-  authService = inject(AuthService);
+  readonly authService = inject(AuthService);
+  readonly userService = inject(UserService);
 
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
