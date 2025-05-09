@@ -18,7 +18,6 @@ export class SearchResultsComponent implements OnInit {
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private searchService = inject(SearchService);
   private playerService = inject(PlayerService);
   private teamService = inject(TeamService);
