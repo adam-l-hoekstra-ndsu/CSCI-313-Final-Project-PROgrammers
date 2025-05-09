@@ -16,6 +16,7 @@ export class SearchResultsComponent implements OnInit {
   results: SearchResult[] = [];
   query = '';
 
+  private router = inject(Router);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private searchService = inject(SearchService);

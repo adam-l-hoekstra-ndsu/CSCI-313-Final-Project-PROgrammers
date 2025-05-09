@@ -15,11 +15,15 @@
             Click the button below to view all {{ sport.name }} teams.
           </p>
           <div class="mt-auto"></div>
-          <button class="btn btn-dark mt-auto" [routerLink]="['sport', sport.sportID]">Select Sport</button>
+          <button
+            class="btn btn-dark mt-auto"
+            [routerLink]="['/sport', sport.sportID]"
+          >
+            Select Sport
+          </button>
         </div>
       </div>
     </div>
     }
   </div>
-  
 </div>
