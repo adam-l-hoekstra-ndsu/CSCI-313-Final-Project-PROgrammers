@@ -2,7 +2,7 @@
     <div class="row  justify-content-md-center">
         <div class="col-md-auto text-center">
             <h1>{{team1.name}} VS. {{team2.name}}</h1>
-            <h2>{{match.date.toDateString()}} - {{match.date.toLocaleTimeString()}}</h2>
+            <h2>{{match.date.toDate().toDateString()}} - {{match.date.toDate().toLocaleTimeString()}}</h2>
 
         </div>
     </div>
@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(player of teamService.getPlayers(team1); track player) {
+                    @for(player of team1Players; track player) {
                         <tr>
                             @if(player.currentlyInMatch){
                                 <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
@@ -84,9 +84,12 @@
                         }
                     </tbody>
                 </table>
-            </div>  
+            </div>
+             
+        }
+        @if (this.authService.token == 'true') {
             <button class="btn btn-primary" [routerLink]="['/game-play-entry', this.match.id]">Edit</button>
-        } 
+        }  
     </div>
     <div class="col-md-4 text-center">
         @if(match.hasStarted) {
@@ -95,7 +98,7 @@
                     <tr>
                         <h2>{{team2.name}}</h2>
                     </tr>
-                    @for(player of teamService.getPlayers(team2); track player) {
+                    @for(player of team2Players; track player) {
                     <tr>
                         @if(player.currentlyInMatch){
                             <td scope="col">{{player.firstName[0]}}. {{player.lastName}}</td>
@@ -136,6 +139,38 @@
                                 <td scope="col"><img class="icon"  src={{quarterOrRound.result}}></td>
                             }
                         }
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @else if(team1.sport == sportEnum.Volleyball) {
+                <h2 style="margin-top: 2rem;">Score by Set</h2>
+                <table class="table table-bordered table-responsive" style="margin: auto; width: 25%; margin-bottom: 2rem;">
+                    <thead>
+                        <tr>
+                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                                @if($index + 1 == match.quarterOrRound) {
+                                    <th style="background-color: grey;">{{$index + 1}} - Active</th>
+                                }
+                                @else {
+                                    <th>{{$index + 1}}</th>
+                                }
+                            }
+                            <th style="background-color: lightgrey;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                           <td>{{quarterOrRound.team1Score}}</td>
+                        }
+                        <td style="background-color: lightgrey;">{{match.team1Score}}</td>
+                        </tr>
+                        <tr>
+                            @for(quarterOrRound of match.quarterOrRoundResults; track $index) {
+                               <td>{{quarterOrRound.team2Score}}</td>
+                            }
+                            <td style="background-color: lightgrey;">{{match.team2Score}}</td>
                         </tr>
                     </tbody>
                 </table>

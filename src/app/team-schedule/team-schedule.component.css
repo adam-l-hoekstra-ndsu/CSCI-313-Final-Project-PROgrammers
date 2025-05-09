@@ -1,3 +1,7 @@
 table {
     table-layout : fixed;
 }
+
+.btn {
+    margin-top: 2rem;
+}

@@ -32,6 +32,7 @@ export class PlayerService implements OnInit {
     else {
       plr.age = -1
     }
+    this.updatePlayer(plr.id, plr)
   }
 
   createPlayer(fname:string, lname:string, bios:string, age:string) {
@@ -44,8 +45,7 @@ export class PlayerService implements OnInit {
       testAge = -1
     }
     let plr : Player = {
-
-      id: players.length,
+      id: "",
       teams:[],
       firstName: fname,
       lastName: lname,
@@ -56,17 +56,19 @@ export class PlayerService implements OnInit {
       avgStats: [],
       currentlyInMatch: false
     }
-    players.push(plr)
+    this.addPlayer(plr)
     
   }
 
   leaveTeam(plr: Player, team: Team) {
     const index = plr.teams.indexOf(team.id,0)
     plr.teams.splice(index,1)
+    this.updatePlayer(plr.id, plr)
   }
 
   joinTeam(plr: Player, team: Team) {
     plr.teams.push(team.id)
+    this.updatePlayer(plr.id, plr)
   }
 
   getPlayerById(id: string): Player {
@@ -83,20 +85,20 @@ export class PlayerService implements OnInit {
       return collectionData(this.playerCollection, ({idField: 'id'})) as Observable<Player[]>
     }
   
-    addTeam(newTeam: Team){
+    addPlayer(newPlayer: Player){
       const playerRef = doc(this.playerCollection);
-      const newId = playerRef.id;
-      newTeam.id = newId;
-      setDoc(playerRef, newTeam);
+      const newId = playerRef.id
+      newPlayer.id = newId
+      setDoc(playerRef, newPlayer);
     }
   
-    updateTeam(id: string, team : Partial<Team>): Promise<void> {
-      const teamDoc = doc(this.firestore, `team-data/${id}`);
-      return updateDoc(teamDoc, team);
+    updatePlayer(id: string, plr : Partial<Player>): Promise<void> {
+      const plrDoc = doc(this.firestore, `player-data/${id}`);
+      return updateDoc(plrDoc, plr);
     }
   
     deleteTeam(id: string): Promise<void> {
-      const teamDoc = doc(this.firestore, `team-data/${id}`);
+      const teamDoc = doc(this.firestore, `player-data/${id}`);
       return deleteDoc(teamDoc);
     }
 

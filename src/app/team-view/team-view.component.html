@@ -1,7 +1,8 @@
 <div class="container">
     <div class="containerA">
-        <!-- <img class="custom-badge img-fluid img-thumbnail rounded thumbnail-bg" [src]="team.logoUrl" alt=""> -->
-        <h1>{{team.name}} {{team.id}}</h1>
+        <img class="icon" [src]="team.logoUrl" alt="{{team.name}}'s Logo">
+        <h1>{{this.team.name}}</h1>
+        <h3>{{team.wins}} -{{team.losses}} - {{team.draws}}</h3>
 
     </div>
     <div class="row">

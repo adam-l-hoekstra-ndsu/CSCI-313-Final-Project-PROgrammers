@@ -15,7 +15,7 @@
           </p>
           <div class="d-flex flex-column gap-2 mt-auto">
             <a routerLink="/login" class="btn btn-danger w-100">Login</a>
-            @if (adminLoggedIn) {
+            @if (this.authService.token == 'true') {
             <a routerLink="/admin-management" class="btn btn-primary w-100"
               >Admin Management Portal</a
             >

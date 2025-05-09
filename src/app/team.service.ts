@@ -3,7 +3,7 @@ import { Team } from './team';
 import { Player } from './player';
 import { PlayerService } from './player.service';
 import { collection, Firestore, collectionData, doc, setDoc, DocumentReference, updateDoc, deleteDoc, docData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { SportInfo, SportsService } from './sports.service';
 import { Sport } from './sport';
 
@@ -32,6 +32,7 @@ export class TeamService implements OnInit {
   // }
 
   // Firestore Methods
+
   getTeam(id: string): Observable<Team> {
     const teamDocRef = doc(this.firestore, `team-data/${id}`);
     return docData(teamDocRef, { idField: 'id' }) as Observable<Team>;
@@ -41,6 +42,17 @@ export class TeamService implements OnInit {
     return collectionData(this.teamCollection, ({idField: 'id'})) as Observable<Team[]>;
   }
 
+  getName(id: string): Observable<string> {
+    return this.getTeam(id).pipe(
+      map((team: Team) => team.name)
+    );
+  }
+  // getName(id:string)  {
+  //   let t!: Team 
+  //   this.getTeam(id).subscribe(data => t = data)
+  //   return t.name
+  // }
+
   addTeam(newTeam: Team){
     const teamRef = doc(this.teamCollection);
     const newId = teamRef.id;
@@ -49,12 +61,13 @@ export class TeamService implements OnInit {
   }
 
   updateTeam(id: string, team : Partial<Team>): Promise<void> {
+    console.log("called "+"new name: "+team.name)
     const teamDoc = doc(this.firestore, `team-data/${id}`);
-    return updateDoc(teamDoc, team);
+    return updateDoc(teamDoc, {... team});
   }
 
   deleteTeam(id: string): Promise<void> {
-    const teamDoc = doc(this.firestore, `team-data/${id}`);
+    const teamDoc = doc(this.firestore, 'team-data/${id}');
     return deleteDoc(teamDoc);
   }
 
@@ -77,7 +90,7 @@ export class TeamService implements OnInit {
 
   createTeam(named: string, sports: Sport, logo:string, league:string){
     let t:Team = {
-      id: teams.length,
+      id: "",
       name: named,
       sport: sports,
       logoUrl: logo,
@@ -86,15 +99,16 @@ export class TeamService implements OnInit {
       wins: 0,
       losses: 0,
       draws: 0,
-      legueSubsection: league
+      leagueSubsection: league
     }
-    teams.push(t)
+    this.addTeam(t);
   }
 
   editTeam(t:Team, name: string, league: string, logo: string) {
     t.name = name
-    t.legueSubsection = league
+    t.leagueSubsection = league
     t.logoUrl = logo
+    this.updateTeam(t.id, t)
   }
 
   getPlayerIDs(teamId: string): string[] {
@@ -106,6 +120,7 @@ export class TeamService implements OnInit {
     // const index = team.players.indexOf(player)
     // teamSpec.players.splice(index,1)
     team.players = team.players.filter(player => player != playerToRemove.id);
+    this.updateTeam(team.id, team)
   }
 
   playerJoin(plr :Player, team: Team) {
@@ -113,12 +128,21 @@ export class TeamService implements OnInit {
     // const index = teamSpec.players.indexOf(plr.id,0)
     // teamSpec.players.push(plr.id)
     team.players.push(plr.id);
+    this.updateTeam(team.id, team)
   }
 
-  getPlayers(team: Team): Player[] {
-    let toReturn:Player[] = []
-    team.players.forEach((playerId) => {
-      toReturn.push(this.playerService.getPlayerById(playerId))});
-    return toReturn;
-  }
+  // getPlayers(teamId: string): Player[] {
+  //   console.log("being called "+teamId)
+  //   let toReturn: Player[] =[]
+  //   this.playerService.getPlayers().subscribe( data => toReturn = data.filter(plr => plr.teams.includes(teamId) ) )
+  //   return toReturn
+  //   // let toReturn:Player[] = []
+  //   // team.players.forEach((playerId) => {
+  //   //   toReturn.push(this.playerService.getPlayerById(playerId))});
+  //   // return toReturn;
+  // }
+
+  // getPlayers(): Observable<Player[]> {
+  //   return collectionData(this.playerService.playerCollection, ({idField: 'id'})) as Observable<Player[]>
+  // }
 }

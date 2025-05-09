@@ -11,13 +11,13 @@ import { PlayerService } from '../player.service';
 })
 export class CreatePlayerComponent {
   sportId = input.required<number>()
-  teamId = input.required<number>()
+  teamId = input.required<string>()
   playerService = inject(PlayerService)
   
-  firstName!: string
-  lastName!: string
-  bio!: string
-  age!: string
+  firstName: string = ""
+  lastName: string = ""
+  bio: string = ""
+  age: string = ""
 
   commitChanges() {
     this.playerService.createPlayer(this.firstName, this.lastName, this.bio, this.age)

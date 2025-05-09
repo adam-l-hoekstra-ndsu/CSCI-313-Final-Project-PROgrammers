@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Team } from '../team';
 import { TeamService } from '../team.service';
 import { Sport } from '../sport';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-team-header',
@@ -13,6 +14,7 @@ import { Sport } from '../sport';
 export class TeamHeaderComponent implements OnInit{
   @Input() teamId!: string;
   teamService = inject(TeamService)
+  readonly authService = inject(AuthService);
   team !: Team;
   getSport(t:Team) {
     if (t.sport == Sport.Basketball) {

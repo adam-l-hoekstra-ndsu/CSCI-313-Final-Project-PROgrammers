@@ -9,6 +9,7 @@ import { VolleyballService } from '../volleyball.service';
 import { RainbowSixSiegeService } from '../rainbow-six-siege.service';
 import { PlayerService } from '../player.service';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-team-roster',
@@ -19,6 +20,7 @@ import { RouterLink } from '@angular/router';
 export class TeamRosterComponent implements OnInit {
   teamService = inject(TeamService)
   playerService = inject(PlayerService)
+  authService = inject(AuthService);
   bb = inject(BasketballService)
   fb = inject(FootballService)
   vb = inject(VolleyballService)
@@ -34,8 +36,11 @@ export class TeamRosterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.teamId)
     this.teamService.getTeam(this.teamId).subscribe(data => this.team = data) 
-      this.players = this.teamService.getPlayers(this.team).sort((a:Player, b:Player)=>a.lastName.localeCompare(b.lastName))
+    this.playerService.getPlayers().subscribe(data => this.players = data.filter(plr => plr.teams.includes(this.teamId)))
+      // this.players = this.teamService.getPlayers(this.team.id).sort((a:Player, b:Player)=>a.lastName.localeCompare(b.lastName))
+    
       this.sport = this.team.sport
       console.log(this.team.sport)
       if (this.sport == Sport.Basketball) {

@@ -51,8 +51,8 @@
 
 
 
-            <button class="btn btn-primary" [routerLink]="['/sport',sport]">Cancel</button>
-            <button class="btn btn-primary" (click)="commitChanges()" [routerLink]="['/sport',sport]">Commit</button>
+            <button class="btn btn-primary" (click)="commitChanges()" [routerLink]="['/sport',sport]">Save</button>
+            <button style="margin-left: 10px;" class="btn btn-primary" (click)="this.userService.goBack()">Cancel</button>
         </div>
     </div>
 </div>

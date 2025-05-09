@@ -8,7 +8,7 @@
   } @if (results.length > 0) {
   <div class="row">
     @for (result of results; track $index) {
-    <div class="col-md-4">
+    <div class="col-md-4 mb-3">
       <div class="card h-100">
         <img
           [src]="result.imageUrl"
@@ -17,11 +17,18 @@
         />
         <div class="card-body">
           <h4 class="card-title">{{ result.name }}</h4>
+          <p>
+            <span style="font-style: italic">{{
+              result.type.toUpperCase()
+            }}</span>
+          </p>
+        </div>
+        <div class="card-footer">
           <button
             class="btn btn-dark mt-auto"
-            [routerLink]="['/', result.type, result.id]"
+            (click)="navigateToResult(result)"
           >
-            View
+            View Page
           </button>
         </div>
       </div>

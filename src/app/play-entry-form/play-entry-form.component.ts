@@ -11,6 +11,7 @@ import { SiegeRoundResult } from '../quarterOrRound';
 import { FootballPlayType, FootballService } from '../football.service';
 import { VolleyballPlayType, VolleyballService } from '../volleyball.service';
 import { BasketBallPlayType, BasketballService } from '../basketball.service';
+import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'app-play-entry-form',
@@ -20,7 +21,7 @@ import { BasketBallPlayType, BasketballService } from '../basketball.service';
 })
 export class PlayEntryFormComponent implements OnInit {
 
-  @Input() matchID!: number;
+  @Input() matchID!: string;
   match!: Match;
   sport!: Sport;
   sportEnum = Sport;  // For use in the template
@@ -28,16 +29,20 @@ export class PlayEntryFormComponent implements OnInit {
   team1!: Team;
   team2!: Team;
 
+  team1Players!: Player[]
+  team2Players!: Player[]
+
   siegeService = inject(RainbowSixSiegeService);
   footballService = inject(FootballService);
   volleyballService = inject(VolleyballService);
   basketballService = inject(BasketballService)
   teamService = inject(TeamService);
   matchService = inject(MatchService)
+  playerService = inject(PlayerService)
 
   playerActing!: Player;
   playerEffected!: Player;
-  playerAssisting!: Player;
+  playerAssisting!: Player
   playTimeMinutes: number = 0;
   playTimeSeconds: number = 0;
   playTime!: number;
@@ -60,32 +65,42 @@ export class PlayEntryFormComponent implements OnInit {
   basketballlActionEnum = BasketBallPlayType // For use in the template
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(Number(this.matchID));
-    this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
-    this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
-    this.sport = this.team1.sport;
+    this.matchService.getMatchById(this.matchID).subscribe(data => {
+      this.match = data
+      this.teamService.getTeam(this.match.team1ID).subscribe(data => {
+        this.team1 = data
+        this.sport = this.team1.sport;
+        this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
+      });
+      this.teamService.getTeam(this.match.team2ID).subscribe(data => {
+        this.team2 = data
+        this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
+      });
+    });
+    
   }
 
   onSubmit(form: NgForm) {
     this.playTime = (Number(this.playTimeMinutes * 60) + Number(this.playTimeSeconds));
     if (this.playOvertime) this.playTime = -this.playTime;
     if(this.sport == Sport.RainbowSixSiege) {
-      this.siegeService.siegePlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.siegeAction, this.trade);
+      this.siegeService.siegePlayBuilder(this.match, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.siegeAction, this.trade);
     }
     if(this.sport == Sport.Football) {
-      this.footballService.footballPlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.footballAction, this.yards);
+      this.footballService.footballPlayBuilder(this.match, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.footballAction, this.yards);
     }
     if(this.sport == Sport.Volleyball) {
-      this.volleyballService.volleyballPlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.volleyballAction);
+      this.volleyballService.volleyballPlayBuilder(this.match, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.volleyballAction);
     }
     if(this.sport == Sport.Basketball) {
-      this.basketballService.basketballPlayBuilder(this.match.id, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.basketballAction);
+      this.basketballService.basketballPlayBuilder(this.match, this.playTime, this.playerActing, this.playerEffected, this.playerAssisting, this.basketballAction);
     }
 
     this.siegeService.calculateStats(this.playerActing, this.match);
 
     //Set current match time
     this.match.timeRemaining = this.playTime;
+    this.matchService.updateMatch(this.match.id, this.match);
 
     //Reset form values
     form.resetForm();

@@ -1,4 +1,7 @@
 <nav class="navbar fixed-top navbar-expand-lg custom-navbar">
+  @if (!['/', '/#sport-selection'].includes(routeR.url)) {
+    <button style="margin-left: 10px;" class="btn btn-outline-warning" (click)="userService.goBack()"><<</button>
+  }
   <div class="container-fluid">
     <a
       class="navbar-brand d-flex align-items-center text-white"
@@ -13,6 +16,7 @@
       />
       Bison Base
     </a>
+    
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         @if (selectedSport) {
@@ -49,11 +53,11 @@
     </nav>
     <div class="d-flex align-items-center ms-auto">
       <app-search></app-search>
-      @if (isLoggedIn()) {
+      @if (this.authService.token == 'true') {
       <div class="dropdown ms-3">
         <a
           class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-          href="#"
+          href=""
           id="userDropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -66,10 +70,14 @@
           aria-labelledby="userDropdown"
         >
           <li>
-            <a class="dropdown-item" href="/manage-account">Manage Account</a>
+            <a class="dropdown-item" routerLink="/admin-management"
+              >Admin Management Portal</a
+            >
           </li>
           <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+          <li>
+            <a class="dropdown-item" href="" (click)="logOut()">Log Out</a>
+          </li>
         </ul>
       </div>
       }

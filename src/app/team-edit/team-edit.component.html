@@ -1,6 +1,6 @@
 <div class="container" style="align-self: center;">
     <div class="containerA">
-        <h1> {{name}}</h1>
+        <h1> {{this.name}}</h1>
     </div>
     <div class="card">
         <div class="container">
@@ -31,10 +31,14 @@
             </div>
 
             <div class="row">
-                <img [src]="logo" alt="{{team.name}}'s Logo">
+                <img [src]="logo" alt="{{this.name}}'s Logo">
             </div>
-            <button class="btn btn-primary" [routerLink]="['/team-view',team.sport,id()]">Cancel</button>
-            <button class="btn btn-primary" (click)="commitChanges()" [routerLink]="['/team-view',team.sport,id()]">Commit</button>
+
+            @if (this.authService.token == 'true') {
+                <button class="btn btn-primary" (click)="commitChanges()"
+                [routerLink]="['/team-view',team.sport,id()]">Save</button>
+            }
+            <button style="margin-left: 10px;" class="btn btn-primary" (click)="userService.goBack()">Cancel</button>
         </div>
     </div>
 </div>

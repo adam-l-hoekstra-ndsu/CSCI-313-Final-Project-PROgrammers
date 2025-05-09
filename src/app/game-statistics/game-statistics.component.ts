@@ -8,6 +8,8 @@ import { TeamService } from '../team.service';
 import { Match } from '../match';
 import { MatchService } from '../match.service';
 import { Sport } from '../sport';
+import { PlayerService } from '../player.service';
+import { Player } from '../player';
 
 @Component({
   selector: 'app-game-statistics',
@@ -18,11 +20,14 @@ import { Sport } from '../sport';
 export class GameStatisticsComponent implements OnInit {
   categories: string[] = [];
 
-  @Input() matchID!: number;
+  @Input() matchID!: string;
   match!: Match;
   
   team1!: Team;
   team2!: Team;
+
+  team1Players!: Player[]
+  team2Players!: Player[]
 
   constructor() {}
 
@@ -32,12 +37,21 @@ export class GameStatisticsComponent implements OnInit {
   basketballService = inject(BasketballService);
   teamService = inject(TeamService);
   matchService = inject(MatchService)
+  playerService = inject(PlayerService)
 
   ngOnInit(): void {
-    this.match = this.matchService.getMatchById(Number(this.matchID));
-    this.teamService.getTeam(this.match.team1ID).subscribe(data => this.team1 = data);
-    this.teamService.getTeam(this.match.team2ID).subscribe(data => this.team2 = data);
-    this.setCategories(this.team1.sport);
+    this.matchService.getMatchById(this.matchID).subscribe(data => {
+      this.match = data
+      this.teamService.getTeam(this.match.team1ID).subscribe(data => {
+        this.team1 = data;
+        this.playerService.getPlayers().subscribe(data => this.team1Players = data.filter(plr => plr.teams.includes(this.team1.id)))
+        this.setCategories(this.team1.sport);
+      });
+      this.teamService.getTeam(this.match.team2ID).subscribe(data => { 
+        this.team2 = data
+        this.playerService.getPlayers().subscribe(data => this.team2Players = data.filter(plr => plr.teams.includes(this.team2.id)))
+      });  
+    });
   }
 
   setCategories(sport: Sport) {
