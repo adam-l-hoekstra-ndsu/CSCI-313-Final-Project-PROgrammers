@@ -8,6 +8,7 @@
       aria-label="Search"
       [(ngModel)]="searchTerm"
       name="searchTerm"
+      (keyup.enter)="onSearch()"
     />
     <button class="btn btn-outline-light" type="submit" (click)="onSearch()">
       Search
